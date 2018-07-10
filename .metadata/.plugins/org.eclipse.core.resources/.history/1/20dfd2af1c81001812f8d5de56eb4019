@@ -1,0 +1,74 @@
+package code;
+
+import lejos.hardware.Button;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.EV3TouchSensor;
+import lejos.hardware.sensor.SensorMode;
+import lejos.robotics.RegulatedMotor;
+import lejos.utility.Delay;
+
+public class RideBetweenWalls {
+
+	RegulatedMotor motorL;
+	RegulatedMotor motorR;
+	EV3TouchSensor touchL;
+	EV3TouchSensor touchR;
+	SensorMode touch;
+	boolean done;
+	
+	public RideBetweenWalls() {
+		Robot robot = new Robot();
+		motorL = new EV3LargeRegulatedMotor(MotorPort.A);
+		motorR = new EV3LargeRegulatedMotor(MotorPort.B);
+		motorL.synchronizeWith(new RegulatedMotor[] { motorR });
+		touchL = new EV3TouchSensor(SensorPort.S1);
+		touchR = new EV3TouchSensor(SensorPort.S3);
+		done = false;
+		ride();
+		motorL.close();
+		motorR.close();
+		touchL.close();
+		touchR.close();
+	}
+	
+	public void ride() {
+		while (!done) {
+			motorL.startSynchronization();
+			motorL.forward();
+			motorR.forward();
+			motorL.endSynchronization();
+			touch = touchL.getTouchMode();
+			float[] sample = new float[touch.sampleSize()];
+			
+			do{
+				touch.fetchSample(sample, 0);
+				
+			} while (sample[0] == 0);
+			
+			System.out.println("otacim se");
+			motorL.startSynchronization();
+			motorL.stop();
+			motorR.stop();
+			motorL.rotate(-163);
+			motorR.rotate(-163);
+			motorL.endSynchronization();
+			Delay.msDelay(300);
+			
+			robot.rotation180();
+
+			if (Button.readButtons() != 0) {
+	            done = true;
+	        }
+
+		} 
+		System.out.println("CLOSING PORTS");
+		
+		touchL.close();
+		touchR.close();
+	}
+	
+	
+	
+}
