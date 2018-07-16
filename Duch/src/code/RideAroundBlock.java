@@ -1,7 +1,5 @@
 package code;
 
-
-
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
@@ -13,7 +11,7 @@ import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
 public class RideAroundBlock {
-	
+
 	Robot robot;
 	RegulatedMotor motorL;
 	RegulatedMotor motorR;
@@ -24,7 +22,7 @@ public class RideAroundBlock {
 	SensorMode touchLeft;
 	SensorMode touchRight;
 	boolean done;
-	
+
 	public RideAroundBlock() {
 		robot = new Robot();
 		motorL = new EV3LargeRegulatedMotor(MotorPort.A);
@@ -41,51 +39,75 @@ public class RideAroundBlock {
 		touchR.close();
 		irSensor.close();
 	}
-	
+
 	public void ride() {
+		double actual = 0;
+		double last1 = 0;
+		double last2 = 0;
+		double ideal = 0.05;
+		double kp = 1;
+		double kd = 5;
+		double action = 0;
+		int speed = 500;
 		touchLeft = touchL.getTouchMode();
-			touchRight = touchR.getTouchMode();
-			rangeSampler = irSensor.getDistanceMode();
-			float[] sampleL = new float[touchLeft.sampleSize()];
-			float[] sampleR = new float[touchRight.sampleSize()];
-			float[] lastRange = new float[rangeSampler.sampleSize()];
-			
-			while (true) {
-			System.out.println("ahoj");
+		touchRight = touchR.getTouchMode();
+		rangeSampler = irSensor.getDistanceMode();
+		float[] sampleL = new float[touchLeft.sampleSize()];
+		float[] sampleR = new float[touchRight.sampleSize()];
+		float[] lastRange = new float[rangeSampler.sampleSize()];
+		rangeSampler.fetchSample(lastRange, 0);
+		actual = lastRange[0];
+
+		while (true) {
 			motorL.startSynchronization();
 			motorL.stop();
 			motorR.stop();
 			motorL.forward();
 			motorR.forward();
+			motorL.setSpeed(speed);
+			motorR.setSpeed(speed);
 			motorL.endSynchronization();
+			Delay.msDelay(100);
 
-			do{
+			do {
 				touchLeft.fetchSample(sampleL, 0);
 				touchRight.fetchSample(sampleR, 0);
 				rangeSampler.fetchSample(lastRange, 0);
-				
-			} while (((sampleL[0] == 0) || (sampleR[0] == 0)) && (lastRange[0] < 0.2) );
-			
+				last1 = actual;
+				last2 = last1;
+				actual = lastRange[0];
+				if ((last1 < 0.2) && (last1 > 0) && (last2 < 0.2) && (last2 > 0) && (actual < 0.2) && (actual > 0)) {
+					action = kp * (last1 - ideal) + kd * (last1 - last2);
+					motorL.startSynchronization();
+					motorL.setSpeed((int) (speed * (1 - action)));
+					motorR.setSpeed((int) (speed * (1 + action)));
+					motorL.endSynchronization();
+					Delay.msDelay(100);
+				} else {
+					motorL.startSynchronization();
+					motorL.setSpeed(speed);
+					motorR.setSpeed(speed);
+					motorL.endSynchronization();
+				}
+
+			} while (((sampleL[0] == 0) || (sampleR[0] == 0)) && (lastRange[0] < 0.2));
+
 			if ((sampleL[0] != 0) && (sampleR[0] != 0)) {
 				robot.stop();
 				motorL.startSynchronization();
-				motorL.rotateTo(-180);
-				motorR.rotateTo(-180);
+				motorL.rotateTo(-10);
+				motorR.rotateTo(-10);
 				motorL.endSynchronization();
-				Delay.msDelay(600);
+				Delay.msDelay(200);
 				robot.rotationRight();
 				System.out.println("tocim doprava");
 			}
-			
+
 			if (lastRange[0] > 0.2) {
-				robot.ride(14);
+				robot.ride(12);
 				robot.rotationLeft();
-				robot.ride(15);
+				robot.ride(17);
 				System.out.println("tocim doleva");
-				motorL.startSynchronization();
-				motorL.forward();
-				motorR.forward();
-				motorL.endSynchronization();
 			}
 		}
 	}
