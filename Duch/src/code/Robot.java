@@ -77,15 +77,15 @@ public class Robot {
 
 	public void rotationRight() {
 		motorL.startSynchronization();
-		motorR.rotate(-182);
-		motorL.rotate(182);
+		motorR.rotate(-165);
+		motorL.rotate(165);
 		motorL.endSynchronization();
-		Delay.msDelay(800);
+		Delay.msDelay(1000);
 	}
 
 	public void rotationLeft() {
 		motorL.startSynchronization();
-		motorR.rotate(167);
+		motorR.rotate(168);
 		motorL.rotate(-167);
 		motorL.endSynchronization();
 		Delay.msDelay(1000);
@@ -112,7 +112,17 @@ public class Robot {
 		motorL.rotate((int) angle);
 		motorR.rotate((int) angle);
 		motorL.endSynchronization();
-		Delay.msDelay(l * 70);
+		Delay.msDelay(l * 80);
 	}
+	
+	public void rideback(int l) {
+		double angle = 360 * l / (3.14159 * 5.6);
+		motorL.startSynchronization();
+		motorL.rotate(- (int) angle);
+		motorR.rotate(- (int) angle);
+		motorL.endSynchronization();
+		Delay.msDelay(l * 80);
+	}
+	
 
 }

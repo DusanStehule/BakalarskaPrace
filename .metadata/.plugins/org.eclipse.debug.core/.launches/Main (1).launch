@@ -9,4 +9,11 @@
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="code.Main"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Duch"/>
+<booleanAttribute key="org.lejos.ev3.ldt.ConnectToName" value="false"/>
+<stringAttribute key="org.lejos.ev3.ldt.ConnectionName" value=""/>
+<booleanAttribute key="org.lejos.ev3.ldt.connectionUseDefaults" value="true"/>
+<booleanAttribute key="org.lejos.ev3.ldt.debug.runAfterUpload" value="true"/>
+<booleanAttribute key="org.lejos.ev3.ldt.debug.useDefaults" value="true"/>
+<booleanAttribute key="org.lejos.ev3.ldt.run.runAfterUpload" value="false"/>
+<booleanAttribute key="org.lejos.ev3.ldt.run.useDefaults" value="false"/>
 </launchConfiguration>

@@ -41,12 +41,12 @@ public class RideAroundBlock {
 	}
 
 	public void ride() {
+		int help = 0;
 		double actual = 0;
-		double last1 = 0;
-		double last2 = 0;
-		double ideal = 0.05;
-		double kp = 1;
-		double kd = 5;
+		double last = 0;
+		double ideal = 0.08;
+		double kp = 0.9;
+		double kd = 7;
 		double action = 0;
 		int speed = 500;
 		touchLeft = touchL.getTouchMode();
@@ -67,22 +67,25 @@ public class RideAroundBlock {
 			motorL.setSpeed(speed);
 			motorR.setSpeed(speed);
 			motorL.endSynchronization();
-			Delay.msDelay(100);
+			if (help == 1) {
+				Delay.msDelay(1200);
+			} else {
+				Delay.msDelay(500);
+			}
+			help = 0;
 
 			do {
 				touchLeft.fetchSample(sampleL, 0);
 				touchRight.fetchSample(sampleR, 0);
 				rangeSampler.fetchSample(lastRange, 0);
-				last1 = actual;
-				last2 = last1;
+				last = actual;
 				actual = lastRange[0];
-				if ((last1 < 0.2) && (last1 > 0) && (last2 < 0.2) && (last2 > 0) && (actual < 0.2) && (actual > 0)) {
-					action = kp * (last1 - ideal) + kd * (last1 - last2);
+				if ((last < 0.18) && (last > 0) && (actual < 0.18) && (actual > 0)) {
+					action = kp * (actual - ideal) + kd * (actual - last);
 					motorL.startSynchronization();
 					motorL.setSpeed((int) (speed * (1 - action)));
 					motorR.setSpeed((int) (speed * (1 + action)));
 					motorL.endSynchronization();
-					Delay.msDelay(100);
 				} else {
 					motorL.startSynchronization();
 					motorL.setSpeed(speed);
@@ -90,24 +93,21 @@ public class RideAroundBlock {
 					motorL.endSynchronization();
 				}
 
-			} while (((sampleL[0] == 0) || (sampleR[0] == 0)) && (lastRange[0] < 0.2));
+			} while (((sampleL[0] == 0) || (sampleR[0] == 0)) && (lastRange[0] < 0.18));
 
 			if ((sampleL[0] != 0) && (sampleR[0] != 0)) {
 				robot.stop();
-				motorL.startSynchronization();
-				motorL.rotateTo(-10);
-				motorR.rotateTo(-10);
-				motorL.endSynchronization();
-				Delay.msDelay(200);
+				robot.rideback(5);
 				robot.rotationRight();
 				System.out.println("tocim doprava");
+				help = 0;
 			}
 
-			if (lastRange[0] > 0.2) {
-				robot.ride(12);
+			if (lastRange[0] > 0.18) {
+				robot.ride(16);
 				robot.rotationLeft();
-				robot.ride(17);
 				System.out.println("tocim doleva");
+				help = 1;
 			}
 		}
 	}
