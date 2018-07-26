@@ -3,7 +3,6 @@
 <fullyQualifiedTypeName name="lejos.hardware.Sound"/>
 <fullyQualifiedTypeName name="lejos.hardware.Battery"/>
 <fullyQualifiedTypeName name="lejos.hardware.motor.Motor"/>
-<fullyQualifiedTypeName name="lejos.hardware.port.MotorPort"/>
 <fullyQualifiedTypeName name="lejos.robotics.RegulatedMotor"/>
 <fullyQualifiedTypeName name="lejos.hardware.motor.EV3LargeRegulatedMotor"/>
 <fullyQualifiedTypeName name="lejos.hardware.sensor.EV3TouchSensor"/>
@@ -23,4 +22,6 @@
 <fullyQualifiedTypeName name="lejos.hardware.Bluetooth"/>
 <fullyQualifiedTypeName name="lejos.remote.nxt.NXTConnection"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="lejos.hardware.sensor.EV3GyroSensor"/>
+<fullyQualifiedTypeName name="lejos.hardware.port.MotorPort"/>
 </qualifiedTypeNameHistroy>

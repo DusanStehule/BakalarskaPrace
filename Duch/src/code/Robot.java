@@ -1,10 +1,9 @@
 package code;
 
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.port.MotorPort;
 import lejos.hardware.sensor.SensorMode;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
@@ -27,44 +26,15 @@ public class Robot {
 		motorR = new EV3LargeRegulatedMotor(MotorPort.B);
 		motorL.synchronizeWith(new RegulatedMotor[] { motorR });
 	//	irSensor = new EV3UltrasonicSensor(SensorPort.S1);
-		touchL = new EV3TouchSensor(SensorPort.S2);
-		touchR = new EV3TouchSensor(SensorPort.S3);
-	//	PDride();
+	//	touchL = new EV3TouchSensor(SensorPort.S2);
+	//	touchR = new EV3TouchSensor(SensorPort.S3);
 		motorL.close();
 		motorR.close();
-		touchL.close();
-		touchR.close();
+	//	touchL.close();
+	//	touchR.close();
 	//	irSensor.close();
 	}
 
-	public void PDride() {
-		double actual = 0;
-		double last = 0;
-		double ideal = 0.075;
-		double kp = 1;
-		double kd = 5;
-		double action = 0;
-		int speed = 500;
-		rangeSampler = irSensor.getDistanceMode();
-		float[] lastRange = new float[rangeSampler.sampleSize()];
-
-		rangeSampler.fetchSample(lastRange, 0);
-		actual = lastRange[0];
-		forward(speed);
-		while (true) {
-			rangeSampler.fetchSample(lastRange, 0);
-			last = actual;
-			actual = lastRange[0];
-			if ((actual < 0.2) && (actual > 0)) {
-				action = kp * (actual - ideal) + kd * (actual - last);
-				motorL.startSynchronization();
-				motorL.setSpeed((int) (speed * (1 - action)));
-				motorR.setSpeed((int) (speed * (1 + action)));
-				motorL.endSynchronization();
-				Delay.msDelay(100);
-			}
-		}
-	}
 
 	public void forward(int speed) {
 		motorL.startSynchronization();
@@ -85,10 +55,10 @@ public class Robot {
 
 	public void rotationLeft() {
 		motorL.startSynchronization();
-		motorR.rotate(168);
-		motorL.rotate(-167);
+		motorR.rotate(206);
+		motorL.rotate(-206);
 		motorL.endSynchronization();
-		Delay.msDelay(1000);
+		Delay.msDelay(1200);
 	}
 
 	public void rotation180() {
