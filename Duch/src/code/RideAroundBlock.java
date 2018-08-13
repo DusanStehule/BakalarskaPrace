@@ -4,7 +4,6 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
-import lejos.hardware.sensor.SensorMode;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
@@ -16,8 +15,6 @@ public class RideAroundBlock {
 	RegulatedMotor motorR;
 	EV3UltrasonicSensor distanceSensor;
 	SampleProvider distanceSampler;
-	SensorMode touchLeft;
-	SensorMode touchRight;
 
 	public RideAroundBlock() {
 		robot = new Robot();
@@ -34,7 +31,7 @@ public class RideAroundBlock {
 	public void ride() {
 		double actual = 0;
 		double last = 0;
-		double ideal = 0.1;
+		double ideal = 0.07;
 		double kp = 0.9;
 		double kd = 7;
 		double action = 0;
@@ -75,7 +72,7 @@ public class RideAroundBlock {
 				}
 			} while (lastRange[0] < 0.2);
 
-			robot.ride(14);
+			robot.ride(12);
 			robot.rotationLeft();
 			System.out.println("tocim doleva");
 			actual = 0;

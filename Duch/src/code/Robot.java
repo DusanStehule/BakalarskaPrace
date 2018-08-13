@@ -44,6 +44,15 @@ public class Robot {
 		motorR.setSpeed(speed);
 		motorL.endSynchronization();
 	}
+	
+	public void backward(int speed) {
+		motorL.startSynchronization();
+		motorL.backward();
+		motorR.backward();
+		motorL.setSpeed(speed);
+		motorR.setSpeed(speed);
+		motorL.endSynchronization();
+	}
 
 	public void rotationRight() {
 		motorL.startSynchronization();
@@ -55,8 +64,8 @@ public class Robot {
 
 	public void rotationLeft() {
 		motorL.startSynchronization();
-		motorR.rotate(206);
-		motorL.rotate(-206);
+		motorR.rotate(180);
+		motorL.rotate(-180);
 		motorL.endSynchronization();
 		Delay.msDelay(1200);
 	}
