@@ -40,8 +40,8 @@ public class RideBetweenWalls {
 		double actual = 0;
 		double last = 0;
 		double ideal = 0.08;
-		double kp = 0.7;
-		double kd = 7;
+		double kp = 1.5;
+		double kd = 70;
 		double action = 0;
 		int speed = 500;
 
