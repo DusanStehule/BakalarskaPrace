@@ -39,9 +39,9 @@ public class RideBetweenWalls {
 	public void ride() {
 		double actual = 0;
 		double last = 0;
-		double ideal = 0.08;
-		double kp = 0.7;
-		double kd = 7;
+		double ideal = 0.07;
+		double kp = 0.4;
+		double kd = 3.5;
 		double action = 0;
 		int speed = 500;
 
@@ -62,13 +62,15 @@ public class RideBetweenWalls {
 			motorL.setSpeed(speed);
 			motorR.setSpeed(speed);
 			motorL.endSynchronization();
+			kp = 1;
+			kd = 7;
 
 			do {
 				touchLeft.fetchSample(sampleL, 0);
 				distanceSampler.fetchSample(lastRange, 0);
 				last = actual;
 				actual = lastRange[0];
-				if ((last < 0.2) && (last > 0) && (actual < 0.2) && (actual > 0)) {
+				if ((last > 0) && (actual > 0)) {
 					action = kp * (actual - ideal) + kd * (actual - last);
 					motorL.startSynchronization();
 					motorL.setSpeed((int) (speed * (1 - action)));
@@ -93,13 +95,15 @@ public class RideBetweenWalls {
 			motorL.setSpeed(speed);
 			motorR.setSpeed(speed);
 			motorL.endSynchronization();
+			kp = 0;
+			kd = 0;
 			
 			do {
 				touchRight.fetchSample(sampleR, 0);
 				distanceSampler.fetchSample(lastRange, 0);
 				last = actual;
 				actual = lastRange[0];
-				if ((last < 0.2) && (last > 0) && (actual < 0.2) && (actual > 0)) {
+				if ((last > 0) && (actual > 0)) {
 					action = kp * (actual - ideal) + kd * (actual - last);
 					motorL.startSynchronization();
 					motorL.setSpeed((int) (speed * (1 - action)));

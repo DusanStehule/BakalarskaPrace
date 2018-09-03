@@ -1,0 +1,35 @@
+double actual, last, ideal, kp, kd, action, speed;
+
+task main() {
+   SetSensorUltrasonic(IN_1);
+
+   actual = 0;
+   last = 0;
+   ideal = 0.07;
+   kp = 0.9;
+   kd = 7;
+   action = 0;
+   speed = 500/7;
+
+   while (true) {
+      do
+      {
+        last = actual;
+        actual =  Sensor(IN_1);
+        if ((last < 0.2) && (last > 0) && (actual < 0.2) && (actual > 0)) {
+            action = kp * (actual - ideal) + kd * (actual - last);
+            OnFwd(OUT_A, speed);
+            OnFwd(OUT_B, speed);
+            }
+        else {
+            OnFwd(OUT_AB, speed);
+            }
+      }
+      while (Sensor(IN_1) < 0.2)
+      
+
+   }
+}
+
+
+
