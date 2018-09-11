@@ -1,0 +1,58 @@
+float actual, last, ideal, kp, kd, action, speed;
+
+task main() {
+   SetSensorUltrasonic(IN_2);
+   SetSensorTouch(IN_1);
+   SetSensorTouch(IN_3);
+
+   actual = 0;
+   last = 0;
+   ideal = 0.07;
+   kp = 0.4;
+   kd = 3.5;
+   action = 0;
+   speed = 500/7;
+
+   while (true) {
+      OnFwd(OUT_AB, speed);
+      kp = 1;
+      kd = 7;
+      
+      do
+      {
+        last = actual;
+        actual =  Sensor(IN_2);
+        if ((last > 0) && (actual > 0)) {
+            action = kp * (actual - ideal) + kd * (actual - last);
+            OnFwd(OUT_A, speed);
+            OnFwd(OUT_B, speed);
+            }
+        else {
+            OnFwd(OUT_AB, speed);
+            }
+      }
+      while (Sensor(IN_3) == 1)
+      
+      OnRev(OUT_AB, speed);
+      kp = 0;
+      kd = 0;
+
+      do
+      {
+        last = actual;
+        actual =  Sensor(IN_2);
+        if ((last > 0) && (actual > 0)) {
+            action = kp * (actual - ideal) + kd * (actual - last);
+            OnFwd(OUT_A, speed);
+            OnFwd(OUT_B, speed);
+            }
+        else {
+            OnFwd(OUT_AB, speed);
+            }
+      }
+      while (Sensor(IN_1) == 1)
+   }
+}
+
+
+

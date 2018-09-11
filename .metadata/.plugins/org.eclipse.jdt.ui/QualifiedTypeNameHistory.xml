@@ -9,19 +9,19 @@
 <fullyQualifiedTypeName name="lejos.hardware.port.SensorPort"/>
 <fullyQualifiedTypeName name="lejos.hardware.sensor.SensorModes"/>
 <fullyQualifiedTypeName name="lejos.hardware.sensor.SensorMode"/>
-<fullyQualifiedTypeName name="lejos.hardware.Button"/>
 <fullyQualifiedTypeName name="code.Robot"/>
 <fullyQualifiedTypeName name="code.RideBetweenWalls"/>
 <fullyQualifiedTypeName name="code.RideAroundBlock"/>
 <fullyQualifiedTypeName name="lejos.hardware.sensor.EV3IRSensor"/>
 <fullyQualifiedTypeName name="lejos.robotics.SampleProvider"/>
 <fullyQualifiedTypeName name="org.omg.IOP.CodecPackage.FormatMismatch"/>
-<fullyQualifiedTypeName name="lejos.hardware.sensor.EV3UltrasonicSensor"/>
-<fullyQualifiedTypeName name="lejos.utility.Delay"/>
 <fullyQualifiedTypeName name="lejos.hardware.lcd.LCD"/>
 <fullyQualifiedTypeName name="lejos.hardware.Bluetooth"/>
 <fullyQualifiedTypeName name="lejos.remote.nxt.NXTConnection"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="lejos.hardware.sensor.EV3GyroSensor"/>
 <fullyQualifiedTypeName name="lejos.hardware.port.MotorPort"/>
+<fullyQualifiedTypeName name="lejos.utility.Delay"/>
+<fullyQualifiedTypeName name="lejos.hardware.sensor.EV3UltrasonicSensor"/>
+<fullyQualifiedTypeName name="lejos.hardware.Button"/>
 </qualifiedTypeNameHistroy>

@@ -10,18 +10,21 @@ import lejos.utility.Delay;
 
 public class RideAroundBlock {
 
-	Robot robot;
 	RegulatedMotor motorL;
 	RegulatedMotor motorR;
+	RegulatedMotor motorSmall;
+	
 	EV3UltrasonicSensor distanceSensor;
+	EV3UltrasonicSensor light;
 	SampleProvider distanceSampler;
 
 	public RideAroundBlock() {
-		robot = new Robot();
-		motorL = new EV3LargeRegulatedMotor(MotorPort.A);
-		motorR = new EV3LargeRegulatedMotor(MotorPort.B);
+		motorL = new EV3LargeRegulatedMotor(MotorPort.B);
+		motorR = new EV3LargeRegulatedMotor(MotorPort.C);
+		motorSmall = new EV3LargeRegulatedMotor(MotorPort.D);
 		motorL.synchronizeWith(new RegulatedMotor[] { motorR });
-		distanceSensor = new EV3UltrasonicSensor(SensorPort.S1);
+		distanceSensor = new EV3UltrasonicSensor(SensorPort.S2);
+		light = new EV3UltrasonicSensor(SensorPort.S4);
 		ride();
 		motorL.close();
 		motorR.close();
@@ -36,10 +39,13 @@ public class RideAroundBlock {
 		double kd = 7;
 		double action = 0;
 		int speed = 500;
+		int constant = 0;
 		distanceSampler = distanceSensor.getDistanceMode();
 		float[] lastRange = new float[distanceSampler.sampleSize()];
 		distanceSampler.fetchSample(lastRange, 0);
 		actual = lastRange[0];
+		motorSmall.resetTachoCount();
+		
 
 		while (true) {
 			motorL.startSynchronization();
@@ -53,6 +59,13 @@ public class RideAroundBlock {
 			Delay.msDelay(1000);
 
 			do {
+				if (constant == 0) {
+					motorSmall.setSpeed(80);
+					motorSmall.forward();
+				} else {
+					motorSmall.setSpeed(80);
+					motorSmall.backward();
+				}
 				distanceSampler.fetchSample(lastRange, 0);
 				last = actual;
 				actual = lastRange[0];
@@ -70,12 +83,39 @@ public class RideAroundBlock {
 					motorL.endSynchronization();
 					distanceSampler.fetchSample(lastRange, 0);
 				}
+				
+				
+				if (motorSmall.getTachoCount() > 350) {
+					constant = 1;
+				}
+				
+				if (motorSmall.getTachoCount() < 10) {
+					constant = 0;
+				}
+				
 			} while (lastRange[0] < 0.2);
 
-			robot.ride(12);
-			robot.rotationLeft();
+			ride(12);
+			rotationLeft();
 			System.out.println("tocim doleva");
 			actual = 0;
 		}
+	}
+	
+	public void ride(int l) {
+		double angle = 360 * l / (3.14159 * 5.6);
+		motorL.startSynchronization();
+		motorL.rotate((int) angle);
+		motorR.rotate((int) angle);
+		motorL.endSynchronization();
+		Delay.msDelay(l * 80);
+	}
+	
+	public void rotationLeft() {
+		motorL.startSynchronization();
+		motorR.rotate(180);
+		motorL.rotate(-180);
+		motorL.endSynchronization();
+		Delay.msDelay(1200);
 	}
 }

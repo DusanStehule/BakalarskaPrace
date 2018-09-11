@@ -11,24 +11,27 @@ import lejos.robotics.SampleProvider;
 
 public class RideBetweenWalls {
 
-	Robot robot;
 	RegulatedMotor motorL;
 	RegulatedMotor motorR;
+	RegulatedMotor motorSmall;
 	EV3TouchSensor touch1;
 	EV3TouchSensor touch2;
 	SensorMode touchLeft;
 	SensorMode touchRight;
 	EV3UltrasonicSensor distanceSensor;
+	EV3UltrasonicSensor light;
 	SampleProvider distanceSampler;
+	int constant = 0;
 
 	public RideBetweenWalls() {
-		robot = new Robot();
-		motorL = new EV3LargeRegulatedMotor(MotorPort.A);
-		motorR = new EV3LargeRegulatedMotor(MotorPort.B);
+		motorL = new EV3LargeRegulatedMotor(MotorPort.B);
+		motorR = new EV3LargeRegulatedMotor(MotorPort.C);
+		motorSmall = new EV3LargeRegulatedMotor(MotorPort.D);
 		motorL.synchronizeWith(new RegulatedMotor[] { motorR });
-		touch1 = new EV3TouchSensor(SensorPort.S3);
+		touch1 = new EV3TouchSensor(SensorPort.S1);
 		distanceSensor = new EV3UltrasonicSensor(SensorPort.S2);
-		touch2 = new EV3TouchSensor(SensorPort.S1);
+		touch2 = new EV3TouchSensor(SensorPort.S3);
+		light = new EV3UltrasonicSensor(SensorPort.S4);
 		ride();
 		motorL.close();
 		motorR.close();
@@ -52,6 +55,7 @@ public class RideBetweenWalls {
 		float[] sampleR = new float[touchRight.sampleSize()];
 		float[] lastRange = new float[distanceSampler.sampleSize()];
 		actual = lastRange[0];
+		motorSmall.resetTachoCount();
 		
 		while (true) {
 			motorL.startSynchronization();
@@ -66,6 +70,7 @@ public class RideBetweenWalls {
 			kd = 7;
 
 			do {
+				startRotate();
 				touchLeft.fetchSample(sampleL, 0);
 				distanceSampler.fetchSample(lastRange, 0);
 				last = actual;
@@ -83,6 +88,8 @@ public class RideBetweenWalls {
 					motorL.endSynchronization();
 				}
 				touchLeft.fetchSample(sampleL, 0);
+				
+				endRotate();
 			} while (sampleL[0] == 0);
 
 			System.out.println("otacim se");
@@ -99,6 +106,7 @@ public class RideBetweenWalls {
 			kd = 0;
 			
 			do {
+				startRotate();
 				touchRight.fetchSample(sampleR, 0);
 				distanceSampler.fetchSample(lastRange, 0);
 				last = actual;
@@ -116,10 +124,32 @@ public class RideBetweenWalls {
 					motorL.endSynchronization();
 				}
 				touchRight.fetchSample(sampleR, 0);
+				
+				endRotate();
 			} while (sampleR[0] == 0);
 
 			System.out.println("otacim se");
 
+		}
+	}
+	
+	private void startRotate() {
+		if (constant == 0) {
+			motorSmall.setSpeed(80);
+			motorSmall.forward();
+		} else {
+			motorSmall.setSpeed(80);
+			motorSmall.backward();
+		}
+	}
+	
+	private void endRotate() {
+		if (motorSmall.getTachoCount() > 350) {
+			constant = 1;
+		}
+		
+		if (motorSmall.getTachoCount() < 10) {
+			constant = 0;
 		}
 	}
 }

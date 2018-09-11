@@ -22,8 +22,8 @@ public class Robot {
 
 	public Robot() {
 
-		motorL = new EV3LargeRegulatedMotor(MotorPort.A);
-		motorR = new EV3LargeRegulatedMotor(MotorPort.B);
+		motorL = new EV3LargeRegulatedMotor(MotorPort.B);
+		motorR = new EV3LargeRegulatedMotor(MotorPort.C);
 		motorL.synchronizeWith(new RegulatedMotor[] { motorR });
 	//	irSensor = new EV3UltrasonicSensor(SensorPort.S1);
 	//	touchL = new EV3TouchSensor(SensorPort.S2);

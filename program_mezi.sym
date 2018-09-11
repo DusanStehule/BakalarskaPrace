@@ -1,0 +1,401 @@
+#SYMBOLS
+Index	Identifier	Type	Flag	Data	Size	RefCount
+0	actual	10	1	0	4	11
+1	last	10	1	4	4	7
+2	ideal	10	1	8	4	3
+3	__float_stack_002main	10	1	12	4	8
+4	__DU0SetSensorLowspeed_inline_SetSensorUltrasonic	5	1	16	4	2
+5	__signed_stack_001main	6	1	20	4	4
+6	__float_stack_001main	10	1	24	4	16
+7	__constValf0P07	10	0	28	4	1
+8	__constValf0P4	10	0	32	4	1
+9	__constValf3P5	10	0	36	4	1
+10	speed	10	1	40	4	10
+11	kp	10	1	44	4	5
+12	kd	10	1	48	4	5
+13	action	10	1	52	4	3
+14	__D0SetSensorLowspeed_inline_SetSensorUltrasonic	6	1	56	4	3
+15	__D0main	6	1	60	4	14
+16	__DF0main	10	1	64	4	40
+17	__SetSensorMode_7qG2_port_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main	1	1	68	1	2
+18	__SetSensorMode_7qG2_mode_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main	1	1	69	1	2
+19	__SetSensorType_7qG2_type_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main	1	1	70	1	2
+20	__SetSensorType_7qG2_port_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main	1	1	71	1	2
+21	__SetSensorLowspeed_7qG2_bIsPowered_7qG2_000_inline_SetSensorUltrasonic_inline_main	1	1	72	1	2
+22	__SetSensorTouch_7qG2_port_7qG2_000_inline_main	1	1	73	1	8
+23	__constVal63	2	0	74	1	8
+24	__constVal71	2	0	75	1	1
+25	__constVal96	2	0	76	1	8
+26	__constVal32	2	0	77	1	26
+27	__OnRev_Tmp	2	1	78	1	2
+28	__SetSensorLowspeed_7qG2_port_7qG2_000_inline_SetSensorUltrasonic_inline_main	1	1	79	1	4
+29	__constVal2	2	0	80	1	1
+30	____ResetSensorSubroutine_return	1	1	81	1	5
+31	__constVal7	2	0	82	1	1
+32	__zfSetSensorLowspeed_inline_SetSensorUltrasonic	1	1	83	1	2
+33	__zfmain	1	1	84	1	22
+34	__ResetSensorTmp	1	1	85	1	2
+35	__constVal0	2	1	86	1	36
+36	__constVal1	2	0	87	1	12
+37	____initialize_global_data_return	1	1	88	1	3
+38	__ResetSensorPort	1	1	89	1	5
+39	__constVal3	2	0	90	1	8
+40	__OUT_AB	7	0	92	4	4
+41	__OUT_AB.__OUT_AB_type	1	0	0	1	0
+#SOURCES
+Clump	Line	PC	Source
+0	3	0	#line 3 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	4	0		subcall __initialize_global_data, ____initialize_global_data_return
+0	3	2	#line 3 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	3	2	#line 3 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	3	2	#line 3 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	3768	2	#line 3768 "NXCDefs.h"
+0	3769	2		mov __SetSensorLowspeed_7qG2_port_7qG2_000_inline_SetSensorUltrasonic_inline_main, __constVal1
+0	3768	4	#line 3768 "NXCDefs.h"
+0	3768	4	#line 3768 "NXCDefs.h"
+0	3769	4		mov __SetSensorLowspeed_7qG2_bIsPowered_7qG2_000_inline_SetSensorUltrasonic_inline_main, __constVal1
+0	3758	6	#line 3758 "NXCDefs.h"
+0	3759	6		mov __SetSensorType_7qG2_port_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main, __SetSensorLowspeed_7qG2_port_7qG2_000_inline_SetSensorUltrasonic_inline_main
+0	3758	8	#line 3758 "NXCDefs.h"
+0	3758	8	#line 3758 "NXCDefs.h"
+0	3759	8		mov __DU0SetSensorLowspeed_inline_SetSensorUltrasonic, __SetSensorLowspeed_7qG2_bIsPowered_7qG2_000_inline_SetSensorUltrasonic_inline_main
+0	3758	10	#line 3758 "NXCDefs.h"
+0	3759	10		tst 5, __zfSetSensorLowspeed_inline_SetSensorUltrasonic, __DU0SetSensorLowspeed_inline_SetSensorUltrasonic
+0	3758	13	#line 3758 "NXCDefs.h"
+0	3759	13		brtst 4, __001__001__NXC_Label_36, __zfSetSensorLowspeed_inline_SetSensorUltrasonic
+0	3758	16	#line 3758 "NXCDefs.h"
+0	3759	16		set __D0SetSensorLowspeed_inline_SetSensorUltrasonic, 11
+0	3758	19	#line 3758 "NXCDefs.h"
+0	3759	19		jmp __001__001__NXC_Label_37
+0	3758	21	#line 3758 "NXCDefs.h"
+0	3759	21		set __D0SetSensorLowspeed_inline_SetSensorUltrasonic, 10
+0	3758	24	#line 3758 "NXCDefs.h"
+0	3759	24		mov __SetSensorType_7qG2_type_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main, __D0SetSensorLowspeed_inline_SetSensorUltrasonic
+0	3663	26	#line 3663 "NXCDefs.h"
+0	3664	26		setin __SetSensorType_7qG2_type_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main, __SetSensorType_7qG2_port_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main, 0
+0	3663	30	#line 3663 "NXCDefs.h"
+0	3759	30	#line 3759 "NXCDefs.h"
+0	3759	30	#line 3759 "NXCDefs.h"
+0	3760	30		mov __SetSensorMode_7qG2_port_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main, __SetSensorLowspeed_7qG2_port_7qG2_000_inline_SetSensorUltrasonic_inline_main
+0	3759	32	#line 3759 "NXCDefs.h"
+0	3759	32	#line 3759 "NXCDefs.h"
+0	3760	32		set __SetSensorMode_7qG2_mode_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main, 0
+0	3759	35	#line 3759 "NXCDefs.h"
+0	3676	35	#line 3676 "NXCDefs.h"
+0	3677	35		setin __SetSensorMode_7qG2_mode_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main, __SetSensorMode_7qG2_port_7qG2_000_inline_SetSensorLowspeed_inline_SetSensorUltrasonic_inline_main, 1
+0	3676	39	#line 3676 "NXCDefs.h"
+0	3760	39	#line 3760 "NXCDefs.h"
+0	3760	39	#line 3760 "NXCDefs.h"
+0	3760	39	#line 3760 "NXCDefs.h"
+0	3694	39	#line 3694 "NXCDefs.h"
+0	3695	39	#pragma macro 4
+0	3695	39		mov __ResetSensorPort, __SetSensorLowspeed_7qG2_port_7qG2_000_inline_SetSensorUltrasonic_inline_main
+0	3695	41		subcall __ResetSensorSubroutine, ____ResetSensorSubroutine_return
+0	5992	43	#line 5992 "NXCDefs.h"
+0	3694	43	#line 3694 "NXCDefs.h"
+0	3761	43	#line 3761 "NXCDefs.h"
+0	3768	43	#line 3768 "NXCDefs.h"
+0	4	43	#line 4 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	4	43	#line 4 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	5	43		set __SetSensorTouch_7qG2_port_7qG2_000_inline_main, 0
+0	4	46	#line 4 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	3718	46	#line 3718 "NXCDefs.h"
+0	3719	46	#pragma macro 6
+0	3719	46		setin __constVal1, __SetSensorTouch_7qG2_port_7qG2_000_inline_main, 0
+0	3719	50		setin __constVal32, __SetSensorTouch_7qG2_port_7qG2_000_inline_main, 1
+0	3719	54		mov __ResetSensorPort, __SetSensorTouch_7qG2_port_7qG2_000_inline_main
+0	3719	56		subcall __ResetSensorSubroutine, ____ResetSensorSubroutine_return
+0	6008	58	#line 6008 "NXCDefs.h"
+0	3718	58	#line 3718 "NXCDefs.h"
+0	5	58	#line 5 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	5	58	#line 5 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	6	58		set __SetSensorTouch_7qG2_port_7qG2_000_inline_main, 2
+0	5	61	#line 5 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	3718	61	#line 3718 "NXCDefs.h"
+0	3719	61	#pragma macro 6
+0	3719	61		setin __constVal1, __SetSensorTouch_7qG2_port_7qG2_000_inline_main, 0
+0	3719	65		setin __constVal32, __SetSensorTouch_7qG2_port_7qG2_000_inline_main, 1
+0	3719	69		mov __ResetSensorPort, __SetSensorTouch_7qG2_port_7qG2_000_inline_main
+0	3719	71		subcall __ResetSensorSubroutine, ____ResetSensorSubroutine_return
+0	6018	73	#line 6018 "NXCDefs.h"
+0	3718	73	#line 3718 "NXCDefs.h"
+0	7	73	#line 7 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	8	73	#line 8 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	8	73	#line 8 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	9	73		mov actual, __constVal0
+0	8	75	#line 8 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	9	75	#line 9 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	9	75	#line 9 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	10	75		mov last, __constVal0
+0	9	77	#line 9 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	10	77	#line 10 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	11	77		mov ideal, __constValf0P07
+0	10	79	#line 10 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	10	79	#line 10 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	11	79	#line 11 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	12	79		mov kp, __constValf0P4
+0	11	81	#line 11 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	11	81	#line 11 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	12	81	#line 12 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	13	81		mov kd, __constValf3P5
+0	12	83	#line 12 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	12	83	#line 12 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	13	83	#line 13 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	13	83	#line 13 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	14	83		mov action, __constVal0
+0	13	85	#line 13 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	15	85	#line 15 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	15	85	#line 15 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	16	85		mov speed, __constVal71
+0	15	87	#line 15 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	15	87	#line 15 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	16	87		set __D0main, 1
+0	16	90	#line 16 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	17	90		tst 5, __zfmain, __D0main
+0	16	93	#line 16 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	17	93		brtst 4, __NXC_Label_625, __zfmain
+0	16	96	#line 16 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	17	96		mov __DF0main, speed
+0	17	98	#line 17 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	18	98	#pragma macro 7
+0	18	98		setout __OUT_AB, 2, __DF0main, 1, __constVal3, 8, __constVal0, 6, __constVal32, 7, __constVal0, 5, __constVal0, 10, __constVal96, 11, __constVal32, 12, __constVal32, 0, __constVal63
+0	6084	121	#line 6084 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	17	121	#line 17 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	18	121	#line 18 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	18	121	#line 18 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	19	121		mov kp, __constVal1
+0	18	123	#line 18 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	20	123	#line 20 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	20	123	#line 20 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	21	123		mov kd, __constVal7
+0	20	125	#line 20 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	23	125	#line 23 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	24	125		mov last, actual
+0	23	127	#line 23 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	23	127	#line 23 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	23	127	#line 23 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	24	127		getin actual, __constVal1, 4
+0	23	131	#line 23 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	23	131	#line 23 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	23	131	#line 23 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	24	131	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	131		mov __float_stack_001main, last
+0	24	133	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	24	133	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	133		mov __DF0main, __constVal0
+0	24	135	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	135		cmp 1, __zfmain, __float_stack_001main, __DF0main
+0	24	139	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	139		mov __D0main, __zfmain
+0	24	141	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	141		brtst 4, __NXC_Label_641, __zfmain
+0	24	144	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	144		mov __signed_stack_001main, __D0main
+0	24	146	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	146		mov __float_stack_002main, actual
+0	24	148	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	24	148	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	148		mov __DF0main, __constVal0
+0	24	150	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	150		cmp 1, __zfmain, __float_stack_002main, __DF0main
+0	24	154	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	24	154	#line 24 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	154		and __D0main, __signed_stack_001main, __zfmain
+0	25	158	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	26	158		tst 5, __zfmain, __D0main
+0	25	161	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	26	161		brtst 4, __NXC_Label_646, __zfmain
+0	25	164	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	26	164		mov __float_stack_001main, kp
+0	25	166	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	166	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	166	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	166	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	166	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	26	166		sub __DF0main, actual, ideal
+0	25	170	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	26	170		mul __float_stack_001main, __float_stack_001main, __DF0main
+0	25	174	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	174	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	26	174		mov __float_stack_002main, kd
+0	25	176	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	176	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	176	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	176	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	25	176	#line 25 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	26	176		sub __DF0main, actual, last
+0	26	180	#line 26 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	27	180		mul __DF0main, __float_stack_002main, __DF0main
+0	26	184	#line 26 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	27	184		add action, __float_stack_001main, __DF0main
+0	26	188	#line 26 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	26	188	#line 26 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	26	188	#line 26 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	27	188		mov __DF0main, speed
+0	27	190	#line 27 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	28	190	#pragma macro 7
+0	28	190		setout __constVal0, 2, __DF0main, 1, __constVal3, 8, __constVal0, 6, __constVal32, 7, __constVal0, 5, __constVal0, 10, __constVal96, 11, __constVal32, 12, __constVal32, 0, __constVal63
+0	6198	213	#line 6198 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	27	213	#line 27 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	27	213	#line 27 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	28	213		mov __DF0main, speed
+0	28	215	#line 28 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	29	215	#pragma macro 7
+0	29	215		setout __constVal1, 2, __DF0main, 1, __constVal3, 8, __constVal0, 6, __constVal32, 7, __constVal0, 5, __constVal0, 10, __constVal96, 11, __constVal32, 12, __constVal32, 0, __constVal63
+0	6205	238	#line 6205 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	28	238	#line 28 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	30	238	#line 30 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	31	238		jmp __NXC_Label_657
+0	30	240	#line 30 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	31	240		mov __DF0main, speed
+0	31	242	#line 31 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	32	242	#pragma macro 7
+0	32	242		setout __OUT_AB, 2, __DF0main, 1, __constVal3, 8, __constVal0, 6, __constVal32, 7, __constVal0, 5, __constVal0, 10, __constVal96, 11, __constVal32, 12, __constVal32, 0, __constVal63
+0	6215	265	#line 6215 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	31	265	#line 31 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	33	265	#line 33 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	33	265	#line 33 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	34	265		getin __D0main, __constVal2, 4
+0	33	269	#line 33 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	34	269		mov __float_stack_001main, __DF0main
+0	35	271	#line 35 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	36	271		mov __DF0main, __constVal1
+0	35	273	#line 35 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	36	273		cmp 4, __zfmain, __float_stack_001main, __DF0main
+0	35	277	#line 35 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	36	277		mov __D0main, __zfmain
+0	35	279	#line 35 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	36	279		brtst 4, __NXC_Label_635, __zfmain
+0	35	282	#line 35 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	36	282		jmp __NXC_Label_634
+0	35	284	#line 35 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	35	284	#line 35 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	36	284	#line 36 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	37	284	#pragma macro 10
+0	37	284		neg __OnRev_Tmp, speed
+0	37	287		setout __OUT_AB, 2, __OnRev_Tmp, 1, __constVal3, 8, __constVal0, 6, __constVal32, 7, __constVal0, 5, __constVal0, 10, __constVal96, 11, __constVal32, 12, __constVal32, 0, __constVal63
+0	6242	310	#line 6242 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	36	310	#line 36 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	37	310	#line 37 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	37	310	#line 37 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	38	310		mov kp, __constVal0
+0	37	312	#line 37 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	39	312	#line 39 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	39	312	#line 39 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	40	312		mov kd, __constVal0
+0	39	314	#line 39 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	42	314	#line 42 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	43	314		mov last, actual
+0	42	316	#line 42 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	42	316	#line 42 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	42	316	#line 42 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	43	316		getin actual, __constVal1, 4
+0	42	320	#line 42 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	42	320	#line 42 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	42	320	#line 42 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	43	320	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	320		mov __float_stack_001main, last
+0	43	322	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	43	322	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	322		mov __DF0main, __constVal0
+0	43	324	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	324		cmp 1, __zfmain, __float_stack_001main, __DF0main
+0	43	328	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	328		mov __D0main, __zfmain
+0	43	330	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	330		brtst 4, __NXC_Label_675, __zfmain
+0	43	333	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	333		mov __signed_stack_001main, __D0main
+0	43	335	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	335		mov __float_stack_002main, actual
+0	43	337	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	43	337	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	337		mov __DF0main, __constVal0
+0	43	339	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	339		cmp 1, __zfmain, __float_stack_002main, __DF0main
+0	43	343	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	43	343	#line 43 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	343		and __D0main, __signed_stack_001main, __zfmain
+0	44	347	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	45	347		tst 5, __zfmain, __D0main
+0	44	350	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	45	350		brtst 4, __NXC_Label_680, __zfmain
+0	44	353	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	45	353		mov __float_stack_001main, kp
+0	44	355	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	355	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	355	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	355	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	355	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	45	355		sub __DF0main, actual, ideal
+0	44	359	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	45	359		mul __float_stack_001main, __float_stack_001main, __DF0main
+0	44	363	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	363	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	45	363		mov __float_stack_002main, kd
+0	44	365	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	365	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	365	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	365	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	44	365	#line 44 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	45	365		sub __DF0main, actual, last
+0	45	369	#line 45 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	46	369		mul __DF0main, __float_stack_002main, __DF0main
+0	45	373	#line 45 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	46	373		add action, __float_stack_001main, __DF0main
+0	45	377	#line 45 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	45	377	#line 45 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	45	377	#line 45 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	46	377		mov __DF0main, speed
+0	46	379	#line 46 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	47	379	#pragma macro 7
+0	47	379		setout __constVal0, 2, __DF0main, 1, __constVal3, 8, __constVal0, 6, __constVal32, 7, __constVal0, 5, __constVal0, 10, __constVal96, 11, __constVal32, 12, __constVal32, 0, __constVal63
+0	6356	402	#line 6356 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	46	402	#line 46 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	46	402	#line 46 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	47	402		mov __DF0main, speed
+0	47	404	#line 47 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	48	404	#pragma macro 7
+0	48	404		setout __constVal1, 2, __DF0main, 1, __constVal3, 8, __constVal0, 6, __constVal32, 7, __constVal0, 5, __constVal0, 10, __constVal96, 11, __constVal32, 12, __constVal32, 0, __constVal63
+0	6363	427	#line 6363 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	47	427	#line 47 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	49	427	#line 49 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	50	427		jmp __NXC_Label_691
+0	49	429	#line 49 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	50	429		mov __DF0main, speed
+0	50	431	#line 50 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	51	431	#pragma macro 7
+0	51	431		setout __OUT_AB, 2, __DF0main, 1, __constVal3, 8, __constVal0, 6, __constVal32, 7, __constVal0, 5, __constVal0, 10, __constVal96, 11, __constVal32, 12, __constVal32, 0, __constVal63
+0	6373	454	#line 6373 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	50	454	#line 50 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	52	454	#line 52 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	52	454	#line 52 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	53	454		getin __D0main, __constVal0, 4
+0	52	458	#line 52 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	53	458		mov __float_stack_001main, __DF0main
+0	53	460	#line 53 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	54	460		mov __DF0main, __constVal1
+0	53	462	#line 53 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	54	462		cmp 4, __zfmain, __float_stack_001main, __DF0main
+0	53	466	#line 53 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	54	466		mov __D0main, __zfmain
+0	54	468	#line 54 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	55	468		brtst 4, __NXC_Label_669, __zfmain
+0	54	471	#line 54 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	55	471		jmp __NXC_Label_668
+0	54	473	#line 54 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	58	473	#line 58 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	59	473		jmp __NXC_Label_624
+0	58	475	#line 58 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+0	59	475		exit -1, -1
+1	4885	0		setin __constVal1, __ResetSensorPort, 5
+1	4887	4		getin __ResetSensorTmp, __ResetSensorPort, 5
+1	4888	8		brtst 5, __SensorStillInvalid, __ResetSensorTmp
+1	4889	11		subret ____ResetSensorSubroutine_return
+2	59	0	#line 59 "C:\Users\dusan\AppData\Local\Temp\temp.nxc"
+2	60	0		subret ____initialize_global_data_return
+#CLUMPS
+Clump	Name	Offset	File
+0	main	0	C:\Users\dusan\AppData\Local\Temp\temp.nxc
+1	__ResetSensorSubroutine	478	NXTDefs.h
+2	__initialize_global_data	491	C:\Users\dusan\AppData\Local\Temp\temp.nxc
