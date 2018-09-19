@@ -20,7 +20,6 @@ public class Ride {
 	int column;
 	int direct;
 	double distance;
-	int steps;
 	int[][] desk = new int[6][9];
 
 	float[] lastRange;
@@ -31,6 +30,15 @@ public class Ride {
 		motorSmall = new EV3LargeRegulatedMotor(MotorPort.A);
 		motorL.synchronizeWith(new RegulatedMotor[] { motorR });
 		distanceSensor = new EV3UltrasonicSensor(SensorPort.S3);
+		distanceSampler = distanceSensor.getDistanceMode();
+		lastRange = new float[distanceSampler.sampleSize()];
+
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 9; j++) {
+				desk[i][j] = 3;
+			}
+		}
+
 		row = 3;
 		column = 4;
 		direct = 0;
@@ -42,29 +50,27 @@ public class Ride {
 	}
 
 	private void start() {
-
-		distanceSampler = distanceSensor.getDistanceMode();
-		lastRange = new float[distanceSampler.sampleSize()];
 		distanceSampler.fetchSample(lastRange, 0);
 		distance = lastRange[0];
-		steps = (int) (distance / 0.28);
+		int steps = (int) (distance / 0.28);
+		System.out.println("nameril jsem " + distance + "m a udelam " + steps + " kroku");
 		// natoèí ultrazvukový senzor doprava
 		motorSmall.rotate(-90);
-		System.out.println("-90");
+		Delay.msDelay(3000);
 
 		for (int i = 0; i < steps; i++) {
+			System.out.println("jedu cyklus");
 			oneStep();
 		}
 
+		System.out.println("ted jsem za cyklem");
 		// natoèí ultrazvukový senzor doleva
 		motorSmall.rotate(180);
-		System.out.println("+180");
 		distanceSampler.fetchSample(lastRange, 0);
 		distance = lastRange[0];
 		steps = (int) (distance / 0.28);
 		// natoèí ultrazvukový senzor rovnì
 		motorSmall.rotate(-90);
-		System.out.println("-90");
 
 		if (steps > 0) {
 			rotationLeft();
@@ -77,6 +83,7 @@ public class Ride {
 	}
 
 	private void oneStep() {
+		System.out.println("delam jeden krok");
 		switch (direct) {
 		case 0:
 			if (desk[row - 1][column] != 0) {
@@ -109,6 +116,7 @@ public class Ride {
 	}
 
 	private void oneStepRotate() {
+		System.out.println("tocim jeden krok");
 		motorL.startSynchronization();
 		motorL.rotate(573);
 		motorR.rotate(573);
@@ -117,90 +125,102 @@ public class Ride {
 	}
 
 	private void measureRight() {
+		System.out.println("merim vpravo");
 		int columnHelp = column;
 		int rowHelp = row;
 		int help = 0;
+		int numberOfSteps;
 		distanceSampler.fetchSample(lastRange, 0);
 		distance = lastRange[0];
-		steps = (int) (distance / 0.28);
+		numberOfSteps = (int) (distance / 0.28);
 
 		switch (direct) {
 		case 0:
-			for (int i = 0; i < steps; i++) {
-				if ((columnHelp < 8) && (desk[rowHelp][columnHelp + 1] != 0) && (desk[rowHelp][columnHelp + 1] != 2)) {
-					columnHelp++;
+			for (int i = 0; i < numberOfSteps; i++) {
+				if ((columnHelp < 8) && (desk[rowHelp][columnHelp + 1] != 0)) {
 					desk[rowHelp][columnHelp] = 1;
-					help++;
 				}
+				columnHelp++;
+				help++;
 			}
-			
+
+			System.out.println("po 1. podmince");
+
 			if ((help == 1) && (desk[row + 1][column + 1] == 2) && (desk[row - 1][column + 1] == 2)) {
 				oneSquare();
 				desk[row][column + 1] = 0;
 			}
-			
-			if (column + steps < 8) {
-				desk[row][column + steps + 1] = 2;
+
+			System.out.println("po 2. podmince");
+
+			if (column + numberOfSteps < 8) {
+				desk[row][column + numberOfSteps + 1] = 2;
 			}
+
+			System.out.println("po 3. podmince");
 			break;
 		case 1:
-			for (int i = 0; i < steps; i++) {
-				if ((rowHelp < 5) && (desk[rowHelp + 1][columnHelp] != 0) && (desk[rowHelp + 1][columnHelp] != 2)) {
-					rowHelp++;
+			for (int i = 0; i < numberOfSteps; i++) {
+				if ((rowHelp < 5) && (desk[rowHelp + 1][columnHelp] != 0)) {
 					desk[rowHelp][columnHelp] = 1;
-					help++;
 				}
+				rowHelp++;
+				help++;
 			}
-			
+
 			if ((help == 1) && (desk[row + 1][column + 1] == 2) && (desk[row + 1][column - 1] == 2)) {
 				oneSquare();
 				desk[row + 1][column] = 0;
 			}
-			
-			if (row + steps < 5) {
-				desk[row + steps + 1][column] = 2;
+
+			if (row + numberOfSteps < 5) {
+				desk[row + numberOfSteps + 1][column] = 2;
 			}
+
 			break;
 		case 2:
-			for (int i = 0; i < steps; i++) {
-				if ((columnHelp > 0) && (desk[rowHelp][columnHelp - 1] != 0) && (desk[rowHelp][columnHelp - 1] != 2)) {
-					columnHelp--;
+			for (int i = 0; i < numberOfSteps; i++) {
+				if ((columnHelp > 0) && (desk[rowHelp][columnHelp - 1] != 0)) {
 					desk[rowHelp][columnHelp] = 1;
-					help++;
 				}
+				columnHelp--;
+				help++;
 			}
-			
+
 			if ((help == 1) && (desk[row + 1][column - 1] == 2) && (desk[row - 1][column - 1] == 2)) {
 				oneSquare();
 				desk[row][column - 1] = 0;
 			}
-			
-			if (column - steps > 0) {
-				desk[row][column - steps - 1] = 2;
+
+			if (column - numberOfSteps > 0) {
+				desk[row][column - numberOfSteps - 1] = 2;
 			}
+
 			break;
 		case 3:
-			for (int i = 0; i < steps; i++) {
-				if ((rowHelp > 0) && (desk[rowHelp - 1][columnHelp] != 0) && (desk[rowHelp - 1][columnHelp] != 2)) {
-					rowHelp--;
+			for (int i = 0; i < numberOfSteps; i++) {
+				if ((rowHelp > 0) && (desk[rowHelp - 1][columnHelp] != 0)) {
 					desk[rowHelp][columnHelp] = 1;
-					help++;
 				}
+				rowHelp--;
+				help++;
 			}
-			
+
 			if ((help == 1) && (desk[row - 1][column + 1] == 2) && (desk[row - 1][column - 1] == 2)) {
 				oneSquare();
 				desk[row - 1][column] = 0;
 			}
-			
-			if (row - steps > 0) {
-				desk[row - steps - 1][column] = 2;
+
+			if (row - numberOfSteps > 0) {
+				desk[row - numberOfSteps - 1][column] = 2;
 			}
+
 			break;
 		}
 	}
-	
+
 	private void oneSquare() {
+		System.out.println("jeden ètverec");
 		rotationRight();
 		oneStepRotate();
 		rotation180();
@@ -209,6 +229,7 @@ public class Ride {
 	}
 
 	private void rotationLeft() {
+		System.out.println("tocim doleva");
 		motorL.startSynchronization();
 		motorR.rotate(180);
 		motorL.rotate(-180);
@@ -223,6 +244,7 @@ public class Ride {
 	}
 
 	private void rotationRight() {
+		System.out.println("tocim doprava");
 		motorL.startSynchronization();
 		motorR.rotate(-180);
 		motorL.rotate(180);
