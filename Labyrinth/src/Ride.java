@@ -144,20 +144,15 @@ public class Ride {
 				help++;
 			}
 
-			System.out.println("po 1. podmince");
-
 			if ((help == 1) && (desk[row + 1][column + 1] == 2) && (desk[row - 1][column + 1] == 2)) {
 				oneSquare();
 				desk[row][column + 1] = 0;
 			}
 
-			System.out.println("po 2. podmince");
-
 			if (column + numberOfSteps < 8) {
 				desk[row][column + numberOfSteps + 1] = 2;
 			}
 
-			System.out.println("po 3. podmince");
 			break;
 		case 1:
 			for (int i = 0; i < numberOfSteps; i++) {
@@ -246,8 +241,8 @@ public class Ride {
 	private void rotationRight() {
 		System.out.println("tocim doprava");
 		motorL.startSynchronization();
-		motorR.rotate(-180);
-		motorL.rotate(180);
+		motorR.rotate(-195);
+		motorL.rotate(195);
 		motorL.endSynchronization();
 		Delay.msDelay(1200);
 

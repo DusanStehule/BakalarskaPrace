@@ -114,8 +114,8 @@ public class RideAroundBlock {
 	
 	public void rotationLeft() {
 		motorL.startSynchronization();
-		motorR.rotate(180);
-		motorL.rotate(-180);
+		motorR.rotate(185);
+		motorL.rotate(-185);
 		motorL.endSynchronization();
 		Delay.msDelay(1200);
 	}
