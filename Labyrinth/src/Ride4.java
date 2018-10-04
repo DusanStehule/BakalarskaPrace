@@ -53,8 +53,8 @@ public class Ride4 {
 				desk[i][j] = 3;
 			}
 		}
-		desk[3][3] = 2; // startovní pole
-		desk[3][5] = 2; // startovní pole
+		desk[3][3] = 2; // startovni pole
+		desk[3][5] = 2; // startovni pole
 
 		row = 3;
 		column = 4;
@@ -69,7 +69,7 @@ public class Ride4 {
 
 	private void goToLabyrinth() {
 		motorSmall.resetTachoCount();
-		motorSmall.rotate(-90); // nastaví US sensor doprava
+		motorSmall.rotate(-90); // nastavi US sensor doprava
 		while (true) {
 			rideWhile();
 			rotate();
@@ -78,21 +78,19 @@ public class Ride4 {
 
 	/*
 	 * Jede, dokud: 
-	 * -není kam zatoèit 
-	 * -nenarazí 
-	 * -jel by znovu, kde už byl
+	 * -neni kam zatocit 
+	 * -nenarazi 
+	 * -jel by znovu, kde uz byl
 	 */
 	private void rideWhile() {
 		int help = 0;
 		motorL.resetTachoCount();
-		motorsForward();
 		
-		/*
 		distanceSampler.fetchSample(sampleDistance, 0);
-		
+		motorsForward();
 		help = control();
 		
-		if ((sampleDistance[0] > 0.3) && (help == 0)) { //pøejede ke stìnì; už se to poèítá do pøejezdu
+		if ((sampleDistance[0] > 0.3) && (help == 0)) { //prejede ke stene; uz se to pocita do prejezdu
 			Delay.msDelay(800);
 		}
 		
@@ -100,12 +98,13 @@ public class Ride4 {
 			help = control();
 		} while ((motorL.getTachoCount() < 150) && (help == 0));
 		move();
+		help = control();
+		desk[row][column] = 0;
 		motorL.resetTachoCount();
 		System.out.println("desk1 " + row + " " + column);
-		*/
+		
 		do {
-			
-			if (motorL.getTachoCount() > 550) { //pùvodnì 573
+			if (motorL.getTachoCount() > 550) { //puvodne 573
 				measure();
 				move();
 				help = control();
@@ -117,13 +116,8 @@ public class Ride4 {
 			touchM.fetchSample(sampleTouch, 0);
 		} while ((sampleDistance[0] < 0.3) && (sampleTouch[0] == 0) && (help == 0));
 		
-		if (sampleDistance[0] < 0.3) {
-			move();
-		}
-			
-		
 		if (sampleDistance[0] > 0.3) {
-			Delay.msDelay(600);
+			Delay.msDelay(700);
 			desk[row][column] = 0;
 		}
 		
@@ -132,16 +126,16 @@ public class Ride4 {
 	}
 
 	/*
-	 * zatoèí doprava nebo doleva, když:
+	 * zatoci doprava nebo doleva, kdyz:
 	 * -to doprava nejde
-	 * -vpravo už byl
+	 * -vpravo uz byl
 	 */
 	private void rotate() {
 		int help = 0;
 		int angle = -90 - motorSmall.getTachoCount();
-		motorSmall.rotate(angle); // otoèí US senzor doprava
+		motorSmall.rotate(angle); // otoci US senzor doprava
 		distanceSampler.fetchSample(sampleDistance, 0);
-		help = controlPresenceRight();  //bude 1, pokud tam robot ještì nebyl (vpravo)
+		help = controlPresenceRight();  //bude 1, pokud tam robot jeste nebyl (vpravo)
 		if ((sampleDistance[0] > 0.2) && (help == 1)) {
 			rotationRight();
 		} 
@@ -151,7 +145,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * dle natoèení US senzoru mìøí buï nalevo nebo napravo
+	 * dle natoceni US senzoru meri bud nalevo nebo napravo
 	 */
 	private void measure() {
 		if (motorSmall.getTachoCount() == 90) {
@@ -162,7 +156,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * pøesune robota v souøadnicovém systému
+	 * presune robota v souradnicovem systemu
 	 */
 	private void move() {
 		switch (direct) {
@@ -182,7 +176,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * vrací 0, pokud tam robot ještì nebyl, jinak 1
+	 * vraci 0, pokud tam robot jeste nebyl, jinak 1
 	 */
 	private int control() {
 		int help = 0;
@@ -212,7 +206,7 @@ public class Ride4 {
 	}
 	
 	/*
-	 * vrací 1, pokud tam robot ještì nebyl, jinak 0
+	 * vrací 1, pokud tam robot jeste nebyl, jinak 0
 	 */
 	private int controlPresenceRight() {
 		int help = 0;
@@ -242,7 +236,7 @@ public class Ride4 {
 	}
 	
 	/*
-	 * projede jednu celou hranu o daný poèet krokù
+	 * projede jednu celou hranu o dany pocet kroku
 	 */
 	private void oneEdge(int reps) {
 		motorL.resetTachoCount();
@@ -300,7 +294,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * mapuje pøekážky nalevo od robota
+	 * mapuje prekazky nalevo od robota
 	 */
 	private void measureLeft() {
 		distanceSampler.fetchSample(sampleDistance, 0);
@@ -324,7 +318,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * mapuje pøekážky napravo od robota
+	 * mapuje prekazky napravo od robota
 	 */
 	private void measureRight() {
 		distanceSampler.fetchSample(sampleDistance, 0);
@@ -347,7 +341,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * udìlá jeden krok otoèením obou motorù o 573°
+	 * udela jeden krok otocenim obou motoru o 573°
 	 */
 	private void oneStep() {
 		oneStepRotate();
@@ -380,7 +374,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * když bude napravo volno, vrátí 0 když narazí, vrátí 1
+	 * kdyz bude napravo volno, vrati 0 kdyz narazi, vrati 1
 	 */
 	private int rideWhileSomething() {
 		int steps = 0;
@@ -424,7 +418,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * spustí oba motory dopøedu
+	 * spusti oba motory dopredu
 	 */
 	private void motorsForward() {
 		motorL.startSynchronization();
@@ -434,7 +428,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * zastaví oba motory
+	 * zastavi oba motory
 	 */
 	private void motorsStop() {
 		motorL.startSynchronization();
@@ -444,7 +438,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * zatoèí doleva (gyro)
+	 * zatoci doleva (gyro)
 	 */
 	private void rotationLeft() {
 		gyro.reset();
@@ -470,7 +464,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * zatoèí doprava (gyro)
+	 * zatoci doprava (gyro)
 	 */
 	private void rotationRight() {
 		gyro.reset();
@@ -496,7 +490,7 @@ public class Ride4 {
 	}
 
 	/*
-	 * otoèí se o 180°
+	 * otoci se o 180°
 	 */
 	private void rotation180() {
 		motorL.startSynchronization();

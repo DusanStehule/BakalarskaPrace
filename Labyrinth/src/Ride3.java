@@ -27,6 +27,7 @@ public class Ride3 {
 	int column;
 	int direct;
 	double distance;
+	double lastDistance;
 	int[][] desk = new int[6][9];
 
 	float[] sampleDistance;
@@ -77,33 +78,36 @@ public class Ride3 {
 	}
 
 	/*
-	 * Jede, dokud: 
-	 * -není kam zatoèit 
-	 * -nenarazí 
-	 * -jel by znovu, kde už byl
+	 * Jede, dokud: -není kam zatoèit -nenarazí -jel by znovu, kde už byl
 	 */
 	private void rideWhile() {
 		int help = 0;
+		int angle = 0;
 		motorL.resetTachoCount();
-		
+
 		distanceSampler.fetchSample(sampleDistance, 0);
 		motorsForward();
 		help = control();
-		
-		if ((sampleDistance[0] > 0.3) && (help == 0)) { //pøejede ke stìnì; už se to poèítá do pøejezdu
-			Delay.msDelay(800);
+
+		if ((sampleDistance[0] > 0.3) && (help == 0)) { // pøejede ke stìnì; už se to poèítá do pøejezdu
+			motorL.resetTachoCount();
+			angle = (int) (360 * lastDistance / 17.593 + 200);
+			while (motorL.getTachoCount() < angle) {
+			}
+		} else if (help == 0) {
+			do {
+				help = control();
+			} while ((motorL.getTachoCount() < 200) && (help == 0));
 		}
-		
-		do {
-			help = control();
-		} while ((motorL.getTachoCount() < 150) && (help == 0));
+
 		move();
+		desk[row][column] = 0;
 		motorL.resetTachoCount();
 		System.out.println("desk1 " + row + " " + column);
-		
+
 		do {
-			
-			if (motorL.getTachoCount() > 550) { //pùvodnì 573
+
+			if (motorL.getTachoCount() > 550) { // pùvodnì 573
 				measure();
 				move();
 				help = control();
@@ -111,33 +115,35 @@ public class Ride3 {
 				System.out.println("desk2 " + row + " " + column);
 				motorL.resetTachoCount();
 			}
+			lastDistance = sampleDistance[0];
 			distanceSampler.fetchSample(sampleDistance, 0);
 			touchM.fetchSample(sampleTouch, 0);
 		} while ((sampleDistance[0] < 0.3) && (sampleTouch[0] == 0) && (help == 0));
-		
+
+		distanceSampler.fetchSample(sampleDistance, 0);
 		if (sampleDistance[0] > 0.3) {
-			Delay.msDelay(700);
+			while (motorL.getTachoCount() < 250) {
+				
+			}
 			desk[row][column] = 0;
 		}
-		
+
 		motorsStop();
 		motorL.resetTachoCount();
 	}
 
 	/*
-	 * zatoèí doprava nebo doleva, když:
-	 * -to doprava nejde
-	 * -vpravo už byl
+	 * zatoèí doprava nebo doleva, když: -to doprava nejde -vpravo už byl
 	 */
 	private void rotate() {
 		int help = 0;
 		int angle = -90 - motorSmall.getTachoCount();
 		motorSmall.rotate(angle); // otoèí US senzor doprava
 		distanceSampler.fetchSample(sampleDistance, 0);
-		help = controlPresenceRight();  //bude 1, pokud tam robot ještì nebyl (vpravo)
+		help = controlPresenceRight(); // bude 1, pokud tam robot ještì nebyl (vpravo)
 		if ((sampleDistance[0] > 0.2) && (help == 1)) {
 			rotationRight();
-		} 
+		}
 		if (help == 0) {
 			rotationLeft();
 		}
@@ -161,7 +167,7 @@ public class Ride3 {
 		switch (direct) {
 		case 0:
 			row--;
-				break;
+			break;
 		case 1:
 			column++;
 			break;
@@ -181,29 +187,29 @@ public class Ride3 {
 		int help = 0;
 		switch (direct) {
 		case 0:
-			if ((column < 8) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2))) {
+			if ((column < 8) && (desk[row - 1][column] == 0)) {
 				help = 1;
 			}
-				break;
+			break;
 		case 1:
-			if ((row < 5) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2))) {
+			if ((row < 5) && (desk[row][column + 1] == 0)) {
 				help = 1;
 			}
 			break;
 		case 2:
-			if ((column > 0) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2))) {
+			if ((column > 0) && (desk[row + 1][column] == 0)) {
 				help = 1;
 			}
 			break;
 		case 3:
-			if ((row > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2))) {
+			if ((row > 0) && (desk[row][column - 1] == 0)) {
 				help = 1;
 			}
 			break;
 		}
 		return help;
 	}
-	
+
 	/*
 	 * vrací 1, pokud tam robot ještì nebyl, jinak 0
 	 */
@@ -214,7 +220,7 @@ public class Ride3 {
 			if ((column < 8) && (desk[row][column + 1] != 0)) {
 				help = 1;
 			}
-				break;
+			break;
 		case 1:
 			if ((row < 5) && ((desk[row + 1][column] != 0))) {
 				help = 1;
@@ -233,7 +239,7 @@ public class Ride3 {
 		}
 		return help;
 	}
-	
+
 	/*
 	 * projede jednu celou hranu o daný poèet krokù
 	 */
