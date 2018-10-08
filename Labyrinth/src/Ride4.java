@@ -102,6 +102,7 @@ public class Ride4 {
 		
 		if (help == 0) {
 			move();
+			measure();
 		}
 		
 		help = control();
@@ -122,12 +123,7 @@ public class Ride4 {
 			touchM.fetchSample(sampleTouch, 0);
 		} while ((sampleDistance[0] < 0.3) && (sampleTouch[0] == 0) && (help == 0));
 		
-		if (sampleDistance[0] > 0.3) {
-			Delay.msDelay(700);
-			desk[row][column] = 0;
-		}
-		
-		if (help == 1) {
+		if ((sampleDistance[0] > 0.3) || (help == 1)) {
 			Delay.msDelay(700);
 			desk[row][column] = 0;
 		}
@@ -154,11 +150,7 @@ public class Ride4 {
 			rotationRight();
 		} 
 		
-		if (help == 0) {
-			rotationLeft();
-		}
-		
-		if (help1 == 1) {
+		if ((help1 == 1) || (help == 0)) {
 			motorSmall.rotate(180); //otoci US senzor doleva
 			Delay.msDelay(500);
 			distanceSampler.fetchSample(sampleDistance, 0);
@@ -270,64 +262,6 @@ public class Ride4 {
 	}
 	
 	/*
-	 * projede jednu celou hranu o dany pocet kroku
-	 */
-	private void oneEdge(int reps) {
-		motorL.resetTachoCount();
-		motorsForward();
-		for (int i = 0; i < reps - 1; i++) {
-			while (motorL.getTachoCount() < 573 * (i + 1)) {
-				touchM.fetchSample(sampleTouch, 0);
-				if (sampleTouch[0] != 0) {
-					reps = (int) (motorL.getTachoCount() / 0.28);
-					System.out.println("zmena opakovani");
-				}
-			}
-			measureLeft();
-		}
-
-		while (motorL.getTachoCount() < 573 * reps) {
-		}
-		motorsStop();
-		measureLeft();
-		System.out.println("jsem zde");
-
-		switch (direct) {
-		case 0:
-			for (int i = 0; i < reps; i++) {
-				row--;
-				desk[row][column] = 0;
-				// System.out.println("desk " + row + " " + column + "!!");
-			}
-			break;
-		case 1:
-			for (int i = 0; i < reps; i++) {
-				column++;
-				desk[row][column] = 0;
-				// System.out.println("desk " + row + " " + column + "!!");
-			}
-			break;
-		case 2:
-			for (int i = 0; i < reps; i++) {
-				row++;
-				desk[row][column] = 0;
-				// System.out.println("desk " + row + " " + column + "!!");
-			}
-			break;
-		case 3:
-			for (int i = 0; i < reps; i++) {
-				column--;
-				desk[row][column] = 0;
-				// System.out.println("desk " + row + " " + column + "!!");
-			}
-			break;
-		}
-
-		rotationRight();
-		measureLeft();
-	}
-
-	/*
 	 * mapuje prekazky nalevo od robota
 	 */
 	private void measureLeft() {
@@ -421,50 +355,6 @@ public class Ride4 {
 		motorR.rotate(573);
 		motorL.endSynchronization();
 		Delay.msDelay(1900);
-	}
-
-	/*
-	 * kdyz bude napravo volno, vrati 0 kdyz narazi, vrati 1
-	 */
-	private int rideWhileSomething() {
-		int steps = 0;
-		int ret;
-		motorL.resetTachoCount();
-		motorsForward();
-		do {
-			distanceSampler.fetchSample(sampleDistance, 0);
-			touchM.fetchSample(sampleTouch, 0);
-		} while ((sampleDistance[0] < 0.2) && (sampleTouch[0] == 0));
-		motorsStop();
-
-		if (sampleDistance[0] < 0.2) {
-			ret = 0;
-		} else {
-			ret = 1;
-		}
-
-		steps = (int) (((motorL.getTachoCount() * 17.593) / 360) / 0.28);
-		// o = 3.14159 * 5.6 = 17.593
-		// 360° = 17.593 cm
-		// n° = x cm
-		// x = n° * 17.593 / 360°
-
-		switch (direct) {
-		case 0:
-			row -= steps;
-			break;
-		case 1:
-			column += steps;
-			break;
-		case 2:
-			row += steps;
-			break;
-		case 3:
-			column -= steps;
-			break;
-		}
-
-		return ret;
 	}
 
 	/*
