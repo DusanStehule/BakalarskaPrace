@@ -1,0 +1,24 @@
+upgrade projizdeni bludiste;
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   .metadata/.log
+#	modified:   .metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources
+#	modified:   .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.debug.ui.prefs
+#	modified:   .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs
+#	modified:   .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.editors.prefs
+#	modified:   .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.workbench.prefs
+#	modified:   .metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+#	modified:   .metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log
+#	modified:   .metadata/version.ini
+#	modified:   .recommenders/caches/identified-project-coordinates.json
+#	modified:   .recommenders/index/http___download_eclipse_org_recommenders_models_photon_/segments.gen
+#	modified:   Labyrinth/Labyrinth.jar
+#	modified:   Labyrinth/src/Labyrinth.java
+#	modified:   Labyrinth/src/Ride3.java
+#	modified:   Labyrinth/src/Ride4.java
+#
