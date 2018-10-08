@@ -9,18 +9,16 @@ public class Desk {
 	int column;
 	int direct;
 	int[][] desk = new int[6][9];
-	
+
 	EV3UltrasonicSensor distanceSensor;
-	RegulatedMotor motorL;
-	RegulatedMotor motorR;
 	SampleProvider distanceSampler;
-	float[] sampleDistance; 
-	
+	float[] sampleDistance;
+
 	public Desk(EV3UltrasonicSensor distanceSensor) {
 		this.distanceSensor = distanceSensor;
 		distanceSampler = distanceSensor.getDistanceMode();
 		sampleDistance = new float[distanceSampler.sampleSize()];
-		
+
 		row = 3;
 		column = 4;
 		direct = 0;
@@ -85,7 +83,7 @@ public class Desk {
 			}
 			break;
 		case 3:
-			if ((column < 8) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2))) {
+			if ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2))) {
 				help = 1;
 			}
 			break;
@@ -123,32 +121,82 @@ public class Desk {
 		return help;
 	}
 
+	public int controlPresenceAround() {
+		int help = 0;
+		switch (direct) {
+		case 0:
+			if ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2))) { // pred robotem
+				if ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2))) { // za robotem
+					if ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2))) { // nalevo od
+																											// robota
+						help = 1;
+					}
+				}
+			}
+			break;
+		case 1:
+			if ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2))) { // pred robotem
+				if ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2))) { // za robotem
+					if ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2))) { // nalevo od
+																										// robota
+						help = 1;
+					}
+				}
+			}
+			break;
+		case 2:
+			if ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2))) { // pred robotem
+				if ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2))) { // za robotem
+					if ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2))) { // nalevo od
+																											// robota
+						help = 1;
+					}
+				}
+			}
+			break;
+		case 3:
+			if ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2))) { // pred robotem
+				if ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2))) { // za robotem
+					if ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2))) { // nalevo od robota
+						help = 1;
+					}
+				}
+			}
+			break;
+		}
+
+		return help;
+	}
+
 	/*
 	 * mapuje prekazky nalevo od robota
 	 */
 	public void measureLeft() {
-		System.out.println("vlevo " + sampleDistance[0]);
 		distanceSampler.fetchSample(sampleDistance, 0);
 		if ((sampleDistance[0] < 0.2) && (sampleDistance[0] > 0)) {
 			switch (direct) {
 			case 0:
-				if (column > 0) {
+				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
+					System.out.println("desk " + row + " " + (column - 1));
 				}
 				break;
 			case 1:
-				if (row > 0) {
+				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
+					System.out.println("desk " + (row - 1) + " " + column);
 				}
 				break;
 			case 2:
-				if (column < 8) {
+				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
+					System.out.println("desk " + row + " " + (column + 1));
 				}
 				break;
 			case 3:
-				if (row < 5) {
+				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
+					System.out.println("desk " + (row + 1) + " " + column);
 				}
 				break;
 			}
@@ -160,38 +208,37 @@ public class Desk {
 	 */
 	public void measureRight() {
 		distanceSampler.fetchSample(sampleDistance, 0);
-		System.out.println("vpravo " + sampleDistance[0]);
 		if ((sampleDistance[0] < 0.2) && (sampleDistance[0] > 0)) {
 			switch (direct) {
 			case 0:
-				if (column < 8) {
+				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
+					System.out.println("desk " + row + " " + (column + 1));
 				}
 				break;
 			case 1:
-				if (row < 5) {
+				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
+					System.out.println("desk " + (row + 1) + " " + column);
 				}
 				break;
 			case 2:
-				if (column > 0) {
+				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
+					System.out.println("desk " + row + " " + (column - 1));
 				}
 				break;
 			case 3:
-				if (row > 0) {
+				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
+					System.out.println("desk " + (row - 1) + " " + column);
 				}
 				break;
 			}
 		}
 	}
 
-	/*
-	 * udela jeden krok otocenim obou motoru o 573°
-	 */
-	public void oneStep() {
-		oneStepRotate();
+	public void oneStepMove() {
 		switch (direct) {
 		case 0:
 			row--;
@@ -209,17 +256,6 @@ public class Desk {
 		desk[row][column] = 0;
 	}
 
-	/*
-	 * rotuje oba motory o 573°
-	 */
-	private void oneStepRotate() {
-		motorL.startSynchronization();
-		motorL.rotate(573);
-		motorR.rotate(573);
-		motorL.endSynchronization();
-		Delay.msDelay(1900);
-	}
-
 	public void rotationL() {
 		if (direct == 0) {
 			direct = 3;
@@ -235,7 +271,7 @@ public class Desk {
 			direct++;
 		}
 	}
-	
+
 	public void rotationB() {
 		switch (direct) {
 		case 0:
@@ -257,10 +293,14 @@ public class Desk {
 		desk[row][column] = 0;
 	}
 
+	public void findWay() {
+		BFS BFS = new BFS(desk, row, column, direct);
+	}
+
 	public int getState(int row, int column) {
 		return desk[row][column];
 	}
-	
+
 	public int getRow() {
 		return row;
 	}

@@ -18,10 +18,13 @@
 <fullyQualifiedTypeName name="lejos.hardware.lcd.LCD"/>
 <fullyQualifiedTypeName name="lejos.hardware.Bluetooth"/>
 <fullyQualifiedTypeName name="lejos.remote.nxt.NXTConnection"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="lejos.hardware.port.MotorPort"/>
 <fullyQualifiedTypeName name="lejos.hardware.sensor.EV3UltrasonicSensor"/>
 <fullyQualifiedTypeName name="lejos.hardware.Button"/>
 <fullyQualifiedTypeName name="lejos.hardware.sensor.EV3GyroSensor"/>
 <fullyQualifiedTypeName name="lejos.utility.Delay"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
 </qualifiedTypeNameHistroy>

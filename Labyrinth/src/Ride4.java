@@ -129,25 +129,32 @@ public class Ride4 {
 	private void rotate() {
 		int help;
 		int help1;
+		int help2;
 		int angle = -90 - motorSmall.getTachoCount();
 		motorSmall.rotate(angle); // otoci US senzor doprava
 		distanceSampler.fetchSample(sampleDistance, 0);
 		help = desk.controlPresenceRight();  //bude 1, pokud tam robot jeste nebyl (vpravo)
 		help1 = desk.control(); //bude 0, pokud tam robot jeste nebyl (policko pred nim)
+		help2 = desk.controlPresenceAround(); //bude 1, kdyz se robot nema kam hnout kvuli prekazce, nebo ze uz tam byl
 		
 		if ((sampleDistance[0] > 0.2) && (help == 1)) {
 			rotationRight();
 		} 
 		
-		if ((help1 == 1) || (help == 0)) {
+		if (((help1 == 1) || (help == 0)) && (help2 == 0)) {
 			motorSmall.rotate(180); //otoci US senzor doleva
 			Delay.msDelay(500);
+			measure();
 			distanceSampler.fetchSample(sampleDistance, 0);
 			if (sampleDistance[0] > 0.3) {
 				rotationLeft();
 			} else {
 				rotation180();
 			}
+		}
+		
+		if (help2 == 1) {
+			desk.findWay();
 		}
 	}
 
@@ -180,6 +187,25 @@ public class Ride4 {
 		motorL.stop();
 		motorR.stop();
 		motorL.endSynchronization();
+	}
+	
+	/*
+	 * udela jeden krok otocenim obou motoru o 573°
+	 */
+	public void oneStep() {
+		oneStepRotate();
+		desk.oneStepMove();
+	}
+
+	/*
+	 * rotuje oba motory o 573°
+	 */
+	private void oneStepRotate() {
+		motorL.startSynchronization();
+		motorL.rotate(573);
+		motorR.rotate(573);
+		motorL.endSynchronization();
+		Delay.msDelay(1900);
 	}
 
 	/*
