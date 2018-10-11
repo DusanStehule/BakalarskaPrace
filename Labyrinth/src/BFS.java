@@ -13,12 +13,22 @@ public class BFS {
 	LinkedList<Integer> expanded = new LinkedList<Integer>();
 	LinkedList<Integer> way = new LinkedList<Integer>();
 
-	public BFS(int[][] desk, int row, int column, int direct) {
+	public BFS() {
+	}
+	
+	public void inicialize(int[][] desk, int row, int column, int direct) {
 		this.desk = desk;
 		this.row = row;
 		this.column = column;
 		this.direct = direct;
 		findWay();
+	}
+	
+	public void stop() {
+		open.clear();
+		close.clear();
+		expanded.clear();
+		way.clear();
 	}
 
 	private void findWay() {
@@ -53,8 +63,6 @@ public class BFS {
 			way.addFirst(goal);
 			goal = parent.get(goal);
 		}
-		way.addFirst(hashIn(row, column));
-		
 	}
 	
 	private LinkedList<Integer> expand(int hash) {
@@ -100,6 +108,10 @@ public class BFS {
 			ret = true;
 		}
 		return ret;
+	}
+	
+	public LinkedList<Integer> getWay() {
+		return way;
 	}
 	
 }

@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
@@ -5,10 +7,15 @@ import lejos.utility.Delay;
 
 public class Desk {
 
+	RegulatedMotor motorL;
+	RegulatedMotor motorR;
+
 	int row;
 	int column;
 	int direct;
 	int[][] desk = new int[6][9];
+	BFS BFS;
+	LinkedList<Integer> way = new LinkedList<Integer>();
 
 	EV3UltrasonicSensor distanceSensor;
 	SampleProvider distanceSampler;
@@ -18,6 +25,7 @@ public class Desk {
 		this.distanceSensor = distanceSensor;
 		distanceSampler = distanceSensor.getDistanceMode();
 		sampleDistance = new float[distanceSampler.sampleSize()];
+		BFS = new BFS();
 
 		row = 3;
 		column = 4;
@@ -157,7 +165,8 @@ public class Desk {
 		case 3:
 			if ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2))) { // pred robotem
 				if ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2))) { // za robotem
-					if ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2))) { // nalevo od robota
+					if ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2))) { // nalevo od
+																										// robota
 						help = 1;
 					}
 				}
@@ -166,6 +175,38 @@ public class Desk {
 		}
 
 		return help;
+	}
+
+	/*
+	 * mapuje prekazky pred robotem po sepnuti dotykoveho senzoru
+	 */
+	public void measureForward() {
+		switch (direct) {
+		case 0:
+			if ((row > 0) && (desk[row - 1][column] != 0)) {
+				desk[row - 1][column] = 2;
+				System.out.println("measure " + (row - 1) + " " + column);
+			}
+			break;
+		case 1:
+			if ((column < 8) && (desk[row][column + 1] != 0)) {
+				desk[row][column + 1] = 2;
+				System.out.println("measure " + row + " " + (column + 1));
+			}
+			break;
+		case 2:
+			if ((row < 5) && (desk[row + 1][column] != 0)) {
+				desk[row + 1][column] = 2;
+				System.out.println("measure " + (row + 1) + " " + column);
+			}
+			break;
+		case 3:
+			if ((column > 0) && (desk[row][column - 1] != 0)) {
+				desk[row][column - 1] = 2;
+				System.out.println("measure " + row + " " + (column - 1));
+			}
+			break;
+		}
 	}
 
 	/*
@@ -178,25 +219,25 @@ public class Desk {
 			case 0:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-					System.out.println("desk " + row + " " + (column - 1));
+					System.out.println("measure " + row + " " + (column - 1));
 				}
 				break;
 			case 1:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-					System.out.println("desk " + (row - 1) + " " + column);
+					System.out.println("measure " + (row - 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-					System.out.println("desk " + row + " " + (column + 1));
+					System.out.println("measure " + row + " " + (column + 1));
 				}
 				break;
 			case 3:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-					System.out.println("desk " + (row + 1) + " " + column);
+					System.out.println("measure " + (row + 1) + " " + column);
 				}
 				break;
 			}
@@ -213,25 +254,22 @@ public class Desk {
 			case 0:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-					System.out.println("desk " + row + " " + (column + 1));
+					System.out.println("measure " + row + " " + column + 1);
 				}
 				break;
 			case 1:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-					System.out.println("desk " + (row + 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-					System.out.println("desk " + row + " " + (column - 1));
 				}
 				break;
 			case 3:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-					System.out.println("desk " + (row - 1) + " " + column);
 				}
 				break;
 			}
@@ -241,19 +279,53 @@ public class Desk {
 	public void oneStepMove() {
 		switch (direct) {
 		case 0:
-			row--;
+			if (row > 0) {
+				row--;
+			}
 			break;
 		case 1:
-			column++;
+			if (column < 8) {
+				column++;
+			}
 			break;
 		case 2:
-			row++;
+			if (row < 5) {
+				row++;
+			}
 			break;
 		case 3:
-			column--;
+			if (column > 0) {
+				column--;
+			}
 			break;
 		}
 		desk[row][column] = 0;
+	}
+	
+	public void back() {
+		switch (direct) {
+		case 0:
+			if ((row < 5) && (row > 0)) {
+				row++;
+			}
+			break;
+		case 1:
+			if ((column < 8) && (column > 0)) {
+				column--;
+			}
+			break;
+		case 2:
+			if ((row < 5) && (row > 0)) {
+				row--;
+			}
+			break;
+		case 3:
+			if ((column < 8) && (column > 0)) {
+				column++;
+			}
+			break;
+		}
+		System.out.println("back " + row + " " + column);
 	}
 
 	public void rotationL() {
@@ -289,12 +361,59 @@ public class Desk {
 		}
 	}
 
+	public int rotationToWay() {
+		int rowHelp = (way.getFirst() / 10) - 1;
+		int columnHelp = way.getFirst() % 10;
+		int directHelp = 0;
+
+		if (rowHelp - row == -1) {
+			directHelp = 0;
+		} else if (rowHelp - row == 1) {
+			directHelp = 2;
+		}
+
+		if (columnHelp - column == -1) {
+			directHelp = 3;
+		} else if (columnHelp - column == 1) {
+			directHelp = 1;
+		}
+
+		switch (direct - directHelp) {
+		case -3:
+			rotationL();
+			break;
+		case -2:
+			rotationB();
+			break;
+		case -1:
+			rotationR();
+			break;
+		case 1:
+			rotationL();
+			break;
+		case 2:
+			rotationB();
+			break;
+		case 3:
+			rotationR();
+			break;
+		}
+		way.removeFirst();
+		return direct - directHelp;
+	}
+
 	public void turnOffLight() {
 		desk[row][column] = 0;
 	}
 
-	public void findWay() {
-		BFS BFS = new BFS(desk, row, column, direct);
+	public LinkedList<Integer> findWay() {
+		BFS.inicialize(desk, row, column, direct);
+		way = BFS.getWay(); // vrati cestu od zacatku do konce (bez aktuálního pole)
+		return way;
+	}
+	
+	public void eraseWay() {
+		BFS.stop();
 	}
 
 	public int getState(int row, int column) {
