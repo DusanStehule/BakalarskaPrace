@@ -104,12 +104,12 @@ public class Ride4 {
 		if (help == 0) {
 			measure();
 			desk.move();
-			System.out.println("desk1 " + desk.getRow() + " " + desk.getColumn());
+		//	System.out.println("desk1 " + desk.getRow() + " " + desk.getColumn());
 		}
 
 		help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
 		if (help == 1) {
-			Delay.msDelay(600);
+			Delay.msDelay(500);
 		}
 
 		help = desk.control();
@@ -122,7 +122,7 @@ public class Ride4 {
 				desk.move();
 				help = desk.control();
 				desk.turnOffLight();
-				System.out.println("desk2 " + desk.getRow() + " " + desk.getColumn());
+		//		System.out.println("desk2 " + desk.getRow() + " " + desk.getColumn());
 				motorL.resetTachoCount();
 			}
 			distanceSampler.fetchSample(sampleDistance, 0);
@@ -161,7 +161,6 @@ public class Ride4 {
 		int helpRight;
 		int helpForward;
 		int helpAround;
-		LinkedList<Integer> way = new LinkedList<Integer>();
 		int angle = -90 - motorSmall.getTachoCount();
 
 		motorSmall.rotate(angle); // otoci US senzor doprava
@@ -170,7 +169,6 @@ public class Ride4 {
 		helpForward = desk.control(); // bude 1, pokud tam robot uz byl (policko pred nim)
 		helpAround = desk.controlPresenceAround(); // bude 1, kdyz se robot nema kam hnout kvuli prekazce, nebo ze uz
 													// tam byl
-		System.out.println("helpAround " + helpAround);
 		if ((sampleDistance[0] > 0.3) && (helpRight == 1)) {
 			rotationRight();
 		}
@@ -188,9 +186,9 @@ public class Ride4 {
 		}
 
 		if (helpAround == 1) {
-			way = desk.findWay();
+			int waySize = desk.findWay();
 			int rot;
-			for (int i = 0; i < way.size(); i++) {
+			for (int i = 0; i < waySize; i++) {
 				rot = desk.rotationToWay();
 				switch (rot) {
 				case -3:
@@ -203,7 +201,6 @@ public class Ride4 {
 					rotationRight();
 					break;
 				case 0:
-
 					break;
 				case 1:
 					rotationLeft();
@@ -216,7 +213,6 @@ public class Ride4 {
 					break;
 				}
 				oneStep();
-				desk.move();
 			}
 			desk.eraseWay();
 		}
@@ -258,7 +254,7 @@ public class Ride4 {
 	 */
 	public void oneStep() {
 		oneStepRotate();
-		desk.oneStepMove();
+		desk.move();
 	}
 
 	/*
@@ -283,7 +279,7 @@ public class Ride4 {
 		motorR.forward();
 		motorL.endSynchronization();
 
-		while (sampleGyro[0] < 79) {
+		while (sampleGyro[0] < 69) {
 			gyroSampler.fetchSample(sampleGyro, 0);
 		}
 
@@ -292,6 +288,7 @@ public class Ride4 {
 		Delay.msDelay(500);
 
 		desk.rotationL();
+		
 	}
 
 	/*
@@ -305,7 +302,7 @@ public class Ride4 {
 		motorR.backward();
 		motorL.endSynchronization();
 
-		while (sampleGyro[0] > -72) {
+		while (sampleGyro[0] > -69) {
 			gyroSampler.fetchSample(sampleGyro, 0);
 		}
 
@@ -314,6 +311,7 @@ public class Ride4 {
 		Delay.msDelay(500);
 
 		desk.rotationR();
+		
 	}
 
 	/*
@@ -327,7 +325,7 @@ public class Ride4 {
 		motorR.forward();
 		motorL.endSynchronization();
 
-		while (sampleGyro[0] < 169) {
+		while (sampleGyro[0] < 159) {
 			gyroSampler.fetchSample(sampleGyro, 0);
 		}
 
@@ -336,5 +334,6 @@ public class Ride4 {
 		Delay.msDelay(500);
 
 		desk.rotationB();
+		
 	}
 }
