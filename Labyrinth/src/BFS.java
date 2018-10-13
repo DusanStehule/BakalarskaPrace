@@ -59,9 +59,15 @@ public class BFS {
 			}
 		}
 		System.out.println("goal " + goal);
+		open.clear();
+		close.clear();
+		expanded.clear();
+		
 		while (goal != (hashIn(row, column))) {
+			System.out.println("size " + way.size());
 			way.addFirst(goal);
 			goal = parent.get(goal);
+			System.out.println("goal = " + goal);
 		}
 	}
 	

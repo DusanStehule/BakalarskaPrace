@@ -192,25 +192,25 @@ public class Desk {
 		case 0:
 			if ((row > 0) && (desk[row - 1][column] != 0)) {
 				desk[row - 1][column] = 2;
-				//System.out.println("measureF " + (row - 1) + " " + column);
+				System.out.println("measureF " + (row - 1) + " " + column);
 			}
 			break;
 		case 1:
 			if ((column < 8) && (desk[row][column + 1] != 0)) {
 				desk[row][column + 1] = 2;
-				//System.out.println("measureF " + row + " " + (column + 1));
+				System.out.println("measureF " + row + " " + (column + 1));
 			}
 			break;
 		case 2:
 			if ((row < 5) && (desk[row + 1][column] != 0)) {
 				desk[row + 1][column] = 2;
-				//System.out.println("measureF " + (row + 1) + " " + column);
+				System.out.println("measureF " + (row + 1) + " " + column);
 			}
 			break;
 		case 3:
 			if ((column > 0) && (desk[row][column - 1] != 0)) {
 				desk[row][column - 1] = 2;
-				//System.out.println("measureF " + row + " " + (column - 1));
+				System.out.println("measureF " + row + " " + (column - 1));
 			}
 			break;
 		}
@@ -226,25 +226,25 @@ public class Desk {
 			case 0:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-					//System.out.println("measureL " + row + " " + (column - 1));
+					System.out.println("measureL " + row + " " + (column - 1));
 				}
 				break;
 			case 1:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-					//System.out.println("measureL " + (row - 1) + " " + column);
+					System.out.println("measureL " + (row - 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-					//System.out.println("measureL " + row + " " + (column + 1));
+					System.out.println("measureL " + row + " " + (column + 1));
 				}
 				break;
 			case 3:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-					//System.out.println("measureL " + (row + 1) + " " + column);
+					System.out.println("measureL " + (row + 1) + " " + column);
 				}
 				break;
 			}
@@ -261,25 +261,25 @@ public class Desk {
 			case 0:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-					//System.out.println("measureR " + row + " " + (column + 1));
+					System.out.println("measureR " + row + " " + (column + 1));
 				}
 				break;
 			case 1:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-					//System.out.println("measureR " + (row + 1) + " " + column);
+					System.out.println("measureR " + (row + 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-					//System.out.println("measureR " + row + " " + (column - 1));
+					System.out.println("measureR " + row + " " + (column - 1));
 				}
 				break;
 			case 3:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-					//System.out.println("measureR " + (row - 1) + " " + column);
+					System.out.println("measureR " + (row - 1) + " " + column);
 				}
 				break;
 			}
@@ -379,7 +379,6 @@ public class Desk {
 	
 	public int findWay() {
 		System.out.println("hledam cestu");
-		System.out.println("desk 0,8 " + desk[0][8]);
 		BFS.inicialize(desk, row, column, direct);
 		way = BFS.getWay(); // vrati cestu od zacatku do konce (bez aktuálního pole)
 		return way.size();

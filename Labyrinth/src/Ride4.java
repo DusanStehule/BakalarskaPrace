@@ -92,7 +92,7 @@ public class Ride4 {
 			motorR.rotate(-30);
 			motorL.endSynchronization();
 			Delay.msDelay(200);
-			desk.back();
+		//	desk.back();
 			desk.measureForward();
 			help = 1;
 			if (motorSmall.getTachoCount() < -80) {
@@ -104,7 +104,7 @@ public class Ride4 {
 		if (help == 0) {
 			measure();
 			desk.move();
-		//	System.out.println("desk1 " + desk.getRow() + " " + desk.getColumn());
+			// System.out.println("desk1 " + desk.getRow() + " " + desk.getColumn());
 		}
 
 		help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
@@ -122,7 +122,7 @@ public class Ride4 {
 				desk.move();
 				help = desk.control();
 				desk.turnOffLight();
-		//		System.out.println("desk2 " + desk.getRow() + " " + desk.getColumn());
+				// System.out.println("desk2 " + desk.getRow() + " " + desk.getColumn());
 				motorL.resetTachoCount();
 			}
 			distanceSampler.fetchSample(sampleDistance, 0);
@@ -130,13 +130,13 @@ public class Ride4 {
 		} while ((sampleDistance[0] < 0.3) && (sampleTouch[0] == 0) && (help == 0));
 
 		if (sampleTouch[0] == 1) {
-			
+
 			motorL.startSynchronization();
 			motorL.rotate(-30);
 			motorR.rotate(-30);
 			motorL.endSynchronization();
 			Delay.msDelay(200);
-			desk.back();
+		//	desk.back();
 			desk.measureForward();
 			help = 1;
 			if (motorSmall.getTachoCount() < -80) {
@@ -187,9 +187,11 @@ public class Ride4 {
 
 		if (helpAround == 1) {
 			int waySize = desk.findWay();
+			System.out.println("way size " + waySize);
 			int rot;
 			for (int i = 0; i < waySize; i++) {
 				rot = desk.rotationToWay();
+				System.out.println("rot " + rot + " po " + i);
 				switch (rot) {
 				case -3:
 					rotationLeft();
@@ -288,7 +290,7 @@ public class Ride4 {
 		Delay.msDelay(500);
 
 		desk.rotationL();
-		
+
 	}
 
 	/*
@@ -311,7 +313,7 @@ public class Ride4 {
 		Delay.msDelay(500);
 
 		desk.rotationR();
-		
+
 	}
 
 	/*
@@ -334,6 +336,6 @@ public class Ride4 {
 		Delay.msDelay(500);
 
 		desk.rotationB();
-		
+
 	}
 }
