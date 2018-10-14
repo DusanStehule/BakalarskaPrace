@@ -48,12 +48,16 @@ public class Ride4 {
 		gyroSampler = gyro.getAngleAndRateMode();
 		sampleGyro = new float[gyroSampler.sampleSize()];
 		desk = new Desk(distanceSensor);
-
+		initialConditions();
 		goToLabyrinth();
 		motorL.close();
 		motorR.close();
 		distanceSensor.close();
 		touch.close();
+	}
+	
+	private void initialConditions() {
+		desk.initialCondition();
 	}
 
 	private void goToLabyrinth() {

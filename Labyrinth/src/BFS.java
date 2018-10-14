@@ -64,10 +64,8 @@ public class BFS {
 		expanded.clear();
 		
 		while (goal != (hashIn(row, column))) {
-			System.out.println("size " + way.size());
 			way.addFirst(goal);
 			goal = parent.get(goal);
-			System.out.println("goal = " + goal);
 		}
 	}
 	
@@ -80,25 +78,21 @@ public class BFS {
 		if ((row < 5) && (desk[row + 1][column] != 2)) {
 			help = (row + 2) * 10 + column;
 			exp.add(help);
-			parent.put(help, hash);
 		}
 		
 		if ((row > 0) && (desk[row - 1][column] != 2)) {
 			help = (row) * 10 + column;
 			exp.add(help);
-			parent.put(help, hash);
 		}
 		
 		if ((column < 8) && (desk[row][column + 1] != 2)) {
 			help = (row + 1) * 10 + column + 1;
 			exp.add(help);
-			parent.put(help, hash);
 		}
 		
 		if ((column > 0) && (desk[row][column - 1] != 2)) {
 			help = (row + 1) * 10 + column - 1;
 			exp.add(help);
-			parent.put(help, hash);
 		}
 		
 		return exp;

@@ -431,6 +431,44 @@ public class Desk {
 	public void eraseWay() {
 		BFS.stop();
 	}
+	
+	public void initialCondition() {
+		row = 0;
+		column = 8;
+		direct = 1;
+		desk[0][3] = 0;
+		desk[0][4] = 0;
+		desk[0][5] = 0;
+		desk[0][6] = 0;
+		desk[0][7] = 0;
+		desk[0][8] = 0;
+		
+		desk[1][3] = 0;
+		desk[1][4] = 2;
+		desk[1][5] = 0;
+		desk[1][6] = 2;
+		desk[1][7] = 0;
+		desk[1][8] = 2;
+		
+		desk[2][2] = 0;
+		desk[2][3] = 0;
+		desk[2][4] = 0;
+		desk[2][5] = 0;
+		desk[2][6] = 0;
+		desk[2][7] = 2;
+		
+		desk[3][2] = 0;
+		desk[3][3] = 2;
+		desk[3][4] = 0;
+		desk[3][5] = 2;
+		desk[3][6] = 0;
+		
+		desk[4][2] = 0;
+		desk[4][3] = 0;
+		desk[4][4] = 0;
+		desk[4][5] = 0;
+		desk[4][6] = 0;
+	}
 
 	public void turnOffLight() {
 		desk[row][column] = 0;
