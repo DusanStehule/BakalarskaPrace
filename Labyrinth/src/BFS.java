@@ -58,7 +58,7 @@ public class BFS {
 				expanded.clear();
 			}
 		}
-		System.out.println("goal " + goal);
+		System.out.println("goal " + (goal-10));
 		open.clear();
 		close.clear();
 		expanded.clear();

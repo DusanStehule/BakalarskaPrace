@@ -48,7 +48,7 @@ public class Ride4 {
 		gyroSampler = gyro.getAngleAndRateMode();
 		sampleGyro = new float[gyroSampler.sampleSize()];
 		desk = new Desk(distanceSensor);
-		initialConditions();
+		//initialConditions();
 		goToLabyrinth();
 		motorL.close();
 		motorR.close();
@@ -96,7 +96,9 @@ public class Ride4 {
 			motorR.rotate(-30);
 			motorL.endSynchronization();
 			Delay.msDelay(200);
-		//	desk.back();
+			if (motorL.getTachoCount() < 300) {
+				desk.back();
+			}
 			desk.measureForward();
 			help = 1;
 			if (motorSmall.getTachoCount() < -80) {
@@ -108,7 +110,6 @@ public class Ride4 {
 		if (help == 0) {
 			measure();
 			desk.move();
-			// System.out.println("desk1 " + desk.getRow() + " " + desk.getColumn());
 		}
 
 		help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
@@ -126,7 +127,6 @@ public class Ride4 {
 				desk.move();
 				help = desk.control();
 				desk.turnOffLight();
-				// System.out.println("desk2 " + desk.getRow() + " " + desk.getColumn());
 				motorL.resetTachoCount();
 			}
 			distanceSampler.fetchSample(sampleDistance, 0);
@@ -140,7 +140,9 @@ public class Ride4 {
 			motorR.rotate(-30);
 			motorL.endSynchronization();
 			Delay.msDelay(200);
-		//	desk.back();
+			if (motorL.getTachoCount() < 300) {
+				desk.back();
+			}
 			desk.measureForward();
 			help = 1;
 			if (motorSmall.getTachoCount() < -80) {
@@ -163,6 +165,7 @@ public class Ride4 {
 	 */
 	private void rotate() {
 		int helpRight;
+		int helpRightEdge;
 		int helpForward;
 		int helpAround;
 		int angle = -90 - motorSmall.getTachoCount();
@@ -170,15 +173,19 @@ public class Ride4 {
 		motorSmall.rotate(angle); // otoci US senzor doprava
 		distanceSampler.fetchSample(sampleDistance, 0);
 		helpRight = desk.controlPresenceRight(); // bude 1, pokud tam robot jeste nebyl (policko vpravo)
+		helpRightEdge = desk.controlPresenceEdge(); // bude 1, pokud ma robot na prave strane bludiste
 		helpForward = desk.control(); // bude 1, pokud tam robot uz byl (policko pred nim)
 		helpAround = desk.controlPresenceAround(); // bude 1, kdyz se robot nema kam hnout kvuli prekazce, nebo ze uz
 													// tam byl
+		System.out.println("help " + helpRight + " " + helpForward + " " + helpAround);
 		if ((sampleDistance[0] > 0.3) && (helpRight == 1)) {
 			rotationRight();
 		}
 
-		if (((helpForward == 1) || (helpRight == 0)) && (helpAround == 0)) {
-			motorSmall.rotate(180); // otoci US senzor doleva
+		if ((helpForward == 1) && (helpAround == 0)) {
+			if (motorSmall.getTachoCount() < -80) {
+				motorSmall.rotate(180); // otoci US senzor doleva
+			}
 			Delay.msDelay(500);
 			measure();
 			distanceSampler.fetchSample(sampleDistance, 0);
@@ -188,40 +195,69 @@ public class Ride4 {
 				rotation180();
 			}
 		}
+		
+		if ((helpRight == 0) && (helpAround == 0)) {
+			if (motorSmall.getTachoCount() < -80) {
+				motorSmall.rotate(180); // otoci US senzor doleva
+			}
+			Delay.msDelay(2000);
+			measure();
+			distanceSampler.fetchSample(sampleDistance, 0);
+			if (sampleDistance[0] > 0.3) {
+				rotationLeft();
+			} else if (helpRightEdge == 0) {
+				rotation180();
+			}
+		}
 
 		if (helpAround == 1) {
-			int waySize = desk.findWay();
-			System.out.println("way size " + waySize);
-			int rot;
-			for (int i = 0; i < waySize; i++) {
-				rot = desk.rotationToWay();
-				System.out.println("rot " + rot + " po " + i);
-				switch (rot) {
-				case -3:
-					rotationLeft();
-					break;
-				case -2:
-					rotation180();
-					break;
-				case -1:
-					rotationRight();
-					break;
-				case 0:
-					break;
-				case 1:
-					rotationLeft();
-					break;
-				case 2:
-					rotation180();
-					break;
-				case 3:
-					rotationRight();
-					break;
-				}
-				oneStep();
-			}
-			desk.eraseWay();
+			findField();
+			System.out.println("konec cesty");
 		}
+	}
+	
+	private void findField() {
+		int waySize = desk.findWay();
+		int rot;
+		motorsForward();
+		for (int i = 0; i < waySize; i++) {
+			rot = desk.rotationToWay();
+			switch (rot) {
+			case -3:
+				rotationLeft();
+				motorsForward();
+				break;
+			case -2:
+				rotation180();
+				motorsForward();
+				break;
+			case -1:
+				rotationRight();
+				motorsForward();
+				break;
+			case 0:
+				break;
+			case 1:
+				rotationLeft();
+				motorsForward();
+				break;
+			case 2:
+				rotation180();
+				motorsForward();
+				break;
+			case 3:
+				rotationRight();
+				motorsForward();
+				break;
+			}
+			motorL.resetTachoCount();
+			while (motorL.getTachoCount() < 550) {
+				
+			}
+			desk.move();
+			
+		}
+		desk.eraseWay();
 	}
 
 	/*

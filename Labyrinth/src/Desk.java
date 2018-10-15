@@ -37,7 +37,7 @@ public class Desk {
 			}
 		}
 		desk[3][3] = 2; // startovni pole
-		desk[3][4] = 0; // startovni pole
+		desk[3][4] = 2; // startovni pole
 		desk[3][5] = 2; // startovni pole
 	}
 
@@ -108,22 +108,52 @@ public class Desk {
 		int help = 0;
 		switch (direct) {
 		case 0:
-			if ((column < 8) && (desk[row][column + 1] != 0)) {
+			if (((column < 8) && (desk[row][column + 1] != 0))) {
 				help = 1;
 			}
 			break;
 		case 1:
-			if ((row < 5) && ((desk[row + 1][column] != 0))) {
+			if (((row < 5) && ((desk[row + 1][column] != 0)))) {
 				help = 1;
 			}
 			break;
 		case 2:
-			if ((column > 0) && ((desk[row][column - 1] != 0))) {
+			if (((column > 0) && ((desk[row][column - 1] != 0)))) {
 				help = 1;
 			}
 			break;
 		case 3:
-			if ((row > 0) && ((desk[row - 1][column] != 0))) {
+			if (((row > 0) && ((desk[row - 1][column] != 0)))) {
+				help = 1;
+			}
+			break;
+		}
+		return help;
+	}
+	
+	/*
+	 * vraci 1, pokud ma robot na prave strane hranu bludiste
+	 */
+	public int controlPresenceEdge() {
+		int help = 0;
+		switch (direct) {
+		case 0:
+			if (column == 8) {
+				help = 1;
+			}
+			break;
+		case 1:
+			if (row == 5) {
+				help = 1;
+			}
+			break;
+		case 2:
+			if (column == 0) {
+				help = 1;
+			}
+			break;
+		case 3:
+			if (row == 0) {
 				help = 1;
 			}
 			break;
@@ -226,25 +256,25 @@ public class Desk {
 			case 0:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-					System.out.println("measureL " + row + " " + (column - 1));
+				//	System.out.println("measureL " + row + " " + (column - 1));
 				}
 				break;
 			case 1:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-					System.out.println("measureL " + (row - 1) + " " + column);
+				//	System.out.println("measureL " + (row - 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-					System.out.println("measureL " + row + " " + (column + 1));
+				//	System.out.println("measureL " + row + " " + (column + 1));
 				}
 				break;
 			case 3:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-					System.out.println("measureL " + (row + 1) + " " + column);
+				//	System.out.println("measureL " + (row + 1) + " " + column);
 				}
 				break;
 			}
@@ -261,25 +291,25 @@ public class Desk {
 			case 0:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-					System.out.println("measureR " + row + " " + (column + 1));
+				//	System.out.println("measureR " + row + " " + (column + 1));
 				}
 				break;
 			case 1:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-					System.out.println("measureR " + (row + 1) + " " + column);
+				//	System.out.println("measureR " + (row + 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-					System.out.println("measureR " + row + " " + (column - 1));
+				//	System.out.println("measureR " + row + " " + (column - 1));
 				}
 				break;
 			case 3:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-					System.out.println("measureR " + (row - 1) + " " + column);
+				//	System.out.println("measureR " + (row - 1) + " " + column);
 				}
 				break;
 			}
@@ -378,7 +408,6 @@ public class Desk {
 	}
 	
 	public int findWay() {
-		System.out.println("hledam cestu");
 		BFS.inicialize(desk, row, column, direct);
 		way = BFS.getWay(); // vrati cestu od zacatku do konce (bez aktuálního pole)
 		return way.size();
@@ -402,27 +431,6 @@ public class Desk {
 			directHelp = 1;
 		}
 		ret = direct - directHelp;
-/*
-		switch (ret) {
-		case -3:
-			rotationL();
-			break;
-		case -2:
-			rotationB();
-			break;
-		case -1:
-			rotationR();
-			break;
-		case 1:
-			rotationL();
-			break;
-		case 2:
-			rotationB();
-			break;
-		case 3:
-			rotationR();
-			break;
-		}*/
 		
 		way.removeFirst();
 		return ret;
