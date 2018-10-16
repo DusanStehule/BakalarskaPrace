@@ -160,6 +160,7 @@ public class Ride4 {
 	 * zatoci doprava nebo doleva, kdyz: -to doprava nejde -vpravo uz byl
 	 */
 	private void rotate() {
+		int rot = 0;
 		int helpRight;
 		int helpRightEdge;
 		int helpForward;
@@ -176,9 +177,13 @@ public class Ride4 {
 	//	System.out.println("help " + helpRight + " " + helpForward + " " + helpAround);
 		if ((sampleDistance[0] > 0.3) && (helpRight == 1)) {
 			rotationRight();
+			System.out.println("rotation right A");
+			rot = 1;
 		}
+		
+		helpForward = desk.control(); // bude 1, pokud tam robot uz byl (policko pred nim)
 
-		if ((helpForward == 1) && (helpAround == 0)) {
+		if ((helpForward == 1) && (helpAround == 0) && (rot == 0)) {
 			if (motorSmall.getTachoCount() < -80) {
 				motorSmall.rotate(180); // otoci US senzor doleva
 			}
@@ -187,12 +192,16 @@ public class Ride4 {
 			distanceSampler.fetchSample(sampleDistance, 0);
 			if (sampleDistance[0] > 0.3) {
 				rotationLeft();
+				rot = 1;
+				System.out.println("rotation left B");
 			} else {
 				rotation180();
+				rot = 1;
+				System.out.println("rotation 180 B");
 			}
 		}
 
-		if ((helpRight == 0) && (helpAround == 0)) {
+		if ((helpRight == 0) && (helpAround == 0) && (rot == 0)) {
 			if (motorSmall.getTachoCount() < -80) {
 				motorSmall.rotate(180); // otoci US senzor doleva
 			}
@@ -201,8 +210,12 @@ public class Ride4 {
 			distanceSampler.fetchSample(sampleDistance, 0);
 			if (sampleDistance[0] > 0.3) {
 				rotationLeft();
+				rot = 1;
+				System.out.println("rotation left C");
 			} else if (helpRightEdge == 0) {
 				rotation180();
+				rot = 1;
+				System.out.println("rotation 180 C");
 			}
 		}
 
