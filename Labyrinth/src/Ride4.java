@@ -48,17 +48,16 @@ public class Ride4 {
 		gyroSampler = gyro.getAngleAndRateMode();
 		sampleGyro = new float[gyroSampler.sampleSize()];
 		desk = new Desk(distanceSensor);
-		//initialConditions();
+		// initialConditions();
 		goToLabyrinth();
 		motorL.close();
 		motorR.close();
 		distanceSensor.close();
 		touch.close();
 	}
-	
-	private void initialConditions() {
-		desk.initialCondition();
-	}
+	/*
+	 * private void initialConditions() { desk.initialCondition(); }
+	 */
 
 	private void goToLabyrinth() {
 		motorSmall.resetTachoCount();
@@ -81,14 +80,11 @@ public class Ride4 {
 		help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
 		if (help == 0) {
 			motorsForward();
-			// if (sampleDistance[0] > 0.3) {
-			// Delay.msDelay(800);
-			// }
 		}
 
 		do {
 			help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
-		} while ((motorL.getTachoCount() < 170) && (help == 0) && (sampleTouch[0] == 0));
+		} while ((motorL.getTachoCount() < 200) && (help == 0) && (sampleTouch[0] == 0));
 
 		if (sampleTouch[0] == 1) {
 			motorL.startSynchronization();
@@ -96,7 +92,7 @@ public class Ride4 {
 			motorR.rotate(-30);
 			motorL.endSynchronization();
 			Delay.msDelay(200);
-			if (motorL.getTachoCount() < 300) {
+			if ((motorL.getTachoCount() < 350) && (motorL.getTachoCount() > 50)) {
 				desk.back();
 			}
 			desk.measureForward();
@@ -140,7 +136,7 @@ public class Ride4 {
 			motorR.rotate(-30);
 			motorL.endSynchronization();
 			Delay.msDelay(200);
-			if (motorL.getTachoCount() < 300) {
+			if ((motorL.getTachoCount() < 350) && (motorL.getTachoCount() > 50)) {
 				desk.back();
 			}
 			desk.measureForward();
@@ -177,7 +173,7 @@ public class Ride4 {
 		helpForward = desk.control(); // bude 1, pokud tam robot uz byl (policko pred nim)
 		helpAround = desk.controlPresenceAround(); // bude 1, kdyz se robot nema kam hnout kvuli prekazce, nebo ze uz
 													// tam byl
-		System.out.println("help " + helpRight + " " + helpForward + " " + helpAround);
+	//	System.out.println("help " + helpRight + " " + helpForward + " " + helpAround);
 		if ((sampleDistance[0] > 0.3) && (helpRight == 1)) {
 			rotationRight();
 		}
@@ -195,7 +191,7 @@ public class Ride4 {
 				rotation180();
 			}
 		}
-		
+
 		if ((helpRight == 0) && (helpAround == 0)) {
 			if (motorSmall.getTachoCount() < -80) {
 				motorSmall.rotate(180); // otoci US senzor doleva
@@ -215,7 +211,7 @@ public class Ride4 {
 			System.out.println("konec cesty");
 		}
 	}
-	
+
 	private void findField() {
 		int waySize = desk.findWay();
 		int rot;
@@ -251,11 +247,26 @@ public class Ride4 {
 				break;
 			}
 			motorL.resetTachoCount();
-			while (motorL.getTachoCount() < 550) {
-				
+			do {
+				touchM.fetchSample(sampleTouch, 0);
+			} while ((motorL.getTachoCount() < 575) && (sampleTouch[0] == 0));
+
+			if (sampleTouch[0] == 1) {
+				motorL.startSynchronization();
+				motorL.rotate(-30);
+				motorR.rotate(-30);
+				motorL.endSynchronization();
+				Delay.msDelay(200);
+				desk.measureForward();
+				if (motorSmall.getTachoCount() < -80) {
+					motorSmall.rotate(180);
+				}
+				measure();
 			}
 			desk.move();
-			
+			if (motorL.getTachoCount() < 300) {
+				desk.back();
+			}
 		}
 		desk.eraseWay();
 	}
