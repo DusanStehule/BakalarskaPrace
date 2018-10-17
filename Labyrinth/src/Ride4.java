@@ -49,6 +49,7 @@ public class Ride4 {
 		sampleGyro = new float[gyroSampler.sampleSize()];
 		desk = new Desk(distanceSensor);
 		// initialConditions();
+		// start();
 		goToLabyrinth();
 		motorL.close();
 		motorR.close();
@@ -58,10 +59,18 @@ public class Ride4 {
 	/*
 	 * private void initialConditions() { desk.initialCondition(); }
 	 */
+	/*
+	 * private void start() { motorSmall.resetTachoCount(); motorSmall.rotate(-90);
+	 * // nastavi US sensor doprava rideWhile(); rotate(); if
+	 * (motorSmall.getTachoCount() < -80) { motorSmall.rotate(180); } rideWhile();
+	 * rotationLeft(); }
+	 */
 
 	private void goToLabyrinth() {
 		motorSmall.resetTachoCount();
 		motorSmall.rotate(-90); // nastavi US sensor doprava
+		motorL.setSpeed(400);
+		motorR.setSpeed(400);
 		while (true) {
 			rideWhile();
 			rotate();
@@ -84,7 +93,8 @@ public class Ride4 {
 
 		do {
 			help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
-		} while ((motorL.getTachoCount() < 200) && (help == 0) && (sampleTouch[0] == 0));
+			touchM.fetchSample(sampleTouch, 0);
+		} while ((motorL.getTachoCount() < 150) && (help == 0) && (sampleTouch[0] == 0));
 
 		if (sampleTouch[0] == 1) {
 			motorL.startSynchronization();
@@ -92,7 +102,7 @@ public class Ride4 {
 			motorR.rotate(-30);
 			motorL.endSynchronization();
 			Delay.msDelay(200);
-			if ((motorL.getTachoCount() < 350) && (motorL.getTachoCount() > 50)) {
+			if ((motorL.getTachoCount() < 350) && (motorL.getTachoCount() > 0)) {
 				desk.back();
 			}
 			desk.measureForward();
@@ -136,7 +146,7 @@ public class Ride4 {
 			motorR.rotate(-30);
 			motorL.endSynchronization();
 			Delay.msDelay(200);
-			if ((motorL.getTachoCount() < 350) && (motorL.getTachoCount() > 50)) {
+			if ((motorL.getTachoCount() < 350) && (motorL.getTachoCount() > 0)) {
 				desk.back();
 			}
 			desk.measureForward();
@@ -147,8 +157,13 @@ public class Ride4 {
 			measure();
 		}
 
-		if ((sampleDistance[0] > 0.3) || (help == 1)) {
+		if (sampleDistance[0] > 0.3) {
 			Delay.msDelay(700);
+			desk.turnOffLight();
+		}
+
+		if (help == 1) {
+			Delay.msDelay(400);
 			desk.turnOffLight();
 		}
 
@@ -160,30 +175,37 @@ public class Ride4 {
 	 * zatoci doprava nebo doleva, kdyz: -to doprava nejde -vpravo uz byl
 	 */
 	private void rotate() {
-		int rot = 0;
 		int helpRight;
 		int helpRightEdge;
 		int helpForward;
+		int helpEdge;
 		int helpAround;
 		int angle = -90 - motorSmall.getTachoCount();
+		int rot = 0;
 
 		motorSmall.rotate(angle); // otoci US senzor doprava
 		distanceSampler.fetchSample(sampleDistance, 0);
 		helpRight = desk.controlPresenceRight(); // bude 1, pokud tam robot jeste nebyl (policko vpravo)
 		helpRightEdge = desk.controlPresenceEdge(); // bude 1, pokud ma robot na prave strane bludiste
 		helpForward = desk.control(); // bude 1, pokud tam robot uz byl (policko pred nim)
+		helpEdge = desk.controlEdge(); // vraci 1, pokud je pred robotem okraj bludiste
 		helpAround = desk.controlPresenceAround(); // bude 1, kdyz se robot nema kam hnout kvuli prekazce, nebo ze uz
 													// tam byl
-	//	System.out.println("help " + helpRight + " " + helpForward + " " + helpAround);
+		// System.out.println("help " + helpRight + " " + helpForward + " " +
+		// helpAround);
 		if ((sampleDistance[0] > 0.3) && (helpRight == 1)) {
 			rotationRight();
 			System.out.println("rotation right A");
 			rot = 1;
 		}
-		
+
 		helpForward = desk.control(); // bude 1, pokud tam robot uz byl (policko pred nim)
 
-		if ((helpForward == 1) && (helpAround == 0) && (rot == 0)) {
+		if (helpEdge == 1) {
+			Delay.msDelay(1000);
+		}
+
+		if (((helpForward == 1) || (helpEdge == 1)) && (helpAround == 0) && (rot == 0)) {
 			if (motorSmall.getTachoCount() < -80) {
 				motorSmall.rotate(180); // otoci US senzor doleva
 			}
@@ -201,11 +223,11 @@ public class Ride4 {
 			}
 		}
 
-		if ((helpRight == 0) && (helpAround == 0) && (rot == 0)) {
+		if ((helpRight == 0) && (helpAround == 0) && (helpForward == 1) && (rot == 0)) {
 			if (motorSmall.getTachoCount() < -80) {
 				motorSmall.rotate(180); // otoci US senzor doleva
 			}
-			Delay.msDelay(2000);
+			Delay.msDelay(500); 
 			measure();
 			distanceSampler.fetchSample(sampleDistance, 0);
 			if (sampleDistance[0] > 0.3) {
@@ -223,6 +245,7 @@ public class Ride4 {
 			findField();
 			System.out.println("konec cesty");
 		}
+		rot = 0;
 	}
 
 	private void findField() {
@@ -231,6 +254,10 @@ public class Ride4 {
 		motorsForward();
 		for (int i = 0; i < waySize; i++) {
 			rot = desk.rotationToWay();
+			if (rot != 0) {
+				motorsStop();
+			}
+			Delay.msDelay(200);
 			switch (rot) {
 			case -3:
 				rotationLeft();
@@ -262,7 +289,7 @@ public class Ride4 {
 			motorL.resetTachoCount();
 			do {
 				touchM.fetchSample(sampleTouch, 0);
-			} while ((motorL.getTachoCount() < 575) && (sampleTouch[0] == 0));
+			} while ((motorL.getTachoCount() < 550) && (sampleTouch[0] == 0));
 
 			if (sampleTouch[0] == 1) {
 				motorL.startSynchronization();
@@ -277,7 +304,7 @@ public class Ride4 {
 				measure();
 			}
 			desk.move();
-			if (motorL.getTachoCount() < 300) {
+			if (motorL.getTachoCount() < 450) {
 				desk.back();
 			}
 		}
@@ -345,13 +372,28 @@ public class Ride4 {
 		motorR.forward();
 		motorL.endSynchronization();
 
-		while (sampleGyro[0] < 69) {
+		while (sampleGyro[0] < 68) {
 			gyroSampler.fetchSample(sampleGyro, 0);
 		}
 
 		motorsStop();
-		gyro.reset();
 		Delay.msDelay(500);
+		gyroSampler.fetchSample(sampleGyro, 0);
+		
+		if (sampleGyro[0] < 80) {
+			motorL.startSynchronization();
+			motorL.backward();
+			motorR.forward();
+			motorL.endSynchronization();
+			while (sampleGyro[0] < 80) {
+				gyroSampler.fetchSample(sampleGyro, 0);
+			}
+			motorsStop();
+			gyro.reset();
+			Delay.msDelay(500);
+		} else {
+			gyro.reset();
+		}
 
 		desk.rotationL();
 
@@ -368,13 +410,28 @@ public class Ride4 {
 		motorR.backward();
 		motorL.endSynchronization();
 
-		while (sampleGyro[0] > -69) {
+		while (sampleGyro[0] > -67) {
 			gyroSampler.fetchSample(sampleGyro, 0);
 		}
 
 		motorsStop();
-		gyro.reset();
 		Delay.msDelay(500);
+		gyroSampler.fetchSample(sampleGyro, 0);
+
+		if (sampleGyro[0] > -80) {
+			motorL.startSynchronization();
+			motorL.forward();
+			motorR.backward();
+			motorL.endSynchronization();
+			while (sampleGyro[0] > -80) {
+				gyroSampler.fetchSample(sampleGyro, 0);
+			}
+			motorsStop();
+			gyro.reset();
+			Delay.msDelay(500);
+		} else {
+			gyro.reset();
+		}
 
 		desk.rotationR();
 

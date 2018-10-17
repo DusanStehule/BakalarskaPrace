@@ -78,22 +78,52 @@ public class Desk {
 		int help = 0;
 		switch (direct) {
 		case 0:
-			if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) {
+			if ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2))) {
 				help = 1;
 			}
 			break;
 		case 1:
-			if ((column == 8) || ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) {
+			if ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2))) {
 				help = 1;
 			}
 			break;
 		case 2:
-			if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) {
+			if ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2))) {
 				help = 1;
 			}
 			break;
 		case 3:
-			if ((column == 0) || ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) {
+			if ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2))) {
+				help = 1;
+			}
+			break;
+		}
+		return help;
+	}
+	
+	/*
+	 * vraci 1, pokud je pred robotem okraj bludiste
+	 */
+	public int controlEdge() {
+		int help = 0;
+		switch (direct) {
+		case 0:
+			if (row == 0) {
+				help = 1;
+			}
+			break;
+		case 1:
+			if (column == 8) {
+				help = 1;
+			}
+			break;
+		case 2:
+			if (row == 5) {
+				help = 1;
+			}
+			break;
+		case 3:
+			if (column == 0) {
 				help = 1;
 			}
 			break;
