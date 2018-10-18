@@ -69,8 +69,6 @@ public class Ride4 {
 	private void goToLabyrinth() {
 		motorSmall.resetTachoCount();
 		motorSmall.rotate(-90); // nastavi US sensor doprava
-		motorL.setSpeed(400);
-		motorR.setSpeed(400);
 		while (true) {
 			rideWhile();
 			rotate();
@@ -94,15 +92,15 @@ public class Ride4 {
 		do {
 			help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
 			touchM.fetchSample(sampleTouch, 0);
-		} while ((motorL.getTachoCount() < 150) && (help == 0) && (sampleTouch[0] == 0));
+		} while ((motorL.getTachoCount() < 190) && (help == 0) && (sampleTouch[0] == 0));
 
 		if (sampleTouch[0] == 1) {
 			motorL.startSynchronization();
 			motorL.rotate(-30);
 			motorR.rotate(-30);
 			motorL.endSynchronization();
-			Delay.msDelay(200);
-			if ((motorL.getTachoCount() < 350) && (motorL.getTachoCount() > 0)) {
+			Delay.msDelay(100);
+			if ((motorL.getTachoCount() < 100) && (motorL.getTachoCount() > 0)) {
 				desk.back();
 			}
 			desk.measureForward();
@@ -114,13 +112,14 @@ public class Ride4 {
 		}
 
 		if (help == 0) {
+			Delay.msDelay(50);
 			measure();
 			desk.move();
 		}
 
 		help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
 		if (help == 1) {
-			Delay.msDelay(500);
+			Delay.msDelay(250);
 		}
 
 		help = desk.control();
@@ -128,7 +127,7 @@ public class Ride4 {
 		motorL.resetTachoCount();
 
 		do {
-			if (motorL.getTachoCount() > 550) { // puvodne 573
+			if (motorL.getTachoCount() > 550) { // puvodne 550
 				measure();
 				desk.move();
 				help = desk.control();
@@ -145,8 +144,8 @@ public class Ride4 {
 			motorL.rotate(-30);
 			motorR.rotate(-30);
 			motorL.endSynchronization();
-			Delay.msDelay(200);
-			if ((motorL.getTachoCount() < 350) && (motorL.getTachoCount() > 0)) {
+			Delay.msDelay(100);
+			if ((motorL.getTachoCount() < 100) && (motorL.getTachoCount() > 0)) {
 				desk.back();
 			}
 			desk.measureForward();
@@ -158,12 +157,12 @@ public class Ride4 {
 		}
 
 		if (sampleDistance[0] > 0.3) {
-			Delay.msDelay(700);
+			Delay.msDelay(430);
 			desk.turnOffLight();
 		}
 
 		if (help == 1) {
-			Delay.msDelay(400);
+			Delay.msDelay(270);
 			desk.turnOffLight();
 		}
 
@@ -209,7 +208,7 @@ public class Ride4 {
 			if (motorSmall.getTachoCount() < -80) {
 				motorSmall.rotate(180); // otoci US senzor doleva
 			}
-			Delay.msDelay(500);
+			Delay.msDelay(200);
 			measure();
 			distanceSampler.fetchSample(sampleDistance, 0);
 			if (sampleDistance[0] > 0.3) {
@@ -227,7 +226,7 @@ public class Ride4 {
 			if (motorSmall.getTachoCount() < -80) {
 				motorSmall.rotate(180); // otoci US senzor doleva
 			}
-			Delay.msDelay(500); 
+			Delay.msDelay(200);
 			measure();
 			distanceSampler.fetchSample(sampleDistance, 0);
 			if (sampleDistance[0] > 0.3) {
@@ -242,6 +241,7 @@ public class Ride4 {
 		}
 
 		if (helpAround == 1) {
+			System.out.println("help around");
 			findField();
 			System.out.println("konec cesty");
 		}
@@ -252,12 +252,12 @@ public class Ride4 {
 		int waySize = desk.findWay();
 		int rot;
 		motorsForward();
+		rot = desk.rotationToWay();
 		for (int i = 0; i < waySize; i++) {
-			rot = desk.rotationToWay();
 			if (rot != 0) {
 				motorsStop();
 			}
-			Delay.msDelay(200);
+			Delay.msDelay(100);
 			switch (rot) {
 			case -3:
 				rotationLeft();
@@ -287,16 +287,31 @@ public class Ride4 {
 				break;
 			}
 			motorL.resetTachoCount();
-			do {
-				touchM.fetchSample(sampleTouch, 0);
-			} while ((motorL.getTachoCount() < 550) && (sampleTouch[0] == 0));
+			if (i < waySize - 1) {
+				rot = desk.rotationToWay();
+			}
+			
+			if (((rot == -1) || (rot == 3)) && (i < waySize - 1)) {
+				Delay.msDelay(400);
+				do {
+					distanceSampler.fetchSample(sampleDistance, 0);
+					touchM.fetchSample(sampleTouch, 0);
+				} while ((sampleDistance[0] < 0.3) && (sampleTouch[0] == 0));
+				if (sampleDistance[0] > 0.4) {
+					Delay.msDelay(470);
+				}
+			} else {
+				do {
+					touchM.fetchSample(sampleTouch, 0);
+				} while ((motorL.getTachoCount() < 550) && (sampleTouch[0] == 0));
+			}
 
 			if (sampleTouch[0] == 1) {
 				motorL.startSynchronization();
 				motorL.rotate(-30);
 				motorR.rotate(-30);
 				motorL.endSynchronization();
-				Delay.msDelay(200);
+				Delay.msDelay(100);
 				desk.measureForward();
 				if (motorSmall.getTachoCount() < -80) {
 					motorSmall.rotate(180);
@@ -304,7 +319,7 @@ public class Ride4 {
 				measure();
 			}
 			desk.move();
-			if (motorL.getTachoCount() < 450) {
+			if (motorL.getTachoCount() < 100) {
 				desk.back();
 			}
 		}
@@ -327,6 +342,8 @@ public class Ride4 {
 	 */
 	private void motorsForward() {
 		motorL.startSynchronization();
+		motorL.setSpeed(600);
+		motorR.setSpeed(600);
 		motorL.forward();
 		motorR.forward();
 		motorL.endSynchronization();
@@ -366,20 +383,22 @@ public class Ride4 {
 	 */
 	private void rotationLeft() {
 		gyro.reset();
+		motorL.setSpeed(400);
+		motorR.setSpeed(400);
 		gyroSampler.fetchSample(sampleGyro, 0);
 		motorL.startSynchronization();
 		motorL.backward();
 		motorR.forward();
 		motorL.endSynchronization();
 
-		while (sampleGyro[0] < 68) {
+		while (sampleGyro[0] < 67) {
 			gyroSampler.fetchSample(sampleGyro, 0);
 		}
 
 		motorsStop();
-		Delay.msDelay(500);
+		Delay.msDelay(300);
 		gyroSampler.fetchSample(sampleGyro, 0);
-		
+
 		if (sampleGyro[0] < 80) {
 			motorL.startSynchronization();
 			motorL.backward();
@@ -390,7 +409,7 @@ public class Ride4 {
 			}
 			motorsStop();
 			gyro.reset();
-			Delay.msDelay(500);
+			Delay.msDelay(200);
 		} else {
 			gyro.reset();
 		}
@@ -403,6 +422,8 @@ public class Ride4 {
 	 * zatoci doprava (gyro)
 	 */
 	private void rotationRight() {
+		motorL.setSpeed(400);
+		motorR.setSpeed(400);
 		gyro.reset();
 		gyroSampler.fetchSample(sampleGyro, 0);
 		motorL.startSynchronization();
@@ -410,12 +431,12 @@ public class Ride4 {
 		motorR.backward();
 		motorL.endSynchronization();
 
-		while (sampleGyro[0] > -67) {
+		while (sampleGyro[0] > -70) {
 			gyroSampler.fetchSample(sampleGyro, 0);
 		}
 
 		motorsStop();
-		Delay.msDelay(500);
+		Delay.msDelay(300);
 		gyroSampler.fetchSample(sampleGyro, 0);
 
 		if (sampleGyro[0] > -80) {
@@ -428,7 +449,7 @@ public class Ride4 {
 			}
 			motorsStop();
 			gyro.reset();
-			Delay.msDelay(500);
+			Delay.msDelay(200);
 		} else {
 			gyro.reset();
 		}
@@ -441,6 +462,8 @@ public class Ride4 {
 	 * otoci se o 180°
 	 */
 	private void rotation180() {
+		motorL.setSpeed(400);
+		motorR.setSpeed(400);
 		gyro.reset();
 		gyroSampler.fetchSample(sampleGyro, 0);
 		motorL.startSynchronization();
@@ -454,7 +477,7 @@ public class Ride4 {
 
 		motorsStop();
 		gyro.reset();
-		Delay.msDelay(500);
+		Delay.msDelay(200);
 
 		desk.rotationB();
 
