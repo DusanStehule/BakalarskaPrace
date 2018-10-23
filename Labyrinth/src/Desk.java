@@ -3,7 +3,6 @@ import java.util.LinkedList;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
-import lejos.utility.Delay;
 
 public class Desk {
 
@@ -100,7 +99,7 @@ public class Desk {
 		}
 		return help;
 	}
-	
+
 	/*
 	 * vraci 1, pokud je pred robotem okraj bludiste
 	 */
@@ -160,7 +159,7 @@ public class Desk {
 		}
 		return help;
 	}
-	
+
 	/*
 	 * vraci 1, pokud ma robot na prave strane hranu bludiste
 	 */
@@ -195,52 +194,66 @@ public class Desk {
 		int help = 0;
 		switch (direct) {
 		case 0:
-			if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) { // pred robotem
-				if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) { // za robotem
-					if ((column == 0) || ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) { // nalevo od
-																											// robota
-					//	System.out.println("presence 0");
+			if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) { // pred
+																												// robotem
+				if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) { // za
+																													// robotem
+					if ((column == 0)
+							|| ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) { // nalevo
+																													// od
+						// robota
+						// System.out.println("presence 0");
 						help = 1;
 					}
 				}
 			}
 			break;
 		case 1:
-			if ((column == 8) || ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) { // pred robotem
-				if ((column == 0) || ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) { // za robotem
-					if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) { // nalevo od
-																										// robota
-					//	System.out.println("presence 1");
+			if ((column == 8) || ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) { // pred
+																														// robotem
+				if ((column == 0) || ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) { // za
+																															// robotem
+					if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) { // nalevo
+																														// od
+						// robota
+						// System.out.println("presence 1");
 						help = 1;
 					}
 				}
 			}
 			break;
 		case 2:
-			if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) { // pred robotem
-				if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) { // za robotem
-					if ((column == 8) || ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) { // nalevo od
-																											// robota
-					//	System.out.println("coordinate " + row + " " + column + " " + direct);
-					//	System.out.println("presence 2");
+			if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) { // pred
+																												// robotem
+				if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) { // za
+																													// robotem
+					if ((column == 8)
+							|| ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) { // nalevo
+																													// od
+						// robota
+						// System.out.println("coordinate " + row + " " + column + " " + direct);
+						// System.out.println("presence 2");
 						help = 1;
 					}
 				}
 			}
 			break;
 		case 3:
-			if ((column == 0) || ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) { // pred robotem
-				if ((column == 8) || ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) { // za robotem
-					if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) { // nalevo od
-																										// robota
-					//	System.out.println("presence 3");
+			if ((column == 0) || ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) { // pred
+																														// robotem
+				if ((column == 8) || ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) { // za
+																															// robotem
+					if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) { // nalevo
+																														// od
+						// robota
+						// System.out.println("presence 3");
 						help = 1;
 					}
 				}
 			}
 			break;
 		}
-		
+
 		return help;
 	}
 
@@ -286,25 +299,25 @@ public class Desk {
 			case 0:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-				//	System.out.println("measureL " + row + " " + (column - 1));
+					// System.out.println("measureL " + row + " " + (column - 1));
 				}
 				break;
 			case 1:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-				//	System.out.println("measureL " + (row - 1) + " " + column);
+					// System.out.println("measureL " + (row - 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-				//	System.out.println("measureL " + row + " " + (column + 1));
+					// System.out.println("measureL " + row + " " + (column + 1));
 				}
 				break;
 			case 3:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-				//	System.out.println("measureL " + (row + 1) + " " + column);
+					// System.out.println("measureL " + (row + 1) + " " + column);
 				}
 				break;
 			}
@@ -321,25 +334,25 @@ public class Desk {
 			case 0:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-				//	System.out.println("measureR " + row + " " + (column + 1));
+					// System.out.println("measureR " + row + " " + (column + 1));
 				}
 				break;
 			case 1:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-				//	System.out.println("measureR " + (row + 1) + " " + column);
+					// System.out.println("measureR " + (row + 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-				//	System.out.println("measureR " + row + " " + (column - 1));
+					// System.out.println("measureR " + row + " " + (column - 1));
 				}
 				break;
 			case 3:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-				//	System.out.println("measureR " + (row - 1) + " " + column);
+					// System.out.println("measureR " + (row - 1) + " " + column);
 				}
 				break;
 			}
@@ -371,7 +384,7 @@ public class Desk {
 		}
 		desk[row][column] = 0;
 	}
-	
+
 	public void back() {
 		switch (direct) {
 		case 0:
@@ -437,13 +450,59 @@ public class Desk {
 		}
 		System.out.println("rotation 180 " + direct);
 	}
-	
+
 	public int findWay() {
 		BFS.inicialize(desk, row, column, direct);
 		way = BFS.getWay(); // vrati cestu od zacatku do konce (bez aktuálního pole)
 		return way.size();
 	}
 
+	/*
+	 * vrati smer, kterym se vydat k neprozkoumanemu policku
+	 */
+	public int getRotation() {
+		int ret = -5;
+		if (way.size() > 0) {
+			int rowHelp = (way.getFirst() / 10) - 1;
+			int columnHelp = way.getFirst() % 10;
+			int directHelp = 0;
+			int rowH = row;
+			int columnH = column;
+			
+			switch (direct) {
+			case 0:
+					rowH--;
+				break;
+			case 1:
+					columnH++;
+				break;
+			case 2:
+					rowH++;
+				break;
+			case 3:
+					columnH--;
+				break;
+			}
+
+			if (rowHelp - rowH == -1) {
+				directHelp = 0;
+			} else if (rowHelp - rowH == 1) {
+				directHelp = 2;
+			}
+
+			if (columnHelp - columnH == -1) {
+				directHelp = 3;
+			} else if (columnHelp - columnH == 1) {
+				directHelp = 1;
+			}
+			ret = direct - directHelp;
+		}
+		return ret;
+	}
+
+	/*
+	 * vrati smer, kterym se vydat k neprozkoumanemu policku a smaze prvni policko
+	 */
 	public int rotationToWay() {
 		int rowHelp = (way.getFirst() / 10) - 1;
 		int columnHelp = way.getFirst() % 10;
@@ -462,55 +521,34 @@ public class Desk {
 			directHelp = 1;
 		}
 		ret = direct - directHelp;
-		
+
 		way.removeFirst();
 		return ret;
 	}
-	
+
 	public void eraseWay() {
+		way.clear();
 		BFS.stop();
 	}
-	
+
 	/*
-	public void initialCondition() {
-	//	row = 0;
-	//	column = 8;
-	//	direct = 1;
-		desk[0][3] = 0;
-		desk[0][4] = 0;
-		desk[0][5] = 0;
-		desk[0][6] = 0;
-		desk[0][7] = 0;
-		desk[0][8] = 0;
-		
-		desk[1][3] = 0;
-		desk[1][4] = 2;
-		desk[1][5] = 0;
-	//	desk[1][6] = 2;
-		desk[1][7] = 0;
-		desk[1][8] = 2;
-		
-		desk[2][2] = 0;
-		desk[2][3] = 0;
-	//	desk[2][4] = 0;
-		desk[2][5] = 0;
-		desk[2][6] = 0;
-		desk[2][7] = 2;
-		
-		desk[3][2] = 0;
-		desk[3][3] = 2;
-		desk[3][4] = 2;
-		desk[3][5] = 2;
-		desk[3][6] = 0;
-		
-		desk[4][2] = 0;
-		desk[4][3] = 0;
-		desk[4][4] = 0;
-		desk[4][5] = 0;
-		desk[4][6] = 0;
-	}
-*/
-	
+	 * public void initialCondition() { // row = 0; // column = 8; // direct = 1;
+	 * desk[0][3] = 0; desk[0][4] = 0; desk[0][5] = 0; desk[0][6] = 0; desk[0][7] =
+	 * 0; desk[0][8] = 0;
+	 * 
+	 * desk[1][3] = 0; desk[1][4] = 2; desk[1][5] = 0; // desk[1][6] = 2; desk[1][7]
+	 * = 0; desk[1][8] = 2;
+	 * 
+	 * desk[2][2] = 0; desk[2][3] = 0; // desk[2][4] = 0; desk[2][5] = 0; desk[2][6]
+	 * = 0; desk[2][7] = 2;
+	 * 
+	 * desk[3][2] = 0; desk[3][3] = 2; desk[3][4] = 2; desk[3][5] = 2; desk[3][6] =
+	 * 0;
+	 * 
+	 * desk[4][2] = 0; desk[4][3] = 0; desk[4][4] = 0; desk[4][5] = 0; desk[4][6] =
+	 * 0; }
+	 */
+
 	public void turnOffLight() {
 		desk[row][column] = 0;
 	}
