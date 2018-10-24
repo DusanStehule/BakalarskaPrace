@@ -530,6 +530,12 @@ public class Desk {
 		way.clear();
 		BFS.stop();
 	}
+	
+	public void reset() {
+		row = 3;
+		column = 4;
+		direct = 0;
+	}
 
 	/*
 	 * public void initialCondition() { // row = 0; // column = 8; // direct = 1;
