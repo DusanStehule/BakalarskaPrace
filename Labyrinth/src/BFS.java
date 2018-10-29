@@ -75,22 +75,22 @@ public class BFS {
 		int column = hash % 10;
 		int help;
 		
-		if ((row < 5) && (desk[row + 1][column] != 2)) {
+		if ((row < 5) && (desk[row + 1][column] != 2) && (desk[row + 1][column] != 4)) {
 			help = (row + 2) * 10 + column;
 			exp.add(help);
 		}
 		
-		if ((row > 0) && (desk[row - 1][column] != 2)) {
+		if ((row > 0) && (desk[row - 1][column] != 2) && (desk[row - 1][column] != 4)) {
 			help = (row) * 10 + column;
 			exp.add(help);
 		}
 		
-		if ((column < 8) && (desk[row][column + 1] != 2)) {
+		if ((column < 8) && (desk[row][column + 1] != 2) && (desk[row][column + 1] != 4)) {
 			help = (row + 1) * 10 + column + 1;
 			exp.add(help);
 		}
 		
-		if ((column > 0) && (desk[row][column - 1] != 2)) {
+		if ((column > 0) && (desk[row][column - 1] != 2) && (desk[row][column - 1] != 4)) {
 			help = (row + 1) * 10 + column - 1;
 			exp.add(help);
 		}
