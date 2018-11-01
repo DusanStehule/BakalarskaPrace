@@ -63,7 +63,7 @@ public class BFS {
 		close.clear();
 		expanded.clear();
 		
-		while (goal != (hashIn(row, column))) {
+		while ((goal != (hashIn(row, column))) && (parent.get(goal) != null)) {
 			way.addFirst(goal);
 			goal = parent.get(goal);
 		}
