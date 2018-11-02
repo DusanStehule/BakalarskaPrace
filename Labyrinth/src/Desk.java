@@ -408,7 +408,7 @@ public class Desk {
 	 */
 	public void measureLeft() {
 		distanceSampler.fetchSample(sampleDistance, 0);
-		if ((sampleDistance[0] < 0.2) && (sampleDistance[0] > 0)) {
+		if ((sampleDistance[0] < 0.25) && (sampleDistance[0] > 0)) {
 			switch (direct) {
 			case 0:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
@@ -443,7 +443,7 @@ public class Desk {
 	 */
 	public void measureRight() {
 		distanceSampler.fetchSample(sampleDistance, 0);
-		if ((sampleDistance[0] < 0.2) && (sampleDistance[0] > 0)) {
+		if ((sampleDistance[0] < 0.25) && (sampleDistance[0] > 0)) {
 			switch (direct) {
 			case 0:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
