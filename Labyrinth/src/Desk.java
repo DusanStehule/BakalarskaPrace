@@ -75,7 +75,7 @@ public class Desk {
 	/*
 	 * vraci 0, pokud tam robot jeste nebyl, jinak 1
 	 */
-	public int control() {
+	public int controlForward() {
 		int help = 0;
 		switch (direct) {
 		case 0:
@@ -435,6 +435,33 @@ public class Desk {
 				}
 				break;
 			}
+		} else if (sampleDistance[0] > 0.25) {
+			switch (direct) {
+			case 0:
+				if ((column > 0) && (desk[row][column - 1] == 2)) {
+					desk[row][column - 1] = 3;
+					 System.out.println("restartL " + row + " " + (column - 1));
+				}
+				break;
+			case 1:
+				if ((row > 0) && (desk[row - 1][column] == 2)) {
+					desk[row - 1][column] = 3;
+					 System.out.println("restartL " + (row - 1) + " " + column);
+				}
+				break;
+			case 2:
+				if ((column < 8) && (desk[row][column + 1] == 2)) {
+					desk[row][column + 1] = 3;
+					 System.out.println("restartL " + row + " " + (column + 1));
+				}
+				break;
+			case 3:
+				if ((row < 5) && (desk[row + 1][column] == 2)) {
+					desk[row + 1][column] = 3;
+					 System.out.println("restartL " + (row + 1) + " " + column);
+				}
+				break;
+			}
 		}
 	}
 
@@ -470,48 +497,34 @@ public class Desk {
 				}
 				break;
 			}
+		} else if (sampleDistance[0] > 0.25) {
+			switch (direct) {
+			case 0:
+				if ((column < 8) && (desk[row][column + 1] == 2)) {
+					desk[row][column + 1] = 3;
+					 System.out.println("restartR " + row + " " + (column + 1));
+				}
+				break;
+			case 1:
+				if ((row < 5) && (desk[row + 1][column] == 2)) {
+					desk[row + 1][column] = 3;
+					 System.out.println("restartR " + (row + 1) + " " + column);
+				}
+				break;
+			case 2:
+				if ((column > 0) && (desk[row][column - 1] == 2)) {
+					desk[row][column - 1] = 3;
+					 System.out.println("restartR " + row + " " + (column - 1));
+				}
+				break;
+			case 3:
+				if ((row > 0) && (desk[row - 1][column] == 2)) {
+					desk[row - 1][column] = 3;
+					 System.out.println("restartR " + (row - 1) + " " + column);
+				}
+				break;
+			}
 		}
-	}
-
-	/*
-	 * oznaci ducha pred robotem
-	 * 
-	 * public void measureGhost() { switch (direct) { case 0: if ((row > 0) &&
-	 * (desk[row - 1][column] != 0)) { desk[row - 1][column] = 5;
-	 * System.out.println("duch uricte " + (row - 1) + " " + column); } break; case
-	 * 1: if ((column < 8) && (desk[row][column + 1] != 0)) { desk[row][column + 1]
-	 * = 5; System.out.println("duch urcite " + row + " " + (column + 1)); } break;
-	 * case 2: if ((row < 5) && (desk[row + 1][column] != 0)) { desk[row +
-	 * 1][column] = 5; System.out.println("duch urcite " + (row + 1) + " " +
-	 * column); } break; case 3: if ((column > 0) && (desk[row][column - 1] != 0)) {
-	 * desk[row][column - 1] = 5; System.out.println("duch urcite " + row + " " +
-	 * (column - 1)); } break; } }
-	 */
-
-	public void oneStepMove() {
-		switch (direct) {
-		case 0:
-			if (row > 0) {
-				row--;
-			}
-			break;
-		case 1:
-			if (column < 8) {
-				column++;
-			}
-			break;
-		case 2:
-			if (row < 5) {
-				row++;
-			}
-			break;
-		case 3:
-			if (column > 0) {
-				column--;
-			}
-			break;
-		}
-		desk[row][column] = 0;
 	}
 
 	/*

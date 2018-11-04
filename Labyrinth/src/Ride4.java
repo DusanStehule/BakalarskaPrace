@@ -92,7 +92,7 @@ public class Ride4 {
 		if (motorSmall.getTachoCount() > 80) {
 			motorSmall.rotate(-180);
 		}
-		help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
+		help = desk.controlForward(); // vraci 0, pokud tam robot jeste nebyl
 		helpGhost = desk.controlGhost(); // vraci 1, pokud je na policku pred nim duch
 		if (help == 0) {
 			motorsForward();
@@ -100,7 +100,7 @@ public class Ride4 {
 		}
 
 		do {
-			help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
+			help = desk.controlForward(); // vraci 0, pokud tam robot jeste nebyl
 			touchM.fetchSample(sampleTouch, 0);
 			resetM.fetchSample(sampleReset, 0);
 		} while ((motorL.getTachoCount() < 200) && (help == 0) && (sampleTouch[0] == 0) && (sampleReset[0] == 0)
@@ -133,7 +133,7 @@ public class Ride4 {
 		if (help == 1) {
 			Delay.msDelay(300);
 		}
-		help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
+		help = desk.controlForward(); // vraci 0, pokud tam robot jeste nebyl
 		helpGhost = desk.controlGhost(); // vraci 1, pokud je na policku pred nim duch
 
 		motorL.resetTachoCount();
@@ -144,7 +144,7 @@ public class Ride4 {
 			if (motorL.getTachoCount() > 560) {
 				measure();
 				desk.move();
-				help = desk.control(); // vraci 0, pokud tam robot jeste nebyl
+				help = desk.controlForward(); // vraci 0, pokud tam robot jeste nebyl
 				helpGhost = desk.controlGhost(); // vraci 1, pokud je na policku pred nim duch
 				motorL.resetTachoCount();
 				distanceSampler.fetchSample(sampleDistance, 0);
@@ -226,7 +226,7 @@ public class Ride4 {
 		helpRight = desk.controlPresenceRight(); // bude 1, pokud tam robot uz byl nebo je tam prekazka(policko vpravo)
 		helpRightEdge = desk.controlPresenceEdge(); // bude 1, pokud ma robot na prave strane bludiste
 		helpRightPresence = desk.controlPresenceRightPresence(); // bude 1, pokud tam robot uz byl
-		helpForward = desk.control(); // bude 1, pokud tam robot uz byl (policko pred nim)
+		helpForward = desk.controlForward(); // bude 1, pokud tam robot uz byl (policko pred nim)
 		helpEdge = desk.controlEdge(); // vraci 1, pokud je pred robotem okraj bludiste
 		helpAround = desk.controlPresenceAround(); // bude 1, kdyz se robot nema kam hnout kvuli prekazce, nebo ze uz
 													// tam byl
@@ -240,7 +240,7 @@ public class Ride4 {
 			rotationRight();
 			rot = 1;
 		}
-		helpForward = desk.control(); // bude 1, pokud tam robot uz byl (policko pred nim)
+		helpForward = desk.controlForward(); // bude 1, pokud tam robot uz byl (policko pred nim)
 
 		if (((helpForward == 1) || (helpEdge == 1)) && (helpAround == 0) && (rot == 0)) {
 			if (motorSmall.getTachoCount() < -80) {
