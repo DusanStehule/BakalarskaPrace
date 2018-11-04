@@ -413,25 +413,25 @@ public class Desk {
 			case 0:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-					 System.out.println("measureL " + row + " " + (column - 1));
+				//	 System.out.println("measureL " + row + " " + (column - 1));
 				}
 				break;
 			case 1:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-					 System.out.println("measureL " + (row - 1) + " " + column);
+				//	 System.out.println("measureL " + (row - 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-					 System.out.println("measureL " + row + " " + (column + 1));
+				//	 System.out.println("measureL " + row + " " + (column + 1));
 				}
 				break;
 			case 3:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-					 System.out.println("measureL " + (row + 1) + " " + column);
+				//	 System.out.println("measureL " + (row + 1) + " " + column);
 				}
 				break;
 			}
@@ -440,25 +440,25 @@ public class Desk {
 			case 0:
 				if ((column > 0) && (desk[row][column - 1] == 2)) {
 					desk[row][column - 1] = 3;
-					 System.out.println("restartL " + row + " " + (column - 1));
+				//	 System.out.println("restartL " + row + " " + (column - 1));
 				}
 				break;
 			case 1:
 				if ((row > 0) && (desk[row - 1][column] == 2)) {
 					desk[row - 1][column] = 3;
-					 System.out.println("restartL " + (row - 1) + " " + column);
+				//	 System.out.println("restartL " + (row - 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column < 8) && (desk[row][column + 1] == 2)) {
 					desk[row][column + 1] = 3;
-					 System.out.println("restartL " + row + " " + (column + 1));
+				//	 System.out.println("restartL " + row + " " + (column + 1));
 				}
 				break;
 			case 3:
 				if ((row < 5) && (desk[row + 1][column] == 2)) {
 					desk[row + 1][column] = 3;
-					 System.out.println("restartL " + (row + 1) + " " + column);
+				//	 System.out.println("restartL " + (row + 1) + " " + column);
 				}
 				break;
 			}
@@ -475,25 +475,25 @@ public class Desk {
 			case 0:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-					 System.out.println("measureR " + row + " " + (column + 1));
+				//	 System.out.println("measureR " + row + " " + (column + 1));
 				}
 				break;
 			case 1:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-					 System.out.println("measureR " + (row + 1) + " " + column);
+				//	 System.out.println("measureR " + (row + 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-					 System.out.println("measureR " + row + " " + (column - 1));
+				//	 System.out.println("measureR " + row + " " + (column - 1));
 				}
 				break;
 			case 3:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-					 System.out.println("measureR " + (row - 1) + " " + column);
+				//	 System.out.println("measureR " + (row - 1) + " " + column);
 				}
 				break;
 			}
@@ -502,25 +502,25 @@ public class Desk {
 			case 0:
 				if ((column < 8) && (desk[row][column + 1] == 2)) {
 					desk[row][column + 1] = 3;
-					 System.out.println("restartR " + row + " " + (column + 1));
+				//	 System.out.println("restartR " + row + " " + (column + 1));
 				}
 				break;
 			case 1:
 				if ((row < 5) && (desk[row + 1][column] == 2)) {
 					desk[row + 1][column] = 3;
-					 System.out.println("restartR " + (row + 1) + " " + column);
+				//	 System.out.println("restartR " + (row + 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column > 0) && (desk[row][column - 1] == 2)) {
 					desk[row][column - 1] = 3;
-					 System.out.println("restartR " + row + " " + (column - 1));
+				//	 System.out.println("restartR " + row + " " + (column - 1));
 				}
 				break;
 			case 3:
 				if ((row > 0) && (desk[row - 1][column] == 2)) {
 					desk[row - 1][column] = 3;
-					 System.out.println("restartR " + (row - 1) + " " + column);
+				//	 System.out.println("restartR " + (row - 1) + " " + column);
 				}
 				break;
 			}

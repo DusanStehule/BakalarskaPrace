@@ -390,7 +390,7 @@ public class Ride {
 					touchM.fetchSample(sampleTouch, 0);
 				}
 				if (sampleDistance[0] > 0.3) {
-					Delay.msDelay(400);
+					Delay.msDelay(350);
 				}
 				if (sampleTouch[0] == 1) {
 					motorL.startSynchronization();
@@ -413,7 +413,7 @@ public class Ride {
 					touchM.fetchSample(sampleTouch, 0);
 				}
 				if (sampleDistance[0] > 0.3) {
-					Delay.msDelay(400);
+					Delay.msDelay(350);
 				}
 				if (sampleTouch[0] == 1) {
 					motorL.startSynchronization();
@@ -655,7 +655,7 @@ public class Ride {
 			motorR.forward();
 			motorL.endSynchronization();
 			Delay.msDelay(30);
-			while (sampleGyro[0] < 80) {
+			while (sampleGyro[0] < 75) {
 				gyroSampler.fetchSample(sampleGyro, 0);
 			}
 			motorsStop();
@@ -693,7 +693,7 @@ public class Ride {
 			motorR.backward();
 			motorL.endSynchronization();
 			Delay.msDelay(30);
-			while (sampleGyro[0] > -80) {
+			while (sampleGyro[0] > -75) {
 				gyroSampler.fetchSample(sampleGyro, 0);
 			}
 			motorsStop();
