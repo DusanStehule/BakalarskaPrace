@@ -80,21 +80,25 @@ public class Desk {
 		switch (direct) {
 		case 0:
 			if ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2))) {
+			//	System.out.println("...control " + desk[row - 1][column]);
 				help = 1;
 			}
 			break;
 		case 1:
 			if ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2))) {
+			//	System.out.println("...control " + desk[row][column + 1]);
 				help = 1;
 			}
 			break;
 		case 2:
 			if ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2))) {
+			//	System.out.println("...control " + desk[row + 1][column]);
 				help = 1;
 			}
 			break;
 		case 3:
 			if ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2))) {
+			//	System.out.println("...control " + desk[row][column - 1]);
 				help = 1;
 			}
 			break;
@@ -561,60 +565,31 @@ public class Desk {
 	}
 
 	/*
-	 * vrati policku pred robotem hodnotu, jakou melo pred oznacenim jako duch
-	 */
-	public void resetField() {
-		switch (direct) {
-		case 0:
-			if (row > 0) {
-				desk[row - 1][column] = deskHelp[row - 1][column];
-			}
-			break;
-		case 1:
-			if (column < 8) {
-				desk[row][column + 1] = deskHelp[row][column + 1];
-			}
-			break;
-		case 2:
-			if (row < 5) {
-				desk[row + 1][column] = deskHelp[row + 1][column];
-			}
-			break;
-		case 3:
-			if (column > 0) {
-				desk[row][column - 1] = deskHelp[row][column - 1];
-			}
-			break;
-		}
-		desk[row][column] = 0;
-	}
-
-	/*
 	 * vrati policku (row, column) hodnotu, jakou melo pred oznacenim jako duch
 	 */
 	public void resetField(int row, int column) {
 		switch (direct) {
 		case 0:
 			if (row > 0) {
-				desk[row][column] = deskHelp[row][column];
+				desk[row][column] = 3; // deskHelp[row][column];
 			//	System.out.println("desk " + (row) + " " + column + " " + desk[row][column]);
 			}
 			break;
 		case 1:
 			if (column < 8) {
-				desk[row][column] = deskHelp[row][column];
+				desk[row][column] = 3; //deskHelp[row][column];
 			//	System.out.println("desk " + (row) + " " + (column) + " " + desk[row][column]);
 			}
 			break;
 		case 2:
 			if (row < 5) {
-				desk[row][column] = deskHelp[row][column];
+				desk[row][column] = 3; // deskHelp[row][column];
 			//	System.out.println("desk " + (row) + " " + column + " " + desk[row][column]);
 			}
 			break;
 		case 3:
 			if (column > 0) {
-				desk[row][column] = deskHelp[row][column];
+				desk[row][column] = 3; // deskHelp[row][column];
 			//	System.out.println("desk " + (row) + " " + (column) + " " + desk[row][column]);
 			}
 			break;
