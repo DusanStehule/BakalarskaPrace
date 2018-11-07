@@ -259,7 +259,7 @@ public class Desk {
 	/*
 	 * vraci 1, pokud ma robot na prave strane hranu bludiste
 	 */
-	public int controlPresenceEdge() {
+	public int controlRightEdge() {
 		int help = 0;
 		switch (direct) {
 		case 0:
@@ -571,30 +571,29 @@ public class Desk {
 		switch (direct) {
 		case 0:
 			if (row > 0) {
-				desk[row][column] = 3; // deskHelp[row][column];
+				desk[row][column] = deskHelp[row][column];
 			//	System.out.println("desk " + (row) + " " + column + " " + desk[row][column]);
 			}
 			break;
 		case 1:
 			if (column < 8) {
-				desk[row][column] = 3; //deskHelp[row][column];
+				desk[row][column] = deskHelp[row][column];
 			//	System.out.println("desk " + (row) + " " + (column) + " " + desk[row][column]);
 			}
 			break;
 		case 2:
 			if (row < 5) {
-				desk[row][column] = 3; // deskHelp[row][column];
+				desk[row][column] = deskHelp[row][column];
 			//	System.out.println("desk " + (row) + " " + column + " " + desk[row][column]);
 			}
 			break;
 		case 3:
 			if (column > 0) {
-				desk[row][column] = 3; // deskHelp[row][column];
+				desk[row][column] = deskHelp[row][column];
 			//	System.out.println("desk " + (row) + " " + (column) + " " + desk[row][column]);
 			}
 			break;
 		}
-		desk[row][column] = 0;
 	}
 
 	/*

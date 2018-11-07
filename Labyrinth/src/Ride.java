@@ -274,7 +274,7 @@ public class Ride {
 		}
 
 		helpRight = desk.controlPresenceRight(); // bude 1, pokud tam robot uz byl nebo je tam prekazka(policko vpravo)
-		helpRightEdge = desk.controlPresenceEdge(); // bude 1, pokud ma robot na prave strane bludiste
+		helpRightEdge = desk.controlRightEdge(); // bude 1, pokud ma robot na prave strane bludiste
 		helpRightPresence = desk.controlPresenceRightPresence(); // bude 1, pokud tam robot uz byl
 		helpForward = desk.controlForward(); // bude 1, pokud tam robot uz byl (policko pred nim)
 		helpEdge = desk.controlEdge(); // vraci 1, pokud je pred robotem okraj bludiste
