@@ -69,13 +69,11 @@ public class Ride {
 	 */
 
 	private void goToLabyrinth() {
-		/*
 		resetM.fetchSample(sampleReset, 0);
 		while (sampleReset[0] == 0) {
 			resetM.fetchSample(sampleReset, 0);
 		}
 		Delay.msDelay(1000);
-		*/
 		oneStep();
 		while (true) {
 			rotate();
