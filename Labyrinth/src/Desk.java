@@ -6,9 +6,6 @@ import lejos.robotics.SampleProvider;
 
 public class Desk {
 
-	RegulatedMotor motorL;
-	RegulatedMotor motorR;
-
 	int row;
 	int column;
 	int direct;
@@ -249,6 +246,36 @@ public class Desk {
 			break;
 		case 3:
 			if ((row > 0) && ((desk[row - 1][column] == 0))) {
+				help = 1;
+			}
+			break;
+		}
+		return help;
+	}
+	
+	/*
+	 * vrací 1, pokud tam robot uz byl nebo je tam prekazka
+	 */
+	public int controlPresenceLeftPresence() {
+		int help = 0;
+		switch (direct) {
+		case 0:
+			if ((column > 0) && ((desk[row][column - 1] == 0))) {
+				help = 1;
+			}
+			break;
+		case 1:
+			if ((row > 0) && ((desk[row - 1][column] == 0))) {
+				help = 1;
+			}
+			break;
+		case 2:
+			if ((column < 8) && ((desk[row][column + 1] == 0))) {
+				help = 1;
+			}
+			break;
+		case 3:
+			if ((row < 5) && ((desk[row + 1][column] == 0))) {
 				help = 1;
 			}
 			break;

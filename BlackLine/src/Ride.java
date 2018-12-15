@@ -4,6 +4,7 @@ import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
+import lejos.utility.Delay;
 
 public class Ride {
 
@@ -13,12 +14,14 @@ public class Ride {
 	SampleProvider colorSampler;
 	float[] sampleColor;
 	
-	double P = 600;
-	double I = 24;
+	double P = 500;
+	double I = 0;
 	double D = 1000;
-	double target = 0.33;
+	//bílá: 0.45
+	//èerná: 0.03
+	double target = 0.24;
 	double last = 0;
-	int speed = 300;
+	int speed = 500;
 
 	public Ride() {
 		motorL = new EV3LargeRegulatedMotor(MotorPort.B);
@@ -27,7 +30,13 @@ public class Ride {
 		color = new EV3ColorSensor(SensorPort.S2);
 		colorSampler = color.getRedMode();
 		sampleColor = new float[colorSampler.sampleSize()];
-		ride();
+		motorL.setSpeed(speed);
+		motorR.setSpeed(speed);
+		motorL.forward();
+		motorR.forward();
+		Delay.msDelay(100000);
+	//	ride();
+		color.close();
 	}
 
 	private void ride() {
@@ -43,14 +52,17 @@ public class Ride {
 		motorL.endSynchronization();
 		colorSampler.fetchSample(sampleColor, 0);
 		
-		while (true) {
+		while (true) { //vyjede doprava na bílou
 			colorSampler.fetchSample(sampleColor, 0);
-			error = sampleColor[0] - target;
+			System.out.println(sampleColor[0]);
+			error = sampleColor[0] - target;  //0.2
 			integral += error;
-			derivation = sampleColor[0] - last; 
+			derivation = sampleColor[0] - last; //0.45 - 0.4 = 0.05 
 			motorL.startSynchronization();
-			motorL.setSpeed((int) (speed - P * error - I * integral - D * derivation));
-			motorR.setSpeed((int) (speed + P * error + I * integral + D * derivation));
+			motorL.setSpeed((int) (speed - P * error - I * integral + D * derivation));
+			motorR.setSpeed((int) (speed + P * error + I * integral - D * derivation));
+			motorL.forward();
+			motorR.forward();
 			motorL.endSynchronization();
 			last = sampleColor[0];
 		}
