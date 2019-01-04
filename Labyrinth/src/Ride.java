@@ -171,7 +171,7 @@ public class Ride {
 			if ((!motorL.isMoving()) && (stop == 0)) {
 				motorsForward();
 			}
-			if (motorL.getTachoCount() > 570) {
+			if (motorL.getTachoCount() > 540) { //570
 				desk.move();
 				help = desk.controlForward(); // vraci 0, pokud tam robot jeste nebyl
 				helpGhost = desk.controlGhost(); // vraci 1, pokud je na policku pred nim duch
@@ -456,7 +456,7 @@ public class Ride {
 					motorL.endSynchronization();
 					Delay.msDelay(50);
 					if ((motorL.getTachoCount() < 170) && (motorL.getTachoCount() > 0)) {
-						desk.back();
+					//	desk.back();
 					}
 					desk.measureForward();
 				}
@@ -484,7 +484,7 @@ public class Ride {
 		motorL.resetTachoCount();
 		motorsForward();
 		Delay.msDelay(50);
-		while ((motorL.getTachoCount() < 200) && (sampleTouch[0] == 0) && (sampleDistance[0] < 0.3)) {
+		while ((motorL.getTachoCount() < 350) && (sampleTouch[0] == 0) && (sampleDistance[0] < 0.3)) { //200
 			touchM.fetchSample(sampleTouch, 0);
 			distanceSampler.fetchSample(sampleDistance, 0);
 		}

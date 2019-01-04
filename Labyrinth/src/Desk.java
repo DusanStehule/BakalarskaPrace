@@ -110,22 +110,22 @@ public class Desk {
 		int help = 0;
 		switch (direct) {
 		case 0:
-			if ((row > 0) && ((desk[row - 1][column] == 4))) {
+			if ((row > 0) && ((desk[row - 1][column] == 4) ||(desk[row - 1][column] == 2))) {
 				help = 1;
 			}
 			break;
 		case 1:
-			if ((column < 8) && ((desk[row][column + 1] == 4))) {
+			if ((column < 8) && ((desk[row][column + 1] == 4) || (desk[row][column + 1] == 2))) {
 				help = 1;
 			}
 			break;
 		case 2:
-			if ((row < 5) && ((desk[row + 1][column] == 4))) {
+			if ((row < 5) && ((desk[row + 1][column] == 4) || (desk[row + 1][column] == 2))) {
 				help = 1;
 			}
 			break;
 		case 3:
-			if ((column > 0) && ((desk[row][column - 1] == 4))) {
+			if ((column > 0) && ((desk[row][column - 1] == 4) || (desk[row][column - 1] == 2))) {
 				help = 1;
 			}
 			break;
@@ -768,7 +768,7 @@ public class Desk {
 			}
 			if (number > 1) {
 				for (int i = 0; i < number - 1; i++) {
-					if ((row - i - 1 > 0) && (desk[row - i - 1][column] == 4)) {
+					if ((row - i - 1 > 0) && ((desk[row - i - 1][column] == 4) || (desk[row - i - 1][column] == 2))) {
 						resetField(row - i - 1, column);
 					}
 				}
@@ -783,7 +783,7 @@ public class Desk {
 			}
 			if (number > 1) {
 				for (int i = 0; i < number - 1; i++) {
-					if ((column + i + 1 < 9) && (desk[row][column + i + 1] == 4)) {
+					if ((column + i + 1 < 9) && ((desk[row][column + i + 1] == 4) || (desk[row][column + i + 1] == 2))) {
 						resetField(row, column + i + 1);
 					}
 				}
@@ -798,7 +798,7 @@ public class Desk {
 			}
 			if (number > 1) {
 				for (int i = 0; i < number - 1; i++) {
-					if ((row + i + 1 < 6) && (desk[row + i + 1][column] == 4)) {
+					if ((row + i + 1 < 6) && ((desk[row + i + 1][column] == 4) || (desk[row + i + 1][column] == 2))) {
 						resetField(row + i + 1, column);
 					}
 				}
@@ -813,7 +813,7 @@ public class Desk {
 			}
 			if (number > 1) {
 				for (int i = 0; i < number - 1; i++) {
-					if ((column - i - 1 > 0) && (desk[row][column - i - 1] == 4)) {
+					if ((column - i - 1 > 0) && ((desk[row][column - i - 1] == 4) || (desk[row][column - i - 1] == 2))) {
 						resetField(row, column - i - 1);
 					}
 				}

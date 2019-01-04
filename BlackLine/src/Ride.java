@@ -3,6 +3,7 @@ import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3TouchSensor;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.SensorMode;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
@@ -14,22 +15,25 @@ public class Ride {
 	RegulatedMotor motorR;
 	EV3ColorSensor color;
 	EV3TouchSensor touch;
+	//EV3UltrasonicSensor distSensor;
 	SampleProvider colorSampler;
+	//SampleProvider distanceSampler;
 	SensorMode touchM;
 
 	float[] sampleTouch;
 	float[] sampleColor;
+	//float[] sampleDistance;
 
 	// docela dobré: 2200, 2350, 2450, 2625, 2800 pro rychlost 450 a P=520
 	// p=430, d=3000, s=340, t=0.3
 
-	double P = 470; //470
-	double D = 4875; //od 2000 výše; 2525 a 2800 a 3050 a 3400 a 3650 a 4350 a 4625 a 4800 dobré
+	double P = 470; // 470
+	double D = 5400; // 5400
 	// bílá: 0.48
 	// èerná: 0.03
 	double target = 0.25;
 	double last = 0;
-	int speed = 380;
+	int speed = 320; //350
 
 	public Ride() {
 		motorL = new EV3LargeRegulatedMotor(MotorPort.B);
@@ -37,12 +41,17 @@ public class Ride {
 		motorL.synchronizeWith(new RegulatedMotor[] { motorR });
 		touch = new EV3TouchSensor(SensorPort.S1);
 		color = new EV3ColorSensor(SensorPort.S2);
+		//distSensor = new EV3UltrasonicSensor(SensorPort.S3);
 		touchM = touch.getTouchMode();
 		colorSampler = color.getRedMode();
+		//distanceSampler = distSensor.getDistanceMode();
 		sampleTouch = new float[touchM.sampleSize()];
 		sampleColor = new float[colorSampler.sampleSize()];
+		//sampleDistance = new float[distanceSampler.sampleSize()];
 		ride();
 		color.close();
+		touch.close();
+		//distSensor.close();
 	}
 
 	private void ride() {
@@ -57,7 +66,7 @@ public class Ride {
 			colorSampler.fetchSample(sampleColor, 0);
 			error = sampleColor[0] - target;
 			derivation = sampleColor[0] - last;
-			motorL.startSynchronization();
+			
 			if ((error > 0.1) || (error < -0.1)) {
 				motorL.setSpeed((int) (speed + P * error - D * derivation));
 				motorR.setSpeed((int) (speed - P * error + D * derivation));
@@ -65,7 +74,8 @@ public class Ride {
 				motorL.setSpeed((int) (speed + 200 * error));
 				motorR.setSpeed((int) (speed - 200 * error));
 			}
-
+			
+			motorL.startSynchronization();
 			motorL.forward();
 			motorR.forward();
 			motorL.endSynchronization();
