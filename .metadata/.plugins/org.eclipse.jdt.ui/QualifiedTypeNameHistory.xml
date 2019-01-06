@@ -24,9 +24,9 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="lejos.robotics.navigation.Move"/>
-<fullyQualifiedTypeName name="lejos.robotics.SampleProvider"/>
 <fullyQualifiedTypeName name="lejos.hardware.sensor.EV3ColorSensor"/>
 <fullyQualifiedTypeName name="lejos.hardware.port.SensorPort"/>
 <fullyQualifiedTypeName name="lejos.utility.Delay"/>
 <fullyQualifiedTypeName name="lejos.hardware.sensor.EV3UltrasonicSensor"/>
+<fullyQualifiedTypeName name="lejos.robotics.SampleProvider"/>
 </qualifiedTypeNameHistroy>

@@ -312,7 +312,7 @@ public class Ride {
 	 */
 	private void findField() {
 		int waySize = desk.findWay();
-		System.out.println("cesta " + waySize);
+		System.out.println("way " + waySize);
 		int help = 0;
 		int rot;
 		int rotNext;

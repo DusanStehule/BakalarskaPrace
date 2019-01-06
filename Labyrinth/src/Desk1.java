@@ -33,13 +33,13 @@ public class Desk1 {
 				deskHelp[i][j] = 3;
 			}
 		}
-		desk[3][3] = 2; // startovni pole
-		desk[3][4] = 2; // startovni pole
-		desk[3][5] = 2; // startovni pole
+		desk[3][3] = 2; // start field
+		desk[3][4] = 2; // start field
+		desk[3][5] = 2; // start field
 	}
 
 	/*
-	 * presune robota v souradnicovem systemu
+	 * robot move one field forward in the coordinate system
 	 */
 	public void move() {
 		switch (direct) {
@@ -69,32 +69,28 @@ public class Desk1 {
 	}
 
 	/*
-	 * vraci 0, pokud tam robot jeste nebyl, jinak 1
+	 * 1 if robot was there
 	 */
 	public int controlForward() {
 		int help = 0;
 		switch (direct) {
 		case 0:
 			if ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2))) {
-			//	System.out.println("...control " + desk[row - 1][column]);
 				help = 1;
 			}
 			break;
 		case 1:
 			if ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2))) {
-			//	System.out.println("...control " + desk[row][column + 1]);
 				help = 1;
 			}
 			break;
 		case 2:
 			if ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2))) {
-			//	System.out.println("...control " + desk[row + 1][column]);
 				help = 1;
 			}
 			break;
 		case 3:
 			if ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2))) {
-			//	System.out.println("...control " + desk[row][column - 1]);
 				help = 1;
 			}
 			break;
@@ -103,7 +99,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * vraci 1, pokud je pred robotem okraj bludiste
+	 * 1 if edge of labyrinth is before robot
 	 */
 	public int controlEdge() {
 		int help = 0;
@@ -133,7 +129,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * vrací 1, pokud tam robot uz byl nebo je tam prekazka
+	 * 1 if robot was there or barrier is there
 	 */
 	public int controlPresenceRight() {
 		int help = 0;
@@ -161,9 +157,9 @@ public class Desk1 {
 		}
 		return help;
 	}
-	
+
 	/*
-	 * vrací 1, pokud tam robot uz byl nebo je tam prekazka
+	 * 1 if robot was on the field right
 	 */
 	public int controlPresenceRightPresence() {
 		int help = 0;
@@ -191,9 +187,9 @@ public class Desk1 {
 		}
 		return help;
 	}
-	
+
 	/*
-	 * vrací 1, pokud tam robot uz byl nebo je tam prekazka
+	 * 1 if robot was on the field left
 	 */
 	public int controlPresenceLeftPresence() {
 		int help = 0;
@@ -223,7 +219,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * vraci 1, pokud ma robot na prave strane hranu bludiste
+	 * 1 if edge of labyrinth is on the robot's right
 	 */
 	public int controlRightEdge() {
 		int help = 0;
@@ -253,24 +249,19 @@ public class Desk1 {
 	}
 
 	/*
-	 * vraci 1, pokud robot uz byl vepredu, vzadu a vlevo
+	 * 1 if robot was on the field forward, back, left and right or is barrier
+	 * forward, back, left and right
 	 */
 	public int controlPresenceAround() {
 		int help = 0;
 		switch (direct) {
 		case 0:
-			if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) { // pred
-																												// robotem
-				if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) { // za
-																													// robotem
+			if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) {
+				if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) {
 					if ((column == 0)
-							|| ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) { // nalevo
-																													// od
-																													// robota
+							|| ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) {
 						if ((column == 8)
-								|| ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) { // napravo
-																														// od
-																														// robota
+								|| ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) {
 							help = 1;
 						}
 					}
@@ -278,18 +269,11 @@ public class Desk1 {
 			}
 			break;
 		case 1:
-			if ((column == 8) || ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) { // pred
-																														// robotem
-				if ((column == 0) || ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) { // za
-																															// robotem
-					if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) { // nalevo
-																														// od
-						// robota
+			if ((column == 8) || ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) {
+				if ((column == 0) || ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) {
+					if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) {
 						if ((row == 5)
-								|| ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) { // napravo
-																													// od
-																													// robota
-							// System.out.println("presence 1");
+								|| ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) {
 							help = 1;
 						}
 					}
@@ -297,20 +281,12 @@ public class Desk1 {
 			}
 			break;
 		case 2:
-			if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) { // pred
-																												// robotem
-				if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) { // za
-																													// robotem
+			if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) {
+				if ((row == 0) || ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) {
 					if ((column == 8)
-							|| ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) { // nalevo
-																													// od
-						// robota
+							|| ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) {
 						if ((column == 0)
-								|| ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) { // nalevo
-																														// od
-							// robota
-							// System.out.println("coordinate " + row + " " + column + " " + direct);
-							// System.out.println("presence 2");
+								|| ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) {
 							help = 1;
 						}
 					}
@@ -318,18 +294,11 @@ public class Desk1 {
 			}
 			break;
 		case 3:
-			if ((column == 0) || ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) { // pred
-																														// robotem
-				if ((column == 8) || ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) { // za
-																															// robotem
-					if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) { // nalevo
-																														// od
-						// robota
+			if ((column == 0) || ((column > 0) && ((desk[row][column - 1] == 0) || (desk[row][column - 1] == 2)))) {
+				if ((column == 8) || ((column < 8) && ((desk[row][column + 1] == 0) || (desk[row][column + 1] == 2)))) {
+					if ((row == 5) || ((row < 5) && ((desk[row + 1][column] == 0) || (desk[row + 1][column] == 2)))) {
 						if ((row == 0)
-								|| ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) { // nalevo
-							// od
-// robota
-							// System.out.println("presence 3");
+								|| ((row > 0) && ((desk[row - 1][column] == 0) || (desk[row - 1][column] == 2)))) {
 							help = 1;
 						}
 					}
@@ -342,39 +311,35 @@ public class Desk1 {
 	}
 
 	/*
-	 * mapuje prekazky pred robotem po sepnuti dotykoveho senzoru
+	 * maps barriers before robot after touch with touch sensor
 	 */
 	public void measureForward() {
 		switch (direct) {
 		case 0:
 			if ((row > 0) && (desk[row - 1][column] != 0)) {
 				desk[row - 1][column] = 2;
-				System.out.println("measureF " + (row - 1) + " " + column);
 			}
 			break;
 		case 1:
 			if ((column < 8) && (desk[row][column + 1] != 0)) {
 				desk[row][column + 1] = 2;
-				System.out.println("measureF " + row + " " + (column + 1));
 			}
 			break;
 		case 2:
 			if ((row < 5) && (desk[row + 1][column] != 0)) {
 				desk[row + 1][column] = 2;
-				System.out.println("measureF " + (row + 1) + " " + column);
 			}
 			break;
 		case 3:
 			if ((column > 0) && (desk[row][column - 1] != 0)) {
 				desk[row][column - 1] = 2;
-				System.out.println("measureF " + row + " " + (column - 1));
 			}
 			break;
 		}
 	}
 
 	/*
-	 * mapuje prekazky nalevo od robota
+	 * maps barriers on the robot's left
 	 */
 	public void measureLeft() {
 		distanceSampler.fetchSample(sampleDistance, 0);
@@ -383,25 +348,21 @@ public class Desk1 {
 			case 0:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-				//	 System.out.println("measureL " + row + " " + (column - 1));
 				}
 				break;
 			case 1:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-				//	 System.out.println("measureL " + (row - 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-				//	 System.out.println("measureL " + row + " " + (column + 1));
 				}
 				break;
 			case 3:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-				//	 System.out.println("measureL " + (row + 1) + " " + column);
 				}
 				break;
 			}
@@ -410,25 +371,21 @@ public class Desk1 {
 			case 0:
 				if ((column > 0) && (desk[row][column - 1] == 2)) {
 					desk[row][column - 1] = 3;
-				//	 System.out.println("restartL " + row + " " + (column - 1));
 				}
 				break;
 			case 1:
 				if ((row > 0) && (desk[row - 1][column] == 2)) {
 					desk[row - 1][column] = 3;
-				//	 System.out.println("restartL " + (row - 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column < 8) && (desk[row][column + 1] == 2)) {
 					desk[row][column + 1] = 3;
-				//	 System.out.println("restartL " + row + " " + (column + 1));
 				}
 				break;
 			case 3:
 				if ((row < 5) && (desk[row + 1][column] == 2)) {
 					desk[row + 1][column] = 3;
-				//	 System.out.println("restartL " + (row + 1) + " " + column);
 				}
 				break;
 			}
@@ -436,7 +393,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * mapuje prekazky napravo od robota
+	 * maps barriers on the robot's right
 	 */
 	public void measureRight() {
 		distanceSampler.fetchSample(sampleDistance, 0);
@@ -445,25 +402,21 @@ public class Desk1 {
 			case 0:
 				if ((column < 8) && (desk[row][column + 1] != 0)) {
 					desk[row][column + 1] = 2;
-				//	 System.out.println("measureR " + row + " " + (column + 1));
 				}
 				break;
 			case 1:
 				if ((row < 5) && (desk[row + 1][column] != 0)) {
 					desk[row + 1][column] = 2;
-				//	 System.out.println("measureR " + (row + 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column > 0) && (desk[row][column - 1] != 0)) {
 					desk[row][column - 1] = 2;
-				//	 System.out.println("measureR " + row + " " + (column - 1));
 				}
 				break;
 			case 3:
 				if ((row > 0) && (desk[row - 1][column] != 0)) {
 					desk[row - 1][column] = 2;
-				//	 System.out.println("measureR " + (row - 1) + " " + column);
 				}
 				break;
 			}
@@ -472,25 +425,21 @@ public class Desk1 {
 			case 0:
 				if ((column < 8) && (desk[row][column + 1] == 2)) {
 					desk[row][column + 1] = 3;
-				//	 System.out.println("restartR " + row + " " + (column + 1));
 				}
 				break;
 			case 1:
 				if ((row < 5) && (desk[row + 1][column] == 2)) {
 					desk[row + 1][column] = 3;
-				//	 System.out.println("restartR " + (row + 1) + " " + column);
 				}
 				break;
 			case 2:
 				if ((column > 0) && (desk[row][column - 1] == 2)) {
 					desk[row][column - 1] = 3;
-				//	 System.out.println("restartR " + row + " " + (column - 1));
 				}
 				break;
 			case 3:
 				if ((row > 0) && (desk[row - 1][column] == 2)) {
 					desk[row - 1][column] = 3;
-				//	 System.out.println("restartR " + (row - 1) + " " + column);
 				}
 				break;
 			}
@@ -498,7 +447,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * vrati robota o 1 policku vzad
+	 * returns the robot one field back 
 	 */
 	public void back() {
 		switch (direct) {
@@ -531,7 +480,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * rotuje robota v systemu souradnic doleva
+	 * rotate robot to the left in the coordinate system
 	 */
 	public void rotationL() {
 		if (direct == 0) {
@@ -543,7 +492,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * rotuje robota v systemu souradnic doprava
+	 * rotate robot to the right in the coordinate system
 	 */
 	public void rotationR() {
 		if (direct == 3) {
@@ -555,7 +504,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * rotuje robota v systemu souradnic o 180 stupnu
+	 * rotate robot to the back in the coordinate system
 	 */
 	public void rotationB() {
 		switch (direct) {
@@ -576,7 +525,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * spusti prohledavani do sirky
+	 * starts BFS
 	 */
 	public int findWay() {
 		BFS.inicialize(desk, row, column, direct);
@@ -585,7 +534,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * vrati smer, kterym se vydat k neprozkoumanemu policku
+	 * this function returns direct, which is to unexplored field
 	 */
 	public int getRotation() {
 		int ret = -5;
@@ -628,7 +577,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * vrati smer, kterym se vydat k neprozkoumanemu policku a smaze prvni policko
+	 * this function returns direct, which is to unexplored field and erase first field
 	 */
 	public int rotationToWay() {
 		int rowHelp = (way.getFirst() / 10) - 1;
@@ -654,7 +603,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * resetuje BFS
+	 * reset BFS
 	 */
 	public void eraseWay() {
 		way.clear();
@@ -662,7 +611,7 @@ public class Desk1 {
 	}
 
 	/*
-	 * vrati robota v souradnem systemu na vychozi pozici
+	 * returns robot on the start in the coordinate system
 	 */
 	public void reset() {
 		row = 3;

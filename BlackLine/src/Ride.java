@@ -21,13 +21,13 @@ public class Ride {
 	float[] sampleTouch;
 	float[] sampleColor;
 
-	double P = 505; // 505, 530
-	double D = 5500; // 5500, 5900
-	// bílá: 0.48
-	// èerná: 0.03
-	double target = 0.24;
+	double P = 470;
+	double D = 5400;
+	// white: 0.48
+	// black: 0.03
+	double target = 0.25;
 	double last = 0;
-	int speed = 290; //290, 300
+	int speed = 350;
 
 	public Ride() {
 		motorL = new EV3LargeRegulatedMotor(MotorPort.B);
@@ -45,10 +45,12 @@ public class Ride {
 	}
 
 	private void ride() {
-		/*
-		 * touchM.fetchSample(sampleTouch, 0); while (sampleTouch[0] == 0) {
-		 * touchM.fetchSample(sampleTouch, 0); }
-		 */
+		
+		touchM.fetchSample(sampleTouch, 0);
+		while (sampleTouch[0] == 0) {
+			touchM.fetchSample(sampleTouch, 0);
+		}
+		
 		double error = 0;
 		double derivation = 0;
 
@@ -60,10 +62,10 @@ public class Ride {
 				motorL.setSpeed((int) (speed + P * error - D * derivation));
 				motorR.setSpeed((int) (speed - P * error + D * derivation));
 			} else {
-				motorL.setSpeed((int) (speed + 250 * error)); //200
-				motorR.setSpeed((int) (speed - 250 * error)); //200
+				motorL.setSpeed((int) (speed + 250 * error)); 
+				motorR.setSpeed((int) (speed - 250 * error)); 
 			}
-			
+
 			motorL.startSynchronization();
 			motorL.forward();
 			motorR.forward();
@@ -71,5 +73,4 @@ public class Ride {
 			last = sampleColor[0];
 		}
 	}
-
 }
