@@ -54,7 +54,7 @@ public class Ride1 {
 		desk = new Desk1(distanceSensor);
 		motorSmall.setSpeed(700);
 		motorSmall.resetTachoCount();
-		motorSmall.rotate(-90); // nastavi US sensor doprava
+		motorSmall.rotate(-90); // rotate US sensor to the right
 		goToLabyrinth();
 		motorL.close();
 		motorR.close();
@@ -63,6 +63,9 @@ public class Ride1 {
 		gyro.close();
 	}
 
+	/*
+	 * endless cycle
+	 */
 	private void goToLabyrinth() {
 		resetM.fetchSample(sampleReset, 0);
 		while (sampleReset[0] == 0) {
@@ -78,7 +81,10 @@ public class Ride1 {
 	}
 
 	/*
-	 * Jede, dokud: -neni kam zatocit -nenarazi -jel by znovu, kde uz byl
+	 * robot rides until:
+	 * -> he can't turn right
+	 * -> he will not bump into wall or barrier
+	 * -> he will not drive to field, where he was already
 	 */
 	private void rideWhile() {
 		int help;
@@ -87,15 +93,15 @@ public class Ride1 {
 		int helpLeftPresence = 1;
 		int stop = 0;
 		motorL.resetTachoCount();
-		helpRightEdge = desk.controlRightEdge(); // bude 1, pokud ma robot na prave strane bludiste
+		helpRightEdge = desk.controlRightEdge(); 
 		
 		if ((motorSmall.getTachoCount() > 80) && (helpRightEdge == 0)) {
-			motorSmall.rotate(-180); // otoci US sensor doprava
+			motorSmall.rotate(-180); // rotate US sensor to the right
 		}
 		if ((motorSmall.getTachoCount() < -80) && (helpRightEdge == 1)) {
-			motorSmall.rotate(180); // otoci US sensor doleva
+			motorSmall.rotate(180); // rotate US sensor to the left
 		}
-		help = desk.controlForward(); // vraci 0, pokud tam robot jeste nebyl
+		help = desk.controlForward(); // 1 if robot was on the field forward 
 
 		if (help == 0) {
 			motorsForward();
@@ -129,17 +135,17 @@ public class Ride1 {
 		}
 		if (help == 0) {
 			desk.move();
-			helpLeftPresence = desk.controlPresenceLeftPresence(); // bude 1, pokud tam robot uz byl
+			helpLeftPresence = desk.controlPresenceLeftPresence(); // 1 if robot was on the field left
 		}
 
 		if (sampleReset[0] == 1) {
 			reset();
 		}
 
-		help = desk.controlForward(); // vraci 0, pokud tam robot jeste nebyl
+		help = desk.controlForward(); // 1 if robot was on the field forward
 
 		motorL.resetTachoCount();
-		Delay.msDelay(200); // aby robot prijel k dalsi prekazce a nemapoval prekazky v mezere
+		Delay.msDelay(200); 
 		distanceSampler.fetchSample(sampleDistance, 0);
 		touchM.fetchSample(sampleTouch, 0);
 		resetM.fetchSample(sampleReset, 0);
@@ -149,10 +155,10 @@ public class Ride1 {
 			if ((!motorL.isMoving()) && (stop == 0)) {
 				motorsForward();
 			}
-			if (motorL.getTachoCount() > 540) { // 570
+			if (motorL.getTachoCount() > 540) { 
 				desk.move();
-				help = desk.controlForward(); // vraci 0, pokud tam robot jeste nebyl
-				helpLeftPresence = desk.controlPresenceLeftPresence(); // bude 1, pokud tam robot uz byl
+				help = desk.controlForward(); // 1 if robot was on the field forward
+				helpLeftPresence = desk.controlPresenceLeftPresence(); // 1 if robot was on the field left
 				motorL.resetTachoCount();
 			}
 
@@ -184,7 +190,7 @@ public class Ride1 {
 			}
 			desk.measureForward();
 			help = 1;
-			if (motorSmall.getTachoCount() < -80) { // otoci US sensor doleva
+			if (motorSmall.getTachoCount() < -80) { // turn US sensor to the left
 				motorSmall.rotate(180);
 			}
 		}
@@ -203,7 +209,7 @@ public class Ride1 {
 	}
 
 	/*
-	 * zatoci doprava nebo doleva, kdyz: -to doprava nejde -vpravo uz byl
+	 * this procedure determines which direction to turn
 	 */
 	private void rotate() {
 		int helpRight;
@@ -214,25 +220,24 @@ public class Ride1 {
 		int helpEdge;
 		int helpAround;
 		int rot = 0;
-		helpRightEdge = desk.controlRightEdge(); // bude 1, pokud ma robot na prave strane bludiste
+		helpRightEdge = desk.controlRightEdge(); 
 
 		if ((motorSmall.getTachoCount() > 80) && (helpRightEdge == 0)) {
-			motorSmall.rotate(-180); // otoci US senzor doprava
+			motorSmall.rotate(-180); // turn US sensor to the right
 			Delay.msDelay(50);
 		} else if ((motorSmall.getTachoCount() > -80) && (helpRightEdge == 0)) {
-			motorSmall.rotate(-90); // otoci US senzor doprava
+			motorSmall.rotate(-90); // turn US sensor right
 			Delay.msDelay(50);
 		}
 		distanceSampler.fetchSample(sampleDistance, 0);
 
-		helpRight = desk.controlPresenceRight(); // bude 1, pokud tam robot uz byl nebo je tam prekazka(policko vpravo)
-		helpRightEdge = desk.controlRightEdge(); // bude 1, pokud ma robot na prave strane bludiste
-		helpLeftPresence = desk.controlPresenceLeftPresence(); // bude 1, pokud tam robot uz byl
+		helpRight = desk.controlPresenceRight(); // 1 if robot was there or its barrier there
+		helpRightEdge = desk.controlRightEdge(); 
+		helpLeftPresence = desk.controlPresenceLeftPresence(); // 1 if robot was on the field left
 		helpRightPresence = desk.controlPresenceRightPresence(); // bude 1, pokud tam robot uz byl
-		helpForward = desk.controlForward(); // bude 1, pokud tam robot uz byl (policko pred nim)
+		helpForward = desk.controlForward(); // 1 if robot was on the field right
 		helpEdge = desk.controlEdge(); // vraci 1, pokud je pred robotem okraj bludiste
-		helpAround = desk.controlPresenceAround(); // bude 1, kdyz se robot nema kam hnout kvuli prekazce, nebo ze uz
-													// tam byl
+		helpAround = desk.controlPresenceAround(); // 1 if robot was on the field forward, back, left and right or is barrier forward, back, left and right
 
 		measure();
 		if ((sampleDistance[0] > 0.3) && (helpRightPresence == 0) && (helpRightEdge == 0)) {
@@ -244,12 +249,11 @@ public class Ride1 {
 			rot = 1;
 		}
 
-		helpForward = desk.controlForward(); // bude 1, pokud tam robot uz byl (policko pred nim)
-
+		helpForward = desk.controlForward(); // 1 if robot was on the field forward 
 		if (((helpForward == 1) || (helpEdge == 1)) && (helpAround == 0) && (rot == 0)) {
 			System.out.println("xxxAxxx " + helpForward + " " + helpEdge);
 			if (motorSmall.getTachoCount() < -80) {
-				motorSmall.rotate(180); // otoci US senzor doleva
+				motorSmall.rotate(180); // turn US sensor to the left
 			}
 			Delay.msDelay(50);
 			measure();
@@ -267,7 +271,7 @@ public class Ride1 {
 		if ((helpRight == 1) && (helpAround == 0) && (helpForward == 1) && (rot == 0)) {
 			System.out.println("xxxBxxx");
 			if (motorSmall.getTachoCount() < -80) {
-				motorSmall.rotate(180); // otoci US senzor doleva
+				motorSmall.rotate(180); // turn US sensor to the left
 			}
 			Delay.msDelay(50);
 			measure();
@@ -289,7 +293,7 @@ public class Ride1 {
 	}
 
 	/*
-	 * BFS, hleda cestu a pak naviguje robota
+	 * this procedure find way and than navigate robot
 	 */
 	private void findField() {
 		int waySize = desk.findWay();
@@ -328,12 +332,12 @@ public class Ride1 {
 			motorL.resetTachoCount();
 			rotNext = desk.getRotation();
 			if (((rotNext == 1) || (rotNext == -3)) && (motorSmall.getTachoCount() < -80)) {
-				motorSmall.rotate(180); // otoci US sensor doleva
+				motorSmall.rotate(180); // turn US sensor to the left
 				Delay.msDelay(50);
 			}
 			motorsForward();
 
-			if ((rotNext == -1) || (rotNext == 3)) { // vpravo
+			if ((rotNext == -1) || (rotNext == 3)) { // right
 				Delay.msDelay(250);
 				distanceSampler.fetchSample(sampleDistance, 0);
 				while ((sampleDistance[0] < 0.3) && (sampleTouch[0] == 0) && (motorL.getTachoCount() < 570)) {
@@ -356,7 +360,7 @@ public class Ride1 {
 					}
 					Delay.msDelay(50);
 				}
-			} else if ((rotNext == 1) || (rotNext == -3)) { // vlevo
+			} else if ((rotNext == 1) || (rotNext == -3)) { // left
 				Delay.msDelay(250);
 				distanceSampler.fetchSample(sampleDistance, 0);
 				while ((sampleDistance[0] < 0.3) && (sampleTouch[0] == 0) && (motorL.getTachoCount() < 570)) {
@@ -412,7 +416,7 @@ public class Ride1 {
 	}
 
 	/*
-	 * dle natoceni US senzoru meri bud nalevo nebo napravo
+	 * according to the rotation of ultrasonic sensor measure this procedure left or right
 	 */
 	private void measure() {
 		if (motorSmall.getTachoCount() > 80) {
@@ -423,7 +427,7 @@ public class Ride1 {
 	}
 
 	/*
-	 * spusti oba motory dopredu
+	 * turn on both motors to the forward
 	 */
 	private void motorsForward() {
 		motorL.startSynchronization();
@@ -435,7 +439,7 @@ public class Ride1 {
 	}
 
 	/*
-	 * zastavi oba motory
+	 * stop both motors
 	 */
 	private void motorsStop() {
 		motorL.startSynchronization();
@@ -445,7 +449,7 @@ public class Ride1 {
 	}
 
 	/*
-	 * udela jeden krok otocenim obou motoru o 573°
+	 * do one step
 	 */
 	public void oneStep() {
 		oneStepRotate();
@@ -453,7 +457,7 @@ public class Ride1 {
 	}
 
 	/*
-	 * rotuje oba motory o 573°
+	 * rotate both motors about 600 degrees 
 	 */
 	private void oneStepRotate() {
 		motorL.startSynchronization();
@@ -466,7 +470,7 @@ public class Ride1 {
 	}
 
 	/*
-	 * zatoci doleva (gyro)
+	 * turn left with gyroscope 
 	 */
 	private void rotationLeft() {
 		gyro.reset();
@@ -504,7 +508,7 @@ public class Ride1 {
 	}
 
 	/*
-	 * zatoci doprava (gyro)
+	 * turn right with gyroscope 
 	 */
 	private void rotationRight() {
 		motorL.setSpeed(400);
@@ -578,7 +582,7 @@ public class Ride1 {
 	}
 
 	/*
-	 * vrati robota na vychozi pozici
+	 * reset robot's coordinates
 	 */
 	private void reset() {
 		System.out.println("reset");

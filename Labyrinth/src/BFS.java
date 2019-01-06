@@ -16,6 +16,9 @@ public class BFS {
 	public BFS() {
 	}
 	
+	/*
+	 * gets the actual state of the labyrinth
+	 */
 	public void inicialize(int[][] desk, int row, int column, int direct) {
 		this.desk = desk;
 		this.row = row;
@@ -24,6 +27,9 @@ public class BFS {
 		findWay();
 	}
 	
+	/*
+	 * deletes lists
+	 */
 	public void stop() {
 		open.clear();
 		close.clear();
@@ -31,6 +37,9 @@ public class BFS {
 		way.clear();
 	}
 
+	/*
+	 * implementation of BFS algorithm
+	 */
 	private void findWay() {
 		int field;
 		int goal = 0;
@@ -69,6 +78,9 @@ public class BFS {
 		}
 	}
 	
+	/*
+	 * this function expands field, which is in parameter
+	 */
 	private LinkedList<Integer> expand(int hash) {
 		LinkedList<Integer> exp = new LinkedList<Integer>();
 		int row = (hash / 10) - 1;
@@ -160,10 +172,16 @@ public class BFS {
 		return exp;
 	}
 	
+	/*
+	 * encodes two coordinates into one number
+	 */
 	private int hashIn(int row, int column) {
 		return (row + 1) * 10 + column;
 	}
 	
+	/*
+	 * verify if the field complies with the conditions
+	 */
 	private boolean isTarget(int field) {
 		boolean ret = false;
 		if (desk[(field / 10) - 1][field % 10] == 3) {
