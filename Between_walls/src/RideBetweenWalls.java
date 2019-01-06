@@ -95,8 +95,6 @@ public class RideBetweenWalls {
 				
 				endRotate();
 			} while (sampleL[0] == 0);
-
-			System.out.println("otacim se");
 			
 			motorL.startSynchronization();
 			motorL.stop();
@@ -132,7 +130,6 @@ public class RideBetweenWalls {
 				endRotate();
 			} while (sampleR[0] == 0);
 
-			System.out.println("otacim se");
 
 		}
 	}

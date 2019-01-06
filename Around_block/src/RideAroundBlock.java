@@ -98,7 +98,6 @@ public class RideAroundBlock {
 
 			ride(12);
 			rotationLeft();
-			System.out.println("tocim doleva");
 			actual = 0;
 		}
 	}
